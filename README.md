@@ -13,7 +13,7 @@ Everyone should become a member of that team.
 Name|Website
 ----|-----
 [Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)
-[Your name here] | [URL to your current work here]
+[Rijk](https://github.com/Rijk-van-Putten) | [website](https://rijkvanputten.000webhostapp.com/)
 [Your name here] | [URL to your current work here]
 [Your name here] | [URL to your current work here]
 
