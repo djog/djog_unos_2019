@@ -4,6 +4,10 @@ Project by the Uno's at DJOG 2019-2020
 
 This is a website on which you can redirect people to your personal work or your team's project page
 
+Whatever you do, you are part of the
+team called [djog_unos_2019](https://github.com/orgs/djog/teams/djog_unos_2019).
+Everyone should become a member of that team.
+
 ## People
 
 Name|Website
@@ -15,12 +19,14 @@ Name|Website
 
 ## Teams
 
-Naam|Website
-----|-----
+
+Naam            |Website
+----------------|---------------------------------------------
+[djog_unos_2019](https://github.com/orgs/djog/teams/djog_unos_2019) | [https://github.com/djog/djog_unos_2019](https://github.com/djog/djog_unos_2019)
 [Name of the team here] | [URL to the team's GitHub repo here]
 [Name of the team here] | [URL to the team's GitHub repo here]
 [Name of the team here] | [URL to the team's GitHub repo here]
-[Name of the team here] | [URL to the team's GitHub repo here]
+
 
 A team has:
 
