@@ -14,7 +14,7 @@ Name|Website
 ----|-----
 [Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)
 [Rijk](https://github.com/Rijk-van-Putten) | [website](https://rijkvanputten.000webhostapp.com/)
-[Your name here] | [URL to your current work here]
+[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/afKxKRR)
 [Your name here] | [URL to your current work here]
 
 ## Teams
