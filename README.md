@@ -14,8 +14,8 @@ Name|Website
 ----|-----
 [Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)
 [Rijk](https://github.com/Rijk-van-Putten) | [website](https://rijkvanputten.000webhostapp.com/)
-[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/afKxKRR)
-[Mart](https://github.com/martje127) | [no website]()
+[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)
+[Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 ## Teams
 
