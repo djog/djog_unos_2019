@@ -17,7 +17,7 @@ _Note: install location might be slightly different from example_
 2. Type `java -version` to check your runtime version.\
 Type `javac -version` to check your compiler version.
 
-3. Copy the `hello_world.java` file from [here](https://github.com/djog/djog_unos_2019/doc) and place it in an empty folder.
+3. Copy the `hello_world.java` file from [here](https://github.com/djog/djog_unos_2019/tree/master/doc) and place it in an empty folder.
 
 4. In the cmd run the following commands:
 - `cd <folder_where_you_placed_hello_world.java>`
