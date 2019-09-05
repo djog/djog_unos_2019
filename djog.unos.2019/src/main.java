@@ -1,1 +1,0 @@
-// Author: Rafayel Gardishyan
