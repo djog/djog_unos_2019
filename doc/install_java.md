@@ -1,3 +1,11 @@
+## Linux (Ubuntu like systems & Mint)
+
+1. First test is Java is alreagy installed on you machine by running `java -version`
+2. If not install Java by using the following command `sudo apt-get install default-jre`
+3. Also you have to install the Java developer kit (JDK) by running the following command `sudo apt-get install default-jdk`
+4. Try running the first commang again. If it works: Congrats, you've installed Java on your linux machine. Otherwise try troubleshooting and googling.
+5. Enjoy Java or test it again as described in the steps below.
+
 ## Windows (64-bit)
 
 1. Go to [the java for 64-bit windows download page](https://www.java.com/nl/download/windows-64bit.jsp)
