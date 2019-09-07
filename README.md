@@ -21,7 +21,7 @@ Name|Website
 ## Teams
 
 
-Naam            |Website
+Name            |Website
 ----------------|---------------------------------------------
 [djog_unos_2019](https://github.com/orgs/djog/teams/djog_unos_2019) | [https://github.com/djog/djog_unos_2019](https://github.com/djog/djog_unos_2019)
 [Name of the team here] | [URL to the team's GitHub repo here]
