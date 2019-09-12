@@ -8,3 +8,4 @@ Add all of the .jar files.
 - [IntelliJ](https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install#intellij-idea)
 - [Eclipse(https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install#eclipse)
 - [Netbeans](https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install#netbeans)
+- VS Code worked for my instantly with the java extension pack
