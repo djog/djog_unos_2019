@@ -1,4 +1,4 @@
-[![IRC Network](https://img.shields.io/badge/irc-%djog_unos_2019-blue.svg)](https://webchat.freenode.net/?channels=djog_unos_2019)
+[![IRC Network](https://img.shields.io/badge/irc-%23djog_unos_2019-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=djog_unos_2019)
 
 # djog_unos_2019
 
