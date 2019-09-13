@@ -8,7 +8,6 @@ public class Player{
     private float m_y = 0;
 
     public void update(long win){
-        System.out.println(m_x);
         manage_input(win);
         draw();
     }
