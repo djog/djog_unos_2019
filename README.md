@@ -1,3 +1,5 @@
+[![IRC Network](https://img.shields.io/badge/irc-%djog_unos_2019-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=djog_unos_2019)
+
 # djog_unos_2019
 
 Project by the Uno's at DJOG 2019-2020 
