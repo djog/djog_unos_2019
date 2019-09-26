@@ -1,3 +1,5 @@
+[![IRC Network](https://img.shields.io/badge/irc-%23djog_unos_2019-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=djog_unos_2019)
+
 # djog_unos_2019
 
 Project by the Uno's at DJOG 2019-2020 
@@ -21,7 +23,7 @@ Name|Website
 ## Teams
 
 
-Naam            |Website
+Name            |Website
 ----------------|---------------------------------------------
 [djog_unos_2019](https://github.com/orgs/djog/teams/djog_unos_2019) | [https://github.com/djog/djog_unos_2019](https://github.com/djog/djog_unos_2019)
 [Name of the team here] | [URL to the team's GitHub repo here]

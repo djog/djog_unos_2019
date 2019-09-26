@@ -8,8 +8,8 @@
 
 ## Windows (64-bit)
 
-1. Go to [the java for 64-bit windows download page](https://www.java.com/nl/download/windows-64bit.jsp)
-and click the big red _accept & download_ button.
+1. Go to [the java for 64-bit windows download page](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html)
+and download the java jdk.
 
 2. Install java.
 
