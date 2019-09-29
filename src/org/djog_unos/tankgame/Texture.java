@@ -11,17 +11,15 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
 
-public class Texture {
+class Texture {
     private int id;
-    private int width;
-    private int height;
 
-    public Texture(String filename) {
+    Texture(String filename) {
         BufferedImage bi;
         try {
             bi = ImageIO.read(new File(filename));
-            width = bi.getWidth();
-            height = bi.getHeight();
+            int width = bi.getWidth();
+            int height = bi.getHeight();
 
             int[] rawPixels = new int [width * height * 4];
             rawPixels = bi.getRGB(0, 0, width, height, null, 0, width);
@@ -57,7 +55,7 @@ public class Texture {
         }
     }
 
-    public void bind()
+    void bind()
     {
         glBindTexture(GL_TEXTURE_2D, id);
     }

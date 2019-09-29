@@ -1,15 +1,16 @@
 package org.djog_unos.tankgame;
 
+import org.lwjgl.opengl.GL;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import org.lwjgl.opengl.GL;
 
 public class Game 
 {
 	private Player player;
 	private long window;
 
-	public void run() {
+	private void run() {
 		init();
 
 		// Main game loop

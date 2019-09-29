@@ -3,13 +3,13 @@ package org.djog_unos.tankgame;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-public class Player 
+class Player
 {
     private float m_x = 0;
     private float m_y = 0;
     private Texture m_texture;
 
-    public void init()
+    void init()
     {
 		m_texture = new Texture("./assets/textures/pig.png");
     }
@@ -22,12 +22,12 @@ public class Player
         if(glfwGetKey(window, GLFW_KEY_S) == 1) m_y -= 0.001;
     }
 
-    public void update(long win)
+    void update(long win)
     {
         manageInput(win);
     }
 
-    public void draw() 
+    void draw()
     {
         // TODO: Implement m_x & m_y again 
         m_texture.bind();
