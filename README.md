@@ -20,28 +20,12 @@ Name|Website
 [Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)
 [Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-## Teams
+## Technical specs
 
-
-Name            |Website
-----------------|---------------------------------------------
-[djog_unos_2019](https://github.com/orgs/djog/teams/djog_unos_2019) | [https://github.com/djog/djog_unos_2019](https://github.com/djog/djog_unos_2019)
-[Name of the team here] | [URL to the team's GitHub repo here]
-[Name of the team here] | [URL to the team's GitHub repo here]
-[Name of the team here] | [URL to the team's GitHub repo here]
-
-
-A team has:
-
- * an idea that **all members** enjoy: 
-   can be software and/or hardware, can be a game and/or something serious 
- * a GitHub website
- * at least one medior
- * three, four, five, six or seven team member
- * a programming language they want to learn/practice
-   * Processing: easiest, Richel can be of great assistance
-   * C++: harder, Richel can be of great assistance 
-   * Any other language: depends on the language
- * a division of labour 
- * a team name
- * a team logo
+|Subject    | Outcome|
+|-----------|------------|
+|Language   | Java |
+|Use Docker | :x: |
+|Use Maven  | :x: |
+|Use Wiki   | :heavy_check_mark: |
+|Which GL   | LWJGL |
