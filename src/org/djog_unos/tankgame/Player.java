@@ -29,24 +29,23 @@ public class Player
 
     public void draw() 
     {
-        // TODO: Implement m_x & m_y again 
         m_texture.bind();
         glBegin(GL_QUADS);
             glColor4f(1, 1, 0, 0);
             glTexCoord2f(0, 0);
-            glVertex2f(-0.5f, 0.5f);
+            glVertex2f(-0.5f + m_x, 0.5f + m_y);
 
             glColor4f(1, 0, 1, 0);
             glTexCoord2f(1, 0);
-            glVertex2f(0.5f, 0.5f);
+            glVertex2f(0.5f + m_x, 0.5f + m_y);
 
             glColor4f(0, 1, 1, 0);
             glTexCoord2f(1, 1);
-            glVertex2f(0.5f, -0.5f);
+            glVertex2f(0.5f + m_x, -0.5f + m_y);
 
             glColor4f(0, 1, 0, 0);
             glTexCoord2f(0, 1);
-            glVertex2f(-0.5f, -0.5f);
+            glVertex2f(-0.5f + m_x, -0.5f + m_y);
         glEnd();
     }
 }

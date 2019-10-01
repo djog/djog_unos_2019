@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c381d2d0-5e84-40f5-a27e-b53fe51ac1b6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/djog_unos_2019.iml" beforeDir="false" afterPath="$PROJECT_DIR$/djog_unos_2019.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/djog_unos/tankgame/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/djog_unos/tankgame/Player.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,10 +21,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lwjgl-release-3.2.3-custom/lwjgl.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lwjgl-release-3.2.3-custom" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -64,7 +65,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
