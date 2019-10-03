@@ -1,6 +1,7 @@
-package org.djog_unos.tankgame;
+package org.djog_unos.tankgame.engine;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -55,8 +56,16 @@ class Texture {
         }
     }
 
-    void bind()
+    public void bind(int sampler)
     {
-        glBindTexture(GL_TEXTURE_2D, id);
+        if (sampler >= 0 && sampler <= 31)
+        {
+            glActiveTexture(GL_TEXTURE0 + sampler);
+            glBindTexture(GL_TEXTURE_2D, id);
+        }
+        else
+        {
+            System.err.println("ERROR: The sampler must be in the range of 0 - 31!");
+        }
     }
 }
