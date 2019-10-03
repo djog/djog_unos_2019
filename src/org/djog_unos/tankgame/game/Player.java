@@ -7,13 +7,13 @@ import org.joml.*;
 
 public class Player 
 {
-    private float m_movespeed = 0.000001f;
+    private float m_movespeed = 0.006f;
     private Model m_model; 
     private Shader m_shader;
     private Texture m_texture;
 
     private Matrix4f m_projection = new Matrix4f().ortho2D(-840/2, 840/2, -640/2, 640/2).scale(128); // 840 is window width 640 is window height scale 128 px
-    private Transform m_transform = new Transform(new Vector3f(0,0,0), new Vector3f(16,16,1));
+    private Transform m_transform = new Transform();
 
     private float[] m_vertices = new float[] {
         -0.5f, 0.5f, 0,         // TOP RIGHT       0
@@ -52,9 +52,9 @@ public class Player
     {
         Vector2f input = getInputVector(window);
         Vector2f movement = input;
-        movement.mul(m_movespeed); // Multiply by movespeed
         if (!(movement.length() == 0.0f))
             movement.normalize();      // Normalize to prevent moving faster diagonally
+        movement.mul(m_movespeed); // Multiply by movespeed
         m_transform.position.add(new Vector3f(movement.x, movement.y, 0));
         System.out.println("POSITION X:" + m_transform.position.x + "  Y:" + m_transform.position.y + "  Z:" + m_transform.position.z);
     }
@@ -63,8 +63,7 @@ public class Player
     {
         m_shader.bind();
         m_shader.setUniform("sampler", 0);
-        // TODO: Implement position again with getProjectionMatrix function in Transform
-        m_shader.setUniform("projection", m_projection);
+        m_shader.setUniform("projection", m_transform.getProjection(m_projection));
         m_texture.bind(0);
         m_model.render();
     }
