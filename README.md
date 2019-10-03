@@ -12,13 +12,14 @@ Everyone should become a member of that team.
 
 ## People
 
-Name|Website
-----|-----
-[Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)
-[Rafayel](https://github.com/RafayelGardishyan) | [E-mail](mailto:rgardishyan@gmail.com)
-[Rijk](https://github.com/Rijk-van-Putten) | [website](https://rijkvanputten.000webhostapp.com/)
-[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)
-[Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+Name|Website|role(s)
+----|-----|----
+[Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)|Adult supervision
+[Rafayel](https://github.com/RafayelGardishyan) | [E-mail](mailto:rgardishyan@gmail.com)|team leader, medior
+[Rijk](https://github.com/Rijk-van-Putten) | [website](https://rijkvanputten.000webhostapp.com/)|medior
+[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)|medior
+[Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)|medior
+[bram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|junior
 
 ## Technical specs
 
