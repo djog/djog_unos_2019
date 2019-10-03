@@ -15,11 +15,12 @@ Everyone should become a member of that team.
 Name|Website|role(s)
 ----|-----|----
 [Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)|Adult supervision
-[Rafayel](https://github.com/RafayelGardishyan) | [E-mail](mailto:rgardishyan@gmail.com)|team leader, medior
+[Rafayel](https://github.com/RafayelGardishyan) | [E-mail](mailto:rgardishyan@gmail.com)|chairman, medior
 [Rijk](https://github.com/Rijk-van-Putten) | [website](https://rijkvanputten.000webhostapp.com/)|medior
-[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)|medior
+[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)|team leader, medior
 [Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)|medior
-[bram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|junior
+[Bram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|junior
+[Aram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|coordinator, junior
 
 ## Technical specs
 
