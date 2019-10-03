@@ -12,10 +12,10 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
 
-class Texture {
+public class Texture {
     private int id;
 
-    Texture(String filename) {
+    public Texture(String filename) {
         BufferedImage bi;
         try {
             bi = ImageIO.read(new File(filename));
