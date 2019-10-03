@@ -1,10 +1,10 @@
-package org.djog_unos.tankgame;
+package org.djog_unos.tankgame.game;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL;
 
-public class Game 
+public class TankGame 
 {
 	private Player player;
 	private long window;
@@ -27,7 +27,7 @@ public class Game
 	private void init()
 	{
 		if(!glfwInit()){
-			System.err.println("Failed To Initialize");
+			System.err.println("Failed To Initialize!");
 			System.exit(1);
 		}
 
@@ -65,6 +65,6 @@ public class Game
 	}
 
 	public static void main(String[] args) {
-		new Game().run();
+		new TankGame().run();
 	}
 }
