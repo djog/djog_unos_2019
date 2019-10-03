@@ -56,7 +56,6 @@ public class Player
             movement.normalize();      // Normalize to prevent moving faster diagonally
         movement.mul(m_movespeed); // Multiply by movespeed
         m_transform.position.add(new Vector3f(movement.x, movement.y, 0));
-        System.out.println("POSITION X:" + m_transform.position.x + "  Y:" + m_transform.position.y + "  Z:" + m_transform.position.z);
     }
 
     public void draw() 
