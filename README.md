@@ -12,7 +12,7 @@ Everyone should become a member of that team.
 
 ## People
 
-Name|Website|role(s)
+Name|Website|Role(s)
 ----|-----|----
 [Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)|Adult supervision
 [Rafayel](https://github.com/RafayelGardishyan) | [E-mail](mailto:rgardishyan@gmail.com)|Team leader, Medior
