@@ -17,7 +17,7 @@ Name|Website|role(s)
 [Richel](https://github.com/richelbilderbeek) | [pirouette](https://github.com/richelbilderbeek/pirouette)|Adult supervision
 [Rafayel](https://github.com/RafayelGardishyan) | [E-mail](mailto:rgardishyan@gmail.com)|Team leader, Medior
 [Rijk](https://github.com/Rijk-van-Putten) | [Website](https://rijkvanputten.000webhostapp.com/)|Medior
-[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)|medior
+[Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)|Medior
 [Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)|Medior
 [Bram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|Junior
 
