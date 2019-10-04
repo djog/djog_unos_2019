@@ -9,34 +9,41 @@ public class TankGame extends Game
 	public final static String WINDOW_TITLE = "Tank Game";
 	public final static int MAX_FPS = 240;
 	
-	private Player player;
+	private IGameObject[] gameObjects = new IGameObject[] { new Player() };
+
+	public static void main(String[] args) {
+		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, MAX_FPS);
+	}
 
 	@Override
 	public void init()
 	{
-		player = new Player();
-		player.init();
+		for (IGameObject gameObject : gameObjects) {
+			gameObject.init();
+		};
 	}	
 
 	@Override
 	public void input()
 	{
-		// Handle input here
+		for (IGameObject gameObject : gameObjects) {
+			gameObject.input();
+		};
 	}
 
 	@Override
 	public void update()
 	{
-		player.update();
+		for (IGameObject gameObject : gameObjects) {
+			gameObject.update();
+		};
 	}
 
 	@Override
 	public void draw()
 	{
-		player.draw();
-	}
-
-	public static void main(String[] args) {
-		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, MAX_FPS);
+		for (IGameObject gameObject : gameObjects) {
+			gameObject.draw();
+		};
 	}
 }

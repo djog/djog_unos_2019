@@ -15,10 +15,10 @@ import org.lwjgl.BufferUtils;
 public class Texture {
     private int id;
 
-    public Texture(String filename) {
+    public Texture(String path) {
         BufferedImage bi;
         try {
-            bi = ImageIO.read(new File(filename));
+            bi = ImageIO.read(new File(path));
             int width = bi.getWidth();
             int height = bi.getHeight();
 
