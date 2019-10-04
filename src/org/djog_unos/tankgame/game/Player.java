@@ -1,13 +1,12 @@
 package org.djog_unos.tankgame.game;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 import org.djog_unos.tankgame.engine.*;
 import org.joml.*;
 
 public class Player 
 {
-    private float m_movespeed = 0.006f;
+    private float m_movespeed = 2f;
     private Model m_model; 
     private Shader m_shader;
     private Texture m_texture;
@@ -48,13 +47,13 @@ public class Player
         return new Vector2f(inputH, inputV);
     }
 
-    public void update(long window)
+    public void update()
     {
-        Vector2f input = getInputVector(window);
+        Vector2f input = getInputVector(Game.getWindow());
         Vector2f movement = input;
         if (!(movement.length() == 0.0f))
             movement.normalize();      // Normalize to prevent moving faster diagonally
-        movement.mul(m_movespeed); // Multiply by movespeed
+        movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
         m_transform.position.add(new Vector3f(movement.x, movement.y, 0));
     }
 

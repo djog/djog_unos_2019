@@ -1,71 +1,42 @@
 package org.djog_unos.tankgame.game;
 
-import org.lwjgl.opengl.GL;
+import org.djog_unos.tankgame.engine.*;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
-
-public class TankGame 
+public class TankGame extends Game
 {
+	public final static int WINDOW_WIDTH = 840;
+	public final static int WINDOW_HEIGHT = 640;
+	public final static String WINDOW_TITLE = "Tank Game";
+	public final static int MAX_FPS = 240;
+	
 	private Player player;
-	private long window;
 
-	private void run() {
-		init();
-
-		// Main game loop
-		while(glfwWindowShouldClose(window) != true){
-			input();
-
-			update();
-
-			draw();
-		}
-
-		glfwTerminate();
-	}
-
-	private void init()
+	@Override
+	public void init()
 	{
-		if(!glfwInit()){
-			System.err.println("Failed To Initialize!");
-			System.exit(1);
-		}
-
-		window = glfwCreateWindow(840, 680, "Game Window", 0, 0);
-
-		glfwShowWindow(window);
-
-		glfwMakeContextCurrent(window);
-
-		GL.createCapabilities();
-
-		glEnable(GL_TEXTURE_2D);
-		
 		player = new Player();
 		player.init();
+	}	
+
+	@Override
+	public void input()
+	{
+		// Handle input here
 	}
 
-	private void input()
+	@Override
+	public void update()
 	{
-		glfwPollEvents();
+		player.update();
 	}
 
-	private void update()
+	@Override
+	public void draw()
 	{
-		player.update(window);
-	}
-
-	private void draw()
-	{
-		glClear(GL_COLOR_BUFFER_BIT);
-
 		player.draw();
-
-		glfwSwapBuffers(window);
 	}
 
 	public static void main(String[] args) {
-		new TankGame().run();
+		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, MAX_FPS);
 	}
 }
