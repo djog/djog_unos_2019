@@ -20,6 +20,7 @@ Name|Website|Role(s)
 [Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)|Medior
 [Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)|Medior
 [Bram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|Junior
+[Aram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|Coordinator, Junior
 
 ## Technical specs
 
