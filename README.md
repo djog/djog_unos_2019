@@ -19,8 +19,9 @@ Name|Website|Role(s)
 [Rijk](https://github.com/Rijk-van-Putten) | [Website](https://rijkvanputten.000webhostapp.com/)|Medior
 [Joshua](https://github.com/joshua260403) | [Discord](https://discord.gg/yrt5egv)|Medior
 [Mart](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=dQw4w9WgXcQ)|Medior
-[Bram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|Junior
-[Aram](https://github.com/martje127) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|Coordinator, Junior
+[Bram](https://github.com/) | [no website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|Junior
+[Aram](https://github.com/) | [no website](https://youtu.be/v2Qy4NjhXwI?t=105)|Coordinator, Junior
+[Jan](https://github.com/janderkkotlarski) | [no website](https://www.youtube.com/watch?v=5bfCyrGid00)| Junior
 
 ## Technical specs
 
