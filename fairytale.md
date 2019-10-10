@@ -6,4 +6,7 @@ Martin lived in a village called [Llanfair­pwllgwyngyll­gogery­chwyrn­drobwl
 He has a habit of being so sharply dressed that he would shave his face with it. and collecting everyday flowers and balloons
 																																																																											
 
+The hedgehog and Cat became friends. then the hedgehog got ran over. 
+The End
+
 ...and they lived happily ever after. <!--but what if they didnt?-->
