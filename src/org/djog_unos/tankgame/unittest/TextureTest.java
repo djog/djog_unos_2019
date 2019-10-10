@@ -1,22 +1,17 @@
 package org.djog_unos.tankgame.unittest;
 
 
-import org.djog_unos.tankgame.engine.Texture;
-import org.djog_unos.tankgame.engine.TextureManager;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.Ignore;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        Texture.class,
-        TextureManager.class
-})
+import static org.junit.Assert.assertEquals;
+
 public class TextureTest {
-    @Test
-    public void TestTexture() {
-        System.out.println("Testing Texture.class");
-        Texture testTexture = new Texture("./assets/textures/pig.png");
 
+    //TODO: Create tests for Texture classes: Texture.class & TextureManager.class
+
+    @Test
+    public void testTextureClass() {
+        System.out.println("Inside testTextureClass()");
     }
 }
