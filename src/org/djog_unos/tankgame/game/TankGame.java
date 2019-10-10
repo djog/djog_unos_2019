@@ -42,8 +42,6 @@ public class TankGame extends Game
 	@Override
 	public void draw()
 	{
-		for (IGameObject gameObject : gameObjects) {
-			gameObject.draw();
-		};
+		GameView.drawGame(gameObjects);
 	}
 }
