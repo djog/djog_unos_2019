@@ -10,5 +10,6 @@
     <orderEntry type="library" name="lwjgl-assimp-javadoc" level="project" />
     <orderEntry type="library" name="lwjgl-assimp-natives-linux" level="project" />
     <orderEntry type="library" name="lwjgl-release-3.21" level="project" />
+    <orderEntry type="library" name="joml-1.9.18" level="project" />
   </component>
 </module>
