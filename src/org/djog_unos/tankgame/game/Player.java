@@ -39,7 +39,7 @@ public class Player implements IGameObject
     {
         m_model = new Model(m_vertices, m_textureCoords, m_indices);
         m_shader = new Shader("shader");
-        m_texture = new Texture("./assets/textures/pig.png");
+        m_texture = TextureManager.getTexture("pig.png");
     }
 
     public void input()
