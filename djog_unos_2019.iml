@@ -7,11 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lwjgl-assimp-javadoc" level="project" />
-    <orderEntry type="library" name="lwjgl-assimp-natives-linux" level="project" />
-    <orderEntry type="library" name="lwjgl-release-3.21" level="project" />
     <orderEntry type="library" name="joml-1.9.18" level="project" />
-    <orderEntry type="library" name="lwjgl-release-3.2" level="project" />
+    <orderEntry type="library" name="lwjgl-release-3.2.3-custom" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit4">
         <CLASSES>
