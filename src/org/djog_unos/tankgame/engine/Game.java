@@ -8,7 +8,6 @@ import static org.lwjgl.opengl.GL11.*;
 public abstract class Game 
 {
 	protected abstract void init();
-    protected abstract void input();
     protected abstract void update();
 	protected abstract void draw();
 
@@ -26,8 +25,6 @@ public abstract class Game
 
 			// Input
 			glfwPollEvents();
-            input();
-
 			// Update
 			update();
 			

@@ -7,44 +7,22 @@ import org.joml.*;
 public class Player implements IGameObject
 {
     private float m_movespeed = 2f;
-    private Shader m_shader;
-
-    private Matrix4f m_projection = new Matrix4f().ortho2D(-TankGame.WINDOW_WIDTH/2, TankGame.WINDOW_WIDTH/2, -TankGame.WINDOW_HEIGHT/2, TankGame.WINDOW_HEIGHT/2); 
-    private Transform m_transform = new Transform(new Vector3f(0,0,0), new Vector3f(128, 128, 0));
     private Vector2f m_input;
+    private Sprite m_sprite;
 
-    private Model m_model; 
-    private Texture m_texture;
+    private float m_x;
+    private float m_y;
 
-    private float[] m_vertices = new float[] {
-        -0.5f, 0.5f, 0,         // TOP RIGHT       0
-        0.5f, 0.5f, 0,          // TOP LEFT        1
-        0.5f, -0.5f, 0,         // BOTTOM RIGHT    2
-        -0.5f, -0.5f, 0,        // BOTTOM LEFT     3
-    };
-
-    private float[] m_textureCoords = new float[] {
-        0,0,
-        1,0,
-        1,1,
-        0,1,
-    };
-
-    private int[] m_indices = new int[] {
-        0,1,2,
-        2,3,0
-    };
+    Player(float x, float y)
+    {
+        m_x = x;
+        m_y = y;
+    }
 
     public void init()
     {
-        m_model = new Model(m_vertices, m_textureCoords, m_indices);
-        m_shader = new Shader("shader");
-        m_texture = TextureManager.getTexture("pig.png");
-    }
-
-    public void input()
-    {
-        m_input = getInputVector(Game.getWindow());
+        // Sprites MUST be initialized in init() 
+        m_sprite = new Sprite("pig.png", 128, 128, 0);               
     }
 
     Vector2f getInputVector(long window)
@@ -56,19 +34,20 @@ public class Player implements IGameObject
 
     public void update()
     {
+        m_input = getInputVector(Game.getWindow());
+
         Vector2f movement = m_input;
         if (!(movement.length() == 0.0f))
             movement.normalize();      // Normalize to prevent moving faster diagonally
         movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
-        m_transform.position.add(new Vector3f(movement.x, movement.y, 0));
+        m_x += movement.x;
+        m_y += movement.y;
+        // Set position of sprite
+        m_sprite.setPosition(m_x, m_y);
     }
 
     public void draw() 
     {
-        m_shader.bind();
-        m_shader.setUniform("sampler", 0);
-        m_shader.setUniform("projection", m_transform.getProjection(m_projection));
-        m_texture.bind(0);
-        m_model.render();
+        m_sprite.draw();
     }
 }

@@ -1,6 +1,7 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
+import org.joml.*;
 
 public class TankGame extends Game
 {
@@ -8,8 +9,14 @@ public class TankGame extends Game
 	public final static int WINDOW_HEIGHT = 640;
 	public final static String WINDOW_TITLE = "Tank Game";
 	public final static int MAX_FPS = 240;
-	
-	private IGameObject[] gameObjects = new IGameObject[] { new Player() };
+	public final static Matrix4f PROJECTION = new Matrix4f().ortho2D(-TankGame.WINDOW_WIDTH/2, TankGame.WINDOW_WIDTH/2, -TankGame.WINDOW_HEIGHT/2, TankGame.WINDOW_HEIGHT/2); 
+
+	private IGameObject[] gameObjects = new IGameObject[] { 
+		new Player(0.0f, 0.0f),
+		new Box(1.0f, 1.0f),
+		new Box(-2.0f, -3.0f),
+		new Box(-1.0f, 2.0f),
+	};
 
 	public static void main(String[] args) {
 		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, MAX_FPS);
@@ -22,14 +29,6 @@ public class TankGame extends Game
 			gameObject.init();
 		};
 	}	
-
-	@Override
-	public void input()
-	{
-		for (IGameObject gameObject : gameObjects) {
-			gameObject.input();
-		};
-	}
 
 	@Override
 	public void update()
