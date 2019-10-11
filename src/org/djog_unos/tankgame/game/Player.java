@@ -22,7 +22,7 @@ public class Player implements IGameObject
     public void init()
     {
         // Sprites MUST be initialized in init() 
-        m_sprite = new Sprite("pig.png", 128, 128, 0);               
+        m_sprite = new Sprite("tank.png", 128, 128, 0);               
     }
 
     Vector2f getInputVector(long window)

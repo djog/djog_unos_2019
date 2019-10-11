@@ -12,6 +12,7 @@ public class TankGame extends Game
 	public final static Matrix4f PROJECTION = new Matrix4f().ortho2D(-TankGame.WINDOW_WIDTH/2, TankGame.WINDOW_WIDTH/2, -TankGame.WINDOW_HEIGHT/2, TankGame.WINDOW_HEIGHT/2); 
 
 	private IGameObject[] gameObjects = new IGameObject[] { 
+		new Background(),
 		new Player(0.0f, 0.0f),
 		new Box(1.0f, 1.0f),
 		new Box(-2.0f, -3.0f),
