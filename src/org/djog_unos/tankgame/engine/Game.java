@@ -29,7 +29,8 @@ public abstract class Game
 			update();
 			
 			// Draw
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT); // Clear the last frame
+			glClearColor(0.8f, 0.8f, 0.8f, 1);
 			draw();
 			glfwSwapBuffers(window);
 
@@ -56,6 +57,10 @@ public abstract class Game
 		GL.createCapabilities();
 
 		glEnable(GL_TEXTURE_2D);
+
+		// Enable transparency
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
     
     private void vsync(int fps) {
