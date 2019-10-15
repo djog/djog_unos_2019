@@ -15,8 +15,8 @@ public class Shader
     private int fragmentShader; // Fragment shader - goes over every pixel
 
     private final String SHADER_FOLDER = "./assets/shaders/";
-    private final String VERTEX_SHADER_EXTENSION = ".vs";
-    private final String FRAGMENT_SHADER_EXTENSION = ".fs";
+    private final String VERTEX_SHADER_EXTENSION = ".vert";
+    private final String FRAGMENT_SHADER_EXTENSION = ".frag";
 
     public Shader(String filename)
     {
@@ -71,6 +71,15 @@ public class Shader
         int location = glGetUniformLocation(program, name);
         if (location != -1)
             glUniform1f(location, value);
+    }
+
+    public void setUniform(String name, Vector4f value)
+    {
+        int location = glGetUniformLocation(program, name);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(4); 
+        value.get(buffer);
+        if (location != -1)
+            glUniform4fv(location, buffer);
     }
 
     public void setUniform(String name, Matrix4f value)

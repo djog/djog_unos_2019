@@ -31,11 +31,11 @@ public class Sprite
         2,3,0
     };
 
-    public Sprite(String texture, float width, float height, int textureSampler)
+    public Sprite(String textureName, float width, float height, int textureSampler)
     {
         m_model = new Model(m_vertices, m_textureCoords, m_indices);
-        m_shader = new Shader("shader");
-        m_texture = TextureManager.getTexture(texture);
+        m_shader = new Shader("texture");
+        m_texture = TextureManager.getTexture(textureName);
         m_transform = new Transform(new Vector3f(0,0,0), new Vector3f(width, height, 0));
         m_textureSampler = textureSampler;
     }
