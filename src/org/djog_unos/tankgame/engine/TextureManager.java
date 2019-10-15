@@ -5,15 +5,15 @@ import java.util.HashMap;
 public class TextureManager {
     private static HashMap<String, Texture> textures = new HashMap<>();
 
-    public static Texture getTexture(String key) {
-        if (textures.containsKey(key))
+    public static Texture getTexture(String fileName) {
+        if (textures.containsKey(fileName))
         { 
-            return textures.get(key);
+            return textures.get(fileName);
         }
         else
         {   // Load new texture
-            Texture newTexture = new Texture("./assets/textures/" + key);
-            textures.put("pig.png", newTexture);
+            Texture newTexture = new Texture("./assets/textures/" + fileName);
+            textures.put(fileName, newTexture);
             return newTexture;
         }
     }
