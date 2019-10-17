@@ -2,7 +2,10 @@ package org.djog_unos.tankgame.engine;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.nio.DoubleBuffer;
+
 import org.joml.Vector2f;
+import org.lwjgl.BufferUtils;
 
 public class InputManager {
 	
@@ -44,6 +47,16 @@ public class InputManager {
 	public static boolean isKeyPressed(int key)
 	{
 		return (isKeyDown(key) && !keys[key]);
+	}
+
+	public static Vector2f getMousPos()
+	{
+		DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
+		DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
+		glfwGetCursorPos(Game.getWindow(), xBuffer, yBuffer);
+		float x = (float)xBuffer.get(0);
+		float y = (float)yBuffer.get(0);
+		return new Vector2f(x, y);
 	}
 	
 	public static void update()

@@ -12,6 +12,7 @@ public abstract class Game
 	protected abstract void draw();
 
 	private static long window;
+	private static double totalGameTime;
 	private static double deltaTime;
 	private static double lastFrameTime;
 	private long variableYieldTime, lastTime;
@@ -111,6 +112,7 @@ public abstract class Game
 		double time = glfwGetTime();
 		deltaTime = time - lastFrameTime;
 		lastFrameTime = time;
+		totalGameTime += deltaTime;
 	}
 
 	// STATIC GETTERS
@@ -124,7 +126,12 @@ public abstract class Game
 		
 		return deltaTime;
 	}
-    
+	
+	public static double getTotalGameTime()
+	{
+		return totalGameTime;
+	}
+
     public static double getFPS()
 	{
 		return (1 / getDeltaTime());
