@@ -3,8 +3,8 @@ language: java
 os: linux
 
 jdk:
-  - oraclejdk8
-  - oraclejdk9
+  - oraclejdk11
+  - oraclejdk12
 
 
 after_success:
