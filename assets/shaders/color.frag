@@ -1,4 +1,4 @@
-#version 460
+#version 440
 
 uniform vec4 color;
 

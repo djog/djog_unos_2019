@@ -1,4 +1,4 @@
-#version 460
+#version 440
 
 uniform sampler2D sampler;
 
