@@ -6,6 +6,12 @@ public class Shell {
     float m_y;
     float m_angle;
 
+    public Shell(){
+        m_x = 0;
+        m_y = 0;
+        m_angle = 0;
+    }
+
     public Shell(float x, float y, float angle){
         m_x = x;
         m_y = y;

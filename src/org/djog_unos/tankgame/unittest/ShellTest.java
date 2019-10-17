@@ -12,9 +12,14 @@ public class ShellTest {
     @Test
     public void testShell() {
         System.out.println("Inside testShell()");
-        Shell shell = new Shell(0, 0, 0);
-        assertEquals(shell.get_x(), 0, 0);
-        shell.set_x(40.5f);
-        assertEquals(shell.get_x(), 40.5f, 0);
+        { //When a shell is created it, x = 0
+            Shell shell = new Shell();
+            assertEquals(shell.get_x(), 0, 0);
+        }
+        { //When a shell's x gets changed, it actually changes
+            Shell shell = new Shell();
+            shell.set_x(40.5f);
+            assertEquals(shell.get_x(), 40.5f, 0);
+        }
     }
 }
