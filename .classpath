@@ -34,6 +34,8 @@
 	<classpathentry kind="lib" path="lwjgl-release-3.2.3-custom/lwjgl-stb.jar"/>
 	<classpathentry kind="lib" path="lwjgl-release-3.2.3-custom/lwjgl-vulkan.jar"/>
 	<classpathentry kind="lib" path="lwjgl-release-3.2.3-custom/lwjgl.jar"/>
-	<classpathentry kind="lib" path="C:/Users/rijkv/Documents/Git-Repos/djog_unos_2019/joml-1.9.18.jar"/>
+	<classpathentry kind="lib" path="joml-1.9.18.jar"/>
+	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.12.jar"/>
 	<classpathentry kind="output" path="out/production/djog_unos_2019"/>
 </classpath>
