@@ -25,20 +25,9 @@ public class Player implements IGameObject
         m_sprite = new Sprite("tank.png", 128, 128, 0);               
     }
 
-    Vector2f getInputVector(long window)
-    {
-        float inputH = glfwGetKey(window, GLFW_KEY_D) - glfwGetKey(window, GLFW_KEY_A);
-        float inputV = glfwGetKey(window, GLFW_KEY_W) - glfwGetKey(window, GLFW_KEY_S);
-        return new Vector2f(inputH, inputV);
-    }
-
     public void update()
     {
-        m_input = getInputVector(Game.getWindow());
-
-        Vector2f movement = m_input;
-        if (!(movement.length() == 0.0f))
-            movement.normalize();      // Normalize to prevent moving faster diagonally
+        Vector2f movement = InputManager.getNormalizedInputVector();
         movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
         m_x += movement.x;
         m_y += movement.y;

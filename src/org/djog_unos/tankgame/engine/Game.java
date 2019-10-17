@@ -24,6 +24,7 @@ public abstract class Game
 			updateDeltaTime();
 
 			// Input
+			InputManager.update();
 			glfwPollEvents();
 			// Update
 			update();
