@@ -1,13 +1,12 @@
 package org.djog_unos.tankgame.game;
 
-import static org.lwjgl.glfw.GLFW.*;
 import org.djog_unos.tankgame.engine.*;
 import org.joml.*;
 
 
 public class Player
 {
-    private float m_movespeed = 2f;
+    private float m_movespeed = 256f;
     private Sprite m_sprite;
 
     private float m_x;
@@ -27,14 +26,17 @@ public class Player
 
     public void update()
     {
+        // Movement
         Vector2f movement = InputManager.getNormalizedInputVector();
         movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
         m_x += movement.x;
         m_y += movement.y;
         m_sprite.setPosition(m_x, m_y);
         
-        float directionX = InputManager.getMousePos().x - InputManager.getScreenCenter().x;
-        float directionY = InputManager.getMousePos().y - InputManager.getScreenCenter().y;
+        // Rotate to mouse
+        Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
+        float directionX = screenPos.x - InputManager.getMousePos().x;
+        float directionY = screenPos.y - InputManager.getMousePos().y;
         float radians = (float)java.lang.Math.atan2(directionX, directionY);
         m_sprite.setRotation(radians);
     }

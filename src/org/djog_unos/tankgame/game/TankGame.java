@@ -1,24 +1,25 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
-import org.joml.*;
 
 public class TankGame extends Game
 {
-	public final static int WINDOW_WIDTH = 840;
-	public final static int WINDOW_HEIGHT = 640;
-	public final static String WINDOW_TITLE = "Tank Game";
-	public final static int MAX_FPS = 240;
-	public final static Matrix4f PROJECTION = new Matrix4f().ortho2D(-TankGame.WINDOW_WIDTH/2, TankGame.WINDOW_WIDTH/2, -TankGame.WINDOW_HEIGHT/2, TankGame.WINDOW_HEIGHT/2); 
+	// Window settings
+	private final static int WINDOW_WIDTH = 1000;
+	private final static int WINDOW_HEIGHT = 500;
+	private final static boolean FULLSCREEN = true;
+	private final static String WINDOW_TITLE = "Tank Game";
+	private final static int MAX_FPS = 240;
+
 
 	public Background background = new Background();
 	public Player player =	new Player(0.0f, 0.0f);
-	public Box box1 = new Box(1.0f, 1.0f);
-	public Box box2 = new Box(-2.0f, -3.0f);
-	public Box box3 = new Box(-1.0f, 2.0f);
+	public Box box1 = new Box(100.0f, 100.0f);
+	public Box box2 = new Box(-200.0f, -300.0f);
+	public Box box3 = new Box(-100.0f, 200.0f);
 
 	public static void main(String[] args) {
-		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, MAX_FPS);
+		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN, WINDOW_TITLE, MAX_FPS);
 	}
 
 	@Override

@@ -8,6 +8,6 @@ public class GameView
 		game.player.draw();
 		game.box1.draw();
 		game.box2.draw();
-		game.box3.draw();
+		game.box3.draw(); 
 	}
 }
