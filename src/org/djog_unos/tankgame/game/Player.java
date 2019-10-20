@@ -1,7 +1,10 @@
 package org.djog_unos.tankgame.game;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.djog_unos.tankgame.engine.*;
-import org.joml.*;
+import org.joml.Vector2f;
 
 
 public class Player
@@ -11,6 +14,11 @@ public class Player
 
     private float m_x;
     private float m_y;
+    
+    private ArrayList<Shell> m_shells = new ArrayList<>();
+    private static final float FIRE_DELAY = .2f;
+    private static final float FIRE_OFFSET = 64;
+    private float m_fireCountdown = 0.0f;
 
     Player(float x, float y)
     {
@@ -35,14 +43,51 @@ public class Player
         
         // Rotate to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
-        float directionX = screenPos.x - InputManager.getMousePos().x;
-        float directionY = screenPos.y - InputManager.getMousePos().y;
+        float directionX = screenPos.x - InputManager.getMousePosition().x;
+        float directionY = screenPos.y - InputManager.getMousePosition().y;
         float radians = (float)java.lang.Math.atan2(directionX, directionY);
         m_sprite.setRotation(radians);
+
+        if (m_fireCountdown > 0.0f)
+        {
+            m_fireCountdown -= Game.getDeltaTime();
+        }
+
+        // Shooting
+        if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f)
+        {
+            m_fireCountdown = FIRE_DELAY;
+            Vector2f shellTarget = Window.ScreenToWorldCoords(InputManager.getMousePosition());
+            Vector2f shellDirection = screenPos.min(shellTarget);
+            shellDirection.normalize();
+            Vector2f shellPosition = new Vector2f(m_x, m_y);
+            Vector2f offsetDirection = new Vector2f(shellDirection); // Copy shellDirection otherwise shellDirectoin will change
+            shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
+            m_shells.add(new Shell(shellPosition.x, shellPosition.y, radians, shellDirection));
+        }
+
+        // Update & destroy shells
+        Iterator<Shell> i = m_shells.iterator();
+        while (i.hasNext()) {
+            Shell shell = i.next(); 
+            shell.update();
+            if (shell.destroyed)
+            {
+                i.remove();
+            }
+        }
     }
 
     public void draw() 
     {
         m_sprite.draw();
+
+        Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
+        for(Shell shell : m_shells)
+        {
+            shellSprite.setPosition(shell.getX(), shell.getY());
+            shellSprite.setRotation(shell.getAngle());
+            shellSprite.draw();
+        }
     }
 }

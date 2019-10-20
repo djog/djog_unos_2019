@@ -15,7 +15,7 @@ public class Box {
 
     public void init()
     {
-        m_sprite = new Sprite("box.png", 64, 64, 0);
+        m_sprite = new Sprite("box.png", 96, 96, 0);
         m_sprite.setPosition(m_x, m_y);
     }
 

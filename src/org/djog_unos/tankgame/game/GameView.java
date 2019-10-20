@@ -1,6 +1,6 @@
 package org.djog_unos.tankgame.game;
 
-public class GameView
+public class GameView  
 {
 	public static void drawGame(TankGame game)
 	{

@@ -53,7 +53,7 @@ public class InputManager {
 		return glfwGetMouseButton(Window.getWindow(), button) == 1;
 	}
 
-	public static Vector2f getMousePos()
+	public static Vector2f getMousePosition()
 	{
 		DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
 		DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
