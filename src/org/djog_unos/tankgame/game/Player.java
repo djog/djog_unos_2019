@@ -4,10 +4,10 @@ import static org.lwjgl.glfw.GLFW.*;
 import org.djog_unos.tankgame.engine.*;
 import org.joml.*;
 
-public class Player implements IGameObject
+
+public class Player
 {
     private float m_movespeed = 2f;
-    private Vector2f m_input;
     private Sprite m_sprite;
 
     private float m_x;
@@ -31,8 +31,12 @@ public class Player implements IGameObject
         movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
         m_x += movement.x;
         m_y += movement.y;
-        // Set position of sprite
         m_sprite.setPosition(m_x, m_y);
+        
+        float directionX = InputManager.getMousePos().x - InputManager.getScreenCenter().x;
+        float directionY = InputManager.getMousePos().y - InputManager.getScreenCenter().y;
+        float radians = (float)java.lang.Math.atan2(directionX, directionY);
+        m_sprite.setRotation(radians);
     }
 
     public void draw() 

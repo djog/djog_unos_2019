@@ -2,7 +2,7 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
 
-public class Background implements IGameObject
+public class Background
 {
     private Sprite m_sprite;
     //desert

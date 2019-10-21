@@ -2,8 +2,7 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
 
-public class Box implements IGameObject
-{
+public class Box {
     private Sprite m_sprite;
     private float m_x = 0.0f;
     private float m_y = 0.0f;

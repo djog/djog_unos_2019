@@ -1,13 +1,13 @@
 package org.djog_unos.tankgame.game;
 
-import org.djog_unos.tankgame.engine.*;
-
 public class GameView
 {
-	public static void drawGame(IGameObject[] gameObjects)
+	public static void drawGame(TankGame game)
 	{
-		for (IGameObject gameObject : gameObjects) {
-			gameObject.draw();
-		};
+		game.background.draw();
+		game.player.draw();
+		game.box1.draw();
+		game.box2.draw();
+		game.box3.draw();
 	}
 }

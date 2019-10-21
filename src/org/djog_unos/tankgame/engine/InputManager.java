@@ -1,8 +1,12 @@
 package org.djog_unos.tankgame.engine;
 
 import static org.lwjgl.glfw.GLFW.*;
+import org.djog_unos.tankgame.game.*;
+
+import java.nio.DoubleBuffer;
 
 import org.joml.Vector2f;
+import org.lwjgl.BufferUtils;
 
 public class InputManager {
 	
@@ -45,7 +49,22 @@ public class InputManager {
 	{
 		return (isKeyDown(key) && !keys[key]);
 	}
+
+	public static Vector2f getMousePos()
+	{
+		DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
+		DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
+		glfwGetCursorPos(Game.getWindow(), xBuffer, yBuffer);
+		float x = (float)xBuffer.get(0);
+		float y = (float)yBuffer.get(0);
+		return new Vector2f(x, y);
+	}
 	
+	public static Vector2f getScreenCenter()
+	{
+		return new Vector2f(TankGame.WINDOW_WIDTH / 2, TankGame.WINDOW_HEIGHT / 2);
+	}
+
 	public static void update()
 	{
 		for(int i = 0; i < GLFW_KEY_LAST; i++)

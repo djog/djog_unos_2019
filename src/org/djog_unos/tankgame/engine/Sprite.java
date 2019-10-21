@@ -46,6 +46,11 @@ public class Sprite
         m_transform.position.y = y;
     }
 
+    public void setRotation(float z)
+    {
+        m_transform.rotation = z;
+    }
+
     public void draw() 
     {
         m_shader.bind();
