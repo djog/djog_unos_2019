@@ -52,7 +52,7 @@ public class Player
             m_fireCountdown -= Game.getDeltaTime();
         }
 
-        // Shooting
+        // Firing
         if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f)
         {
             m_fireCountdown = FIRE_DELAY;
