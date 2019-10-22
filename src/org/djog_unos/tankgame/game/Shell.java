@@ -12,7 +12,7 @@ public class Shell
     private Vector2f m_direction;
     private float m_lifetime = 0.0f;
     
-    private static final float MOVE_SPEED = 18f;
+    private static final float SPEED = 400f;
     private static final float MAX_LIFETIME = 5f;
 
     public Shell(float x, float y, float angle, Vector2f direction)
@@ -25,8 +25,8 @@ public class Shell
 
     public void update()
     {
-        m_x += m_direction.x * MOVE_SPEED;
-        m_y += m_direction.y * MOVE_SPEED;
+        m_x += m_direction.x * SPEED * Game.getDeltaTime();
+        m_y += m_direction.y * SPEED * Game.getDeltaTime();
         m_lifetime += Game.getDeltaTime();
         if (m_lifetime >= MAX_LIFETIME)
         {

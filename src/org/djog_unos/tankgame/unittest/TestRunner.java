@@ -10,20 +10,18 @@ import org.junit.runner.notification.Failure;
 
 public class TestRunner {
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(ShellTest.class);
+        System.out.println("\nRunning tests...");
+        Result result = JUnitCore.runClasses(
+            ShellTest.class, 
+            TextureTest.class
+        );
+
+        System.out.println(result.wasSuccessful() ? 
+        "\nAll tests completed succesfully!\n" : 
+        "\nNot all tests were succesful :(\nMake sure they work before merging changes!\n");
 
         for (Failure failure : result.getFailures()) {
-            System.out.println("Failure: " + failure.toString());
+                System.out.println("Failure: " + failure.toString());
+            }
         }
-
-        System.out.println("Testing Shell was successful: " + result.wasSuccessful());
-
-        result = JUnitCore.runClasses(TextureTest.class);
-
-        for (Failure failure : result.getFailures()) {
-            System.out.println("Failure: " + failure.toString());
-        }
-
-        System.out.println("Testing Texture was successful: " + result.wasSuccessful());
     }
-}

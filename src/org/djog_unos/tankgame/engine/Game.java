@@ -13,7 +13,7 @@ public abstract class Game
 
 	private static Window window;
 	private static double totalGameTime;
-	private static double deltaTime;
+	private static double deltaTime = 1.0/60.0; // Default for testing
 	private static double lastFrameTime;
 	private long variableYieldTime, lastTime;
 
@@ -115,7 +115,6 @@ public abstract class Game
 	// STATIC GETTERS
 
 	public static double getDeltaTime() {
-		
 		return deltaTime;
 	}
 	

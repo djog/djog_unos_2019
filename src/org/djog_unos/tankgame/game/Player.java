@@ -1,7 +1,6 @@
 package org.djog_unos.tankgame.game;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 import org.djog_unos.tankgame.engine.*;
 import org.joml.Vector2f;
@@ -81,13 +80,10 @@ public class Player
     public void draw() 
     {
         m_sprite.draw();
+    }
 
-        Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
-        for(Shell shell : m_shells)
-        {
-            shellSprite.setPosition(shell.getX(), shell.getY());
-            shellSprite.setRotation(shell.getAngle());
-            shellSprite.draw();
-        }
+    public ArrayList<Shell> getShells()
+    {
+        return m_shells;
     }
 }

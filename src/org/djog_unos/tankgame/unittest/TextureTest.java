@@ -1,5 +1,6 @@
 package org.djog_unos.tankgame.unittest;
 
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -9,6 +10,6 @@ public class TextureTest {
 
     @Test
     public void testTextureClass() {
-        System.out.println("Inside testTextureClass()");
+        
     }
 }
