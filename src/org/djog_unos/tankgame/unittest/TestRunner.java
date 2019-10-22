@@ -21,7 +21,7 @@ public class TestRunner {
         "\nNot all tests were succesful :(\nMake sure they work before merging changes!\n");
 
         for (Failure failure : result.getFailures()) {
-                System.out.println("Failure: " + failure.toString());
-            }
+            System.out.println("Failure: " + failure.toString());
         }
     }
+}

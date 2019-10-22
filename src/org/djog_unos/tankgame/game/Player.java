@@ -15,8 +15,8 @@ public class Player
     private float m_y;
     
     private ArrayList<Shell> m_shells = new ArrayList<>();
-    private static final float FIRE_DELAY = .2f;
-    private static final float FIRE_OFFSET = 64;
+    private static final float FIRE_DELAY = .05f;
+    private static final float FIRE_OFFSET = 68;
     private float m_fireCountdown = 0.0f;
 
     Player(float x, float y)
@@ -57,7 +57,7 @@ public class Player
         {
             m_fireCountdown = FIRE_DELAY;
             Vector2f shellTarget = Window.ScreenToWorldCoords(InputManager.getMousePosition());
-            Vector2f shellDirection = screenPos.min(shellTarget);
+            Vector2f shellDirection = shellTarget.sub(new Vector2f(m_x, m_y)); 
             shellDirection.normalize();
             Vector2f shellPosition = new Vector2f(m_x, m_y);
             Vector2f offsetDirection = new Vector2f(shellDirection); // Copy shellDirection otherwise shellDirectoin will change
