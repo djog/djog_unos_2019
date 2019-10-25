@@ -15,7 +15,7 @@ public class tree {
 
     public void init()
     {
-        m_sprite = new Sprite("tree.png", 91, 128, 0);
+        m_sprite = new Sprite("tree.png", 128, 128, 0);
         m_sprite.setPosition(m_x, m_y);
     }
     public void draw(){ m_sprite.draw();}

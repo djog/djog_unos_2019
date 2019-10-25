@@ -8,7 +8,7 @@ public class GameView
 	{
 		game.background.draw();
 		game.player.draw();
-		game.box1.draw()
+		game.box1.draw();
 		game.bush1.draw();
 		game.tree1.draw();
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
