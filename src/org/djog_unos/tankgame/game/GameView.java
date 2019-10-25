@@ -7,7 +7,7 @@ public class GameView
 		game.background.draw();
 		game.player.draw();
 		game.box1.draw();
-		game.box2.draw();
-		game.box3.draw();
+		game.bush1.draw();
+		game.tree1.draw();
 	}
 }

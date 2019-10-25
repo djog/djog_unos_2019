@@ -14,8 +14,8 @@ public class TankGame extends Game
 	public Background background = new Background();
 	public Player player =	new Player(0.0f, 0.0f);
 	public Box box1 = new Box(1.0f, 1.0f);
-	public Box box2 = new Box(-2.0f, -3.0f);
-	public Box box3 = new Box(-1.0f, 2.0f);
+	public bush bush1 = new bush(-2.0f, -3.0f);
+	public tree tree1 = new tree(2.0f, 2.0f);
 
 	public static void main(String[] args) {
 		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, MAX_FPS);
@@ -27,8 +27,8 @@ public class TankGame extends Game
 		background.init();
 		player.init();
 		box1.init();
-		box2.init();
-		box3.init();
+		bush1.init();
+		tree1.init();
 	}	
 
 	@Override
