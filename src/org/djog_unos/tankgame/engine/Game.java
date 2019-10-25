@@ -1,9 +1,9 @@
 package org.djog_unos.tankgame.engine;
 
-import org.lwjgl.opengl.GL;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+
+import org.lwjgl.opengl.GL;
 
 public abstract class Game 
 {
@@ -11,17 +11,18 @@ public abstract class Game
     protected abstract void update();
 	protected abstract void draw();
 
-	private static long window;
+	private static Window window;
 	private static double totalGameTime;
-	private static double deltaTime;
+	private static double deltaTime = 1.0/60.0; // Default for testing
 	private static double lastFrameTime;
 	private long variableYieldTime, lastTime;
 
-	protected void run(int width, int height, String title, int maxFPS) {
-		setupWindow(width, height, title);
+	
+	protected void run(int width, int height, boolean fullscreen, String title, int maxFPS) {
+		setupWindow(title, width, height, fullscreen);
 		init();
 
-		while(glfwWindowShouldClose(window) != true){
+		while(!window.isOpen()){
 			updateDeltaTime();
 
 			// Input
@@ -32,9 +33,9 @@ public abstract class Game
 			
 			// Draw
 			glClear(GL_COLOR_BUFFER_BIT); // Clear the last frame
-			glClearColor(0.8f, 0.8f, 0.8f, 1);
+			glClearColor(0.6f, 0.8f, 1f, 1);
 			draw();
-			glfwSwapBuffers(window);
+			window.swapBuffers();
 
 			// Vsync / Wait for next frame
 			vsync(maxFPS); 
@@ -43,18 +44,14 @@ public abstract class Game
 		glfwTerminate();
 	}
 
-	private void setupWindow(int width, int height, String title)
+	private void setupWindow(String title, int width, int height, boolean fullscreen)
 	{
 		if(!glfwInit()){
 			System.err.println("Failed To Initialize!");
 			System.exit(1);
 		}
 
-		window = glfwCreateWindow(width, height, title, 0, 0);
-
-		glfwShowWindow(window);
-
-		glfwMakeContextCurrent(window);
+		window = new Window(title, width, height, fullscreen);
 
 		GL.createCapabilities();
 
@@ -117,13 +114,7 @@ public abstract class Game
 
 	// STATIC GETTERS
 
-	public static long getWindow()
-	{
-		return window;
-	}
-	
 	public static double getDeltaTime() {
-		
 		return deltaTime;
 	}
 	

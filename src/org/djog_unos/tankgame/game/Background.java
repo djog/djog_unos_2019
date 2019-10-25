@@ -8,7 +8,7 @@ public class Background
     //desert
     /*public void init()
     {
-        m_sprite = new Sprite("sand.png", 1024, 1024, 0);
+        m_sprite = new Sprite("sand.png", 2048, 2048, 0);
     }
     */
     //grassland
