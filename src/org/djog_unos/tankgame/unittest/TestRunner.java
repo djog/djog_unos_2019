@@ -21,7 +21,8 @@ public class TestRunner {
         
         Result result = JUnitCore.runClasses(
             ShellTest.class, 
-            TextureTest.class
+            TextureTest.class,
+            CoordinateTest.class
         );
 
         System.out.println(result.wasSuccessful() ? 
