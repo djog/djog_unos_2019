@@ -1,7 +1,6 @@
 package org.djog_unos.tankgame.unittest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.djog_unos.tankgame.game.Shell;
 import org.joml.Vector2f;
