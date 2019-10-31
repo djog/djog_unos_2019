@@ -2,6 +2,8 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
 
+import java.util.*;
+
 public class TankGame extends Game
 {
 	// Window settings
@@ -14,9 +16,8 @@ public class TankGame extends Game
 
 	public Background background = new Background();
 	public Player player =	new Player(0.0f, 0.0f);
-	public Box box1 = new Box(100.0f, 100.0f);
-	public Box box2 = new Box(-200.0f, -300.0f);
-	public Box box3 = new Box(-100.0f, 200.0f);
+
+	public ArrayList<Box> m_boxes = new ArrayList<>();
 
 	private float Time = 0;
 
@@ -29,9 +30,14 @@ public class TankGame extends Game
 	{
 		background.init();
 		player.init();
-		box1.init();
-		box2.init();
-		box3.init();
+		m_boxes.add(new Box(100.0f, 100.0f));
+		m_boxes.add(new Box(-200.0f, -300.0f));
+		m_boxes.add(new Box(-100.0f, 200.0f));
+		Iterator<Box> i = m_boxes.iterator();
+		while (i.hasNext()) {
+			Box box = i.next();
+			box.init();
+		}
 	}	
 
 	@Override
@@ -41,7 +47,7 @@ public class TankGame extends Game
 		// 86400 seconds in a real life day
 		Time = (float) ((Time + (60f / (1f / getDeltaTime()))) % 86400);
 
-		player.update();
+		player.update(this);
 	}
 
 	@Override

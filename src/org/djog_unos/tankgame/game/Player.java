@@ -29,16 +29,18 @@ public class Player
     public void init()
     {
         // Sprites MUST be initialized in init() 
-        m_sprite = new Sprite("tank.png", 128, 128, 0);               
+        m_sprite = new Sprite("tank.png", 128, 128, 0);
     }
 
-    public void update()
+    public void update(TankGame game)
     {
         // Movement
         Vector2f movement = InputManager.getNormalizedInputVector();
         movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
-        m_x += movement.x;
-        m_y += movement.y;
+        if(!Game.collide(m_x + movement.x, m_y + movement.y, game)){
+            m_x += movement.x;
+            m_y += movement.y;
+        }
         m_sprite.setPosition(m_x, m_y);
         
         // Rotate to mouse
@@ -92,4 +94,7 @@ public class Player
     {
         return m_shells;
     }
+
+    public float get_x() { return m_x; }
+    public float get_y() { return m_y; }
 }

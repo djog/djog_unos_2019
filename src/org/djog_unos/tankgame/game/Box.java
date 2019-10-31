@@ -23,4 +23,7 @@ public class Box {
     {
         m_sprite.draw();
     }
+
+    public float get_x() { return m_x; }
+    public float get_y() { return m_y; }
 }

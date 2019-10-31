@@ -2,15 +2,19 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.Sprite;
 
+import java.util.Iterator;
+
 public class GameView  
 {
 	public static void drawGame(TankGame game)
 	{
 		game.background.draw();
 		game.player.draw();
-		game.box1.draw();
-		game.box2.draw();
-		game.box3.draw(); 
+		Iterator<Box> i = game.m_boxes.iterator();
+		while (i.hasNext()) {
+			Box box = i.next();
+			box.draw();
+		}
 
 		// Draw shells
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);

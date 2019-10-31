@@ -3,7 +3,11 @@ package org.djog_unos.tankgame.engine;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import org.djog_unos.tankgame.game.Box;
+import org.djog_unos.tankgame.game.TankGame;
 import org.lwjgl.opengl.GL;
+
+import java.util.Iterator;
 
 public abstract class Game 
 {
@@ -126,5 +130,19 @@ public abstract class Game
     public static double getFPS()
 	{
 		return (1 / getDeltaTime());
+	}
+
+	public static boolean collide(float x, float y, TankGame game){
+		Iterator<Box> i = game.m_boxes.iterator();
+		while (i.hasNext()) {
+			Box box = i.next();
+			if (box.get_x() < game.player.get_x() + 128 &&
+				box.get_x() + 64 > game.player.get_x() &&
+				box.get_y() < game.player.get_y() + 128 &&
+				box.get_y() + 64 > game.player.get_y()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
