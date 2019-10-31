@@ -16,8 +16,8 @@ public class TankGame extends Game
 	public Player player =	new Player(0.0f, 0.0f);
 
 	public Box box1 = new Box(100.0f, 100.0f);
-	public bush bush1 = new bush(-200.0f, -300.0f);
-	public tree tree1 = new tree(-100.0f, 200.0f);
+	public Bush bush1 = new Bush(-200.0f, -300.0f);
+	public Tree tree1 = new Tree(-100.0f, 200.0f);
 
 	private float Time = 0;
 
