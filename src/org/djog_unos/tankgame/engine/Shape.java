@@ -1,6 +1,5 @@
 package org.djog_unos.tankgame.engine;
 
-import org.djog_unos.tankgame.game.TankGame;
 import org.joml.*;
 
 public class Shape
@@ -60,11 +59,22 @@ public class Shape
         m_transform.position.y = y;
     }
 
+    public void setPosition(Vector2f position)
+    {
+        m_transform.position.x = position.x;
+        m_transform.position.y = position.y;
+    }
+
+    public void setSize(float x, float y)
+    {
+        m_transform.scale = new Vector3f(x, y, 1);
+    }
+
     public void draw() 
     {
         m_shader.bind();
         m_shader.setUniform("color", m_color);
-        m_shader.setUniform("projection", m_transform.getProjection(TankGame.PROJECTION));
+        m_shader.setUniform("projection", m_transform.getProjection(Window.getMatrixProjection()));
         m_model.render();
     }
 }
