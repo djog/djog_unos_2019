@@ -9,9 +9,11 @@ public class TankGame extends Game
 	public final static int WINDOW_HEIGHT = 640;
 	public final static String WINDOW_TITLE = "Tank Game";
 	public final static int MAX_FPS = 240;
-	public final static Matrix4f PROJECTION = new Matrix4f().ortho2D(-TankGame.WINDOW_WIDTH/2, TankGame.WINDOW_WIDTH/2, -TankGame.WINDOW_HEIGHT/2, TankGame.WINDOW_HEIGHT/2); 
+	public final static Matrix4f PROJECTION = new Matrix4f().ortho2D(-TankGame.WINDOW_WIDTH/2, TankGame.WINDOW_WIDTH/2, -TankGame.WINDOW_HEIGHT/2, TankGame.WINDOW_HEIGHT/2);
 
-	private IGameObject[] gameObjects = new IGameObject[] { 
+	private float Time = 0;
+
+	private IGameObject[] gameObjects = new IGameObject[] {
 		new Background(),
 		new Player(0.0f, 0.0f),
 		new Box(1.0f, 1.0f),
@@ -34,9 +36,13 @@ public class TankGame extends Game
 	@Override
 	public void update()
 	{
+		// Will add 1 to time every 60 frames
+		// 86400 seconds in a real life day
+		Time = (float) ((Time + (60f / (1f / getDeltaTime()))) % 86400);
+
 		for (IGameObject gameObject : gameObjects) {
 			gameObject.update();
-		};
+		}
 	}
 
 	@Override
