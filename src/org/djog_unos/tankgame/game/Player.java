@@ -15,9 +15,10 @@ public class Player
     private float m_y;
     
     private ArrayList<Shell> m_shells = new ArrayList<>();
-    private static final float FIRE_DELAY = .05f;
+    private static final float FIRE_DELAY = 1f;
     private static final float FIRE_OFFSET = 68;
     private float m_fireCountdown = 0.0f;
+    private boolean m_buttonDown = false;
 
     Player(float x, float y)
     {
@@ -47,15 +48,20 @@ public class Player
         float radians = (float)java.lang.Math.atan2(directionX, directionY);
         m_sprite.setRotation(radians);
 
+        if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
+            m_buttonDown = false;
+        }
+
         if (m_fireCountdown > 0.0f)
         {
             m_fireCountdown -= Game.getDeltaTime();
         }
 
         // Firing
-        if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f)
+        if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f && !m_buttonDown)
         {
             m_fireCountdown = FIRE_DELAY;
+            m_buttonDown = true;
             Vector2f shellTarget = Window.ScreenToWorldCoords(InputManager.getMousePosition());
             Vector2f shellDirection = shellTarget.sub(new Vector2f(m_x, m_y)); 
             shellDirection.normalize();
