@@ -36,7 +36,7 @@ public class TankGame extends Game
 	@Override
 	public void update()
 	{
-		// Will add 1 to time every 60 frames
+		// Will add 60 to time every real life second
 		// 86400 seconds in a real life day
 		Time = (float) ((Time + (60f / (1f / getDeltaTime()))) % 86400);
 
