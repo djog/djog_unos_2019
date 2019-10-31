@@ -1,6 +1,5 @@
 package org.djog_unos.tankgame.engine;
 
-import org.djog_unos.tankgame.game.TankGame;
 import org.joml.*;
 
 public class Sprite
@@ -45,12 +44,17 @@ public class Sprite
         m_transform.position.x = x;
         m_transform.position.y = y;
     }
+    
+    public void setRotation(float z)
+    {
+        m_transform.rotation = z;
+    }
 
     public void draw() 
     {
         m_shader.bind();
         m_shader.setUniform("sampler", m_textureSampler);
-        m_shader.setUniform("projection", m_transform.getProjection(TankGame.PROJECTION));
+        m_shader.setUniform("projection", m_transform.getProjection(Window.getMatrixProjection()));
 
         m_texture.bind(m_textureSampler);
         m_model.render();

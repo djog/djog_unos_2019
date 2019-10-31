@@ -1,41 +1,41 @@
 package org.djog_unos.tankgame.game;
 
-public class Shell {
+import org.djog_unos.tankgame.engine.Game;
+import org.joml.Vector2f;
 
-    float m_x;
-    float m_y;
-    float m_angle;
+public class Shell 
+{
+    public boolean destroyed = false;
 
-    public Shell(){
-        m_x = 0;
-        m_y = 0;
-        m_angle = 0;
-    }
+    private float m_x, m_y = 0.0f;
+    private float m_angle = 0.0f;
+    private Vector2f m_direction;
+    private float m_lifetime = 0.0f;
+    
+    private static final float SPEED = 400f;
+    private static final float MAX_LIFETIME = 5f;
 
-    public Shell(float x, float y, float angle){
+    public Shell(float x, float y, float angle, Vector2f direction)
+    {
         m_x = x;
         m_y = y;
         m_angle = angle;
+        m_direction = direction;
     }
 
-    public void set_x(float x){
-        m_x = x;
-    }
-    public float get_x(){
-        return m_x;
-    }
-
-    public void set_y(float y){
-        m_y = y;
-    }
-    public float get_y(){
-        return m_y;
+    public void update()
+    {
+        m_x += m_direction.x * SPEED * Game.getDeltaTime();
+        m_y += m_direction.y * SPEED * Game.getDeltaTime();
+        m_lifetime += Game.getDeltaTime();
+        if (m_lifetime >= MAX_LIFETIME)
+        {
+            destroyed = true;
+        }
     }
 
-    public void set_angle(float angle){
-        m_angle = angle;
-    }
-    public float get_angle(){
-        return m_angle;
-    }
+    // GETTERS
+    public float getX() { return m_x; }
+    public float getY() { return m_y; }
+    public float getAngle() { return m_angle; }
 }

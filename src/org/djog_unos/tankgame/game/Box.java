@@ -2,8 +2,7 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
 
-public class Box implements IGameObject
-{
+public class Box {
     private Sprite m_sprite;
     private float m_x = 0.0f;
     private float m_y = 0.0f;
@@ -16,7 +15,7 @@ public class Box implements IGameObject
 
     public void init()
     {
-        m_sprite = new Sprite("box.png", 64, 64, 0);
+        m_sprite = new Sprite("box.png", 96, 96, 0);
         m_sprite.setPosition(m_x, m_y);
     }
 
