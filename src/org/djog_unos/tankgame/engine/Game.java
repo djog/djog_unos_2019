@@ -7,6 +7,8 @@ import org.djog_unos.tankgame.game.Box;
 import org.djog_unos.tankgame.game.TankGame;
 import org.lwjgl.opengl.GL;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 public abstract class Game 
@@ -134,14 +136,18 @@ public abstract class Game
 
 	public static boolean collide(float x, float y, TankGame game){
 		Iterator<Box> i = game.m_boxes.iterator();
+		int radius = 64;
+        float distanceToCenter = (float) Math.sqrt((radius * radius) / 2);
 		while (i.hasNext()) {
-			Box box = i.next();
-			if (box.get_x() < game.player.get_x() + 128 &&
-				box.get_x() + 64 > game.player.get_x() &&
-				box.get_y() < game.player.get_y() + 128 &&
-				box.get_y() + 64 > game.player.get_y()) {
-				return true;
-			}
+		    Box box = i.next();
+            float closestX = Math.max(box.get_x(), Math.min(box.get_x() + 64, x + distanceToCenter));
+            float closestY = Math.max(box.get_y(), Math.min(box.get_y() + 64, y + distanceToCenter));
+
+            float distanceX = x + 45 - closestX;
+            float distanceY = y + 45 - closestY;
+
+            float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+            if(distanceSquared < (radius * radius)) return true;
 		}
 		return false;
 	}

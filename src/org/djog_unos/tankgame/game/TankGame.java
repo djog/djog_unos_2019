@@ -30,7 +30,7 @@ public class TankGame extends Game
 	{
 		background.init();
 		player.init();
-		m_boxes.add(new Box(100.0f, 100.0f));
+		m_boxes.add(new Box(200.0f, 200.0f));
 		m_boxes.add(new Box(-200.0f, -300.0f));
 		m_boxes.add(new Box(-100.0f, 200.0f));
 		Iterator<Box> i = m_boxes.iterator();

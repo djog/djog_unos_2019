@@ -37,8 +37,10 @@ public class Player
         // Movement
         Vector2f movement = InputManager.getNormalizedInputVector();
         movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
-        if(!Game.collide(m_x + movement.x, m_y + movement.y, game)){
+        if(!Game.collide(m_x + movement.x, m_y, game)){
             m_x += movement.x;
+        }
+        if(!Game.collide(m_x, m_y + movement.y, game)){
             m_y += movement.y;
         }
         m_sprite.setPosition(m_x, m_y);
