@@ -1,7 +1,7 @@
 # Configure Intellij IDEA
 
 Disclaimer: I'm not entirely sure if this is correct,
-I just describe how my IDEA is configured.
+I'll just describe how my IDEA is configured.
 
 ### Add module
 
