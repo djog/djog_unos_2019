@@ -22,6 +22,7 @@ Name|Website|Role(s)
 [Bram](https://github.com/kombossen) | [No Website](https://www.youtube.com/watch?v=CH1XGdu-hzQ)|Junior
 [Aram](https://github.com/AramPetiet) |[No Website](https://youtu.be/v2Qy4NjhXwI?t=105)|Coördinator, Junior
 [Jan](https://github.com/janderkkotlarski) | [No Website](https://www.youtube.com/watch?v=5bfCyrGid00)| Junior
+[Hans](https://github.com/Hans-Bouwman) | [E-mail](mailto:hans.bouwman@protonmail.com)|Junior
 
 ## Technical specs
 

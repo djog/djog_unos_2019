@@ -4,7 +4,9 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.djog_unos.tankgame.game.Box;
+import org.djog_unos.tankgame.game.Bush;
 import org.djog_unos.tankgame.game.TankGame;
+import org.djog_unos.tankgame.game.Tree;
 import org.lwjgl.opengl.GL;
 
 import java.awt.*;
@@ -135,19 +137,48 @@ public abstract class Game
 	}
 
 	public static boolean collide(float x, float y, TankGame game){
-		Iterator<Box> i = game.m_boxes.iterator();
 		int radius = 64;
         float distanceToCenter = (float) Math.sqrt((radius * radius) / 2);
+        // Boxes
+		Iterator<Box> i = game.m_boxes.iterator();
 		while (i.hasNext()) {
 		    Box box = i.next();
-            float closestX = Math.max(box.get_x(), Math.min(box.get_x() + 64, x + distanceToCenter));
-            float closestY = Math.max(box.get_y(), Math.min(box.get_y() + 64, y + distanceToCenter));
+            float closestX = Math.max(box.get_x(), Math.min(box.get_x() + box.get_width(), x + distanceToCenter));
+            float closestY = Math.max(box.get_y(), Math.min(box.get_y() + box.get_height(), y + distanceToCenter));
 
             float distanceX = x + 45 - closestX;
             float distanceY = y + 45 - closestY;
 
             float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
             if(distanceSquared < (radius * radius)) return true;
+		}
+
+		// Trees
+		Iterator<Tree> j = game.m_trees.iterator();
+		while (j.hasNext()) {
+			Tree tree = j.next();
+			float closestX = Math.max(tree.get_x(), Math.min(tree.get_x() + tree.get_width(), x + distanceToCenter));
+			float closestY = Math.max(tree.get_y(), Math.min(tree.get_y() + tree.get_height(), y + distanceToCenter));
+
+			float distanceX = x + distanceToCenter - closestX;
+			float distanceY = y + distanceToCenter - closestY;
+
+			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+			if(distanceSquared < (radius * radius)) return true;
+		}
+
+		// Boxes
+		Iterator<Bush> k = game.m_bushes.iterator();
+		while (k.hasNext()) {
+			Bush bush = k.next();
+			float closestX = Math.max(bush.get_x(), Math.min(bush.get_x() + bush.get_width(), x + distanceToCenter));
+			float closestY = Math.max(bush.get_y(), Math.min(bush.get_y() + bush.get_height(), y + distanceToCenter));
+
+			float distanceX = x + distanceToCenter - closestX;
+			float distanceY = y + distanceToCenter - closestY;
+
+			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+			if(distanceSquared < (radius * radius)) return true;
 		}
 		return false;
 	}
