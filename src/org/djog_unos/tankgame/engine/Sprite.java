@@ -59,4 +59,7 @@ public class Sprite
         m_texture.bind(m_textureSampler);
         m_model.render();
     }
+
+    public float get_width() { return m_transform.scale.x; }
+    public float get_height() { return m_transform.scale.y; }
 }
