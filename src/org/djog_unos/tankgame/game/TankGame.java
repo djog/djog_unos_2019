@@ -19,6 +19,8 @@ public class TankGame extends Game
 	public bush bush1 = new bush(-200.0f, -300.0f);
 	public tree tree1 = new tree(-100.0f, 200.0f);
 
+	private float Time = 0;
+
 	public static void main(String[] args) {
 		new TankGame().run(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN, WINDOW_TITLE, MAX_FPS);
 	}
@@ -36,6 +38,10 @@ public class TankGame extends Game
 	@Override
 	public void update()
 	{
+		// Will add 60 to time every real life second
+		// 86400 seconds in a real life day
+		Time = (float) ((Time + (60f / (1f / getDeltaTime()))) % 86400);
+
 		player.update();
 	}
 
