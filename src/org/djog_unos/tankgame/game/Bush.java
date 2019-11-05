@@ -19,4 +19,9 @@ public class Bush {
         m_sprite.setPosition(m_x, m_y);
     }
     public void draw(){ m_sprite.draw();}
+
+    public float get_x() { return m_x; }
+    public float get_y() { return m_y; }
+    public float get_width() { return m_sprite.get_width(); }
+    public float get_height() { return m_sprite.get_height(); }
 }
