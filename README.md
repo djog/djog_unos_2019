@@ -2,7 +2,7 @@
 
 Branch   |[![Travis CI logo](pics/TravisCI.png)](https://travis-ci.org)                                                             
 ---------|--------------------------------------------------------------------------------------------------------------------------
-`master` |[![Build Status](https://travis-ci.org/djog/djog_unos_2019.svg?branch=master)](https://travis-ci.org/djog/djog_unos_2019) 
+`master` |[![Build Status](https://travis-ci.org/djog/djog_unos_2019.svg?branch=master)](https://travis-ci.org/djog/djog_unos_2019)
 `develop`|[![Build Status](https://travis-ci.org/djog/djog_unos_2019.svg?branch=develop)](https://travis-ci.org/djog/djog_unos_2019)
 `richel` |[![Build Status](https://travis-ci.org/djog/djog_unos_2019.svg?branch=richel)](https://travis-ci.org/djog/djog_unos_2019)
 
