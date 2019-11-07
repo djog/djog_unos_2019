@@ -9,8 +9,6 @@ import org.djog_unos.tankgame.game.TankGame;
 import org.djog_unos.tankgame.game.Tree;
 import org.lwjgl.opengl.GL;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 public abstract class Game 
