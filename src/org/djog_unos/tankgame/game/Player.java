@@ -14,7 +14,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
 public class Player
 {
     private float m_movespeed = 256f;
-    private float m_rotatespeed = 0.4f;
+    private float m_rotatespeed = 40f;
     private Sprite m_hull_sprite;
     private Sprite m_turret_sprite;
 
@@ -72,7 +72,7 @@ public class Player
         m_hull_sprite.setRotation(-hull_radian);
 
         // Rotate hull
-        m_hull_rotation += ((InputManager.isKeyDownInt(GLFW_KEY_D) - InputManager.isKeyDownInt(GLFW_KEY_A)) * m_rotatespeed) % 360;
+        m_hull_rotation += ((InputManager.isKeyDownInt(GLFW_KEY_D) - InputManager.isKeyDownInt(GLFW_KEY_A)) * (m_rotatespeed * (float)Game.getDeltaTime())) % 360;
         m_hull_rotation = m_hull_rotation % 360;
 
         if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
