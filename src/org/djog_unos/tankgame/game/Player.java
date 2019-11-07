@@ -9,7 +9,8 @@ import org.joml.Vector2f;
 public class Player
 {
     private float m_movespeed = 256f;
-    private Sprite m_sprite;
+    private Sprite m_hull_sprite;
+    private Sprite m_turret_sprite;
 
     private float m_x;
     private float m_y;
@@ -29,7 +30,8 @@ public class Player
     public void init()
     {
         // Sprites MUST be initialized in init() 
-        m_sprite = new Sprite("tank.png", 128, 128, 0);
+        m_hull_sprite = new Sprite("hull.png", 128, 128, 0);
+        m_turret_sprite = new Sprite("turret.png", 176, 176, 0);
     }
 
     public void update(TankGame game)
@@ -43,14 +45,15 @@ public class Player
         if(!Game.collide(m_x, m_y + movement.y, game)){
             m_y += movement.y;
         }
-        m_sprite.setPosition(m_x, m_y);
+        m_hull_sprite.setPosition(m_x, m_y);
+        m_turret_sprite.setPosition(m_x, m_y + 12);
         
         // Rotate to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
         float directionX = screenPos.x - InputManager.getMousePosition().x;
         float directionY = screenPos.y - InputManager.getMousePosition().y;
         float radians = (float)java.lang.Math.atan2(directionX, directionY);
-        m_sprite.setRotation(radians);
+        m_turret_sprite.setRotation(radians);
 
         if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
             m_buttonDown = false;
@@ -89,7 +92,8 @@ public class Player
 
     public void draw() 
     {
-        m_sprite.draw();
+        m_hull_sprite.draw();
+        m_turret_sprite.draw();
     }
 
     public ArrayList<Shell> getShells()
