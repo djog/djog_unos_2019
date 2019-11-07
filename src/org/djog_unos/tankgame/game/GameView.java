@@ -1,7 +1,11 @@
 package org.djog_unos.tankgame.game;
 
-import org.djog_unos.tankgame.engine.Sprite;
+import org.djog_unos.tankgame.engine.*;
+import org.joml.Vector2f;
 
+import fontMeshCreator.*;
+
+import java.io.File;
 import java.util.Iterator;
 
 public class GameView
@@ -33,6 +37,9 @@ public class GameView
             shellSprite.setRotation(shell.getAngle());
             shellSprite.draw();
         }
-
+        
+        FontType font = new FontType(0, new File("./assets/fonts/arial.fnt"));
+        GUIText text = new GUIText("My text!!", 1f, font, new Vector2f(0,0), 1f, true);
+        Text.draw(text);
 	}
 }

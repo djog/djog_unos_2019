@@ -72,7 +72,25 @@ public class Shader
         if (location != -1)
             glUniform1f(location, value);
     }
-
+    
+    public void setUniform(String name, Vector2f value)
+    {
+        int location = glGetUniformLocation(program, name);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(2); 
+        value.get(buffer);
+        if (location != -1)
+            glUniform2fv(location, buffer);
+    }
+    
+    public void setUniform(String name, Vector3f value)
+    {
+        int location = glGetUniformLocation(program, name);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(3); 
+        value.get(buffer);
+        if (location != -1)
+            glUniform3fv(location, buffer);
+    }
+    
     public void setUniform(String name, Vector4f value)
     {
         int location = glGetUniformLocation(program, name);

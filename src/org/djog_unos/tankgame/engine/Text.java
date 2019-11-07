@@ -1,63 +1,37 @@
+package org.djog_unos.tankgame.engine;
+
 import org.joml.*;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
+
+import fontMeshCreator.*;
 
 public class Text
 {
-    private Transform m_transform;
-    
-    private Shader m_shader;
-    private Model m_model; 
-    private Texture m_texture;
-    private int m_textureSampler;
+    private static Shader m_shader = new Shader("font");
 
-    private float[] m_vertices = new float[] {
-        -0.5f, 0.5f, 0,         // TOP RIGHT       0
-        0.5f, 0.5f, 0,          // TOP LEFT        1
-        0.5f, -0.5f, 0,         // BOTTOM RIGHT    2
-        -0.5f, -0.5f, 0,        // BOTTOM LEFT     3
-    };
-
-    private float[] m_textureCoords = new float[] {
-        0,0,
-        1,0,
-        1,1,
-        0,1,
-    };
-
-    private int[] m_indices = new int[] {
-        0,1,2,
-        2,3,0
-    };
-
-    public Text(String textureName, float width, float height, int textureSampler)
+    public static void draw(GUIText text) 
     {
-        m_model = new Model(m_vertices, m_textureCoords, m_indices);
-        m_shader = new Shader("texture");
-        m_texture = TextureManager.getTexture(textureName);
-        m_transform = new Transform(new Vector3f(0,0,0), new Vector3f(width, height, 0));
-        m_textureSampler = textureSampler;
-    }
-
-    public void setPosition(float x, float y)
-    {
-        m_transform.position.x = x;
-        m_transform.position.y = y;
-    }
-    
-    public void setRotation(float z)
-    {
-        m_transform.rotation = z;
-    }
-
-    public void draw() 
-    {
+    	GL11.glEnable(GL11.GL_BLEND);
+    	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    	GL11.glDisable(GL11.GL_DEPTH_TEST);
+    	
         m_shader.bind();
-        m_shader.setUniform("sampler", m_textureSampler);
-        m_shader.setUniform("projection", m_transform.getProjection(Window.getMatrixProjection()));
-
-        m_texture.bind(m_textureSampler);
-        m_model.render();
+        m_shader.setUniform("colour", new Vector3f(1.0f, 1.0f, 1.0f));
+        m_shader.setUniform("fontAtlas", 0);
+        m_shader.setUniform("translation", new Vector2f(0.0f, 0.0f));
+        
+        GL30.glBindVertexArray(text.getMesh());
+    	GL20.glEnableVertexAttribArray(0);
+    	GL20.glEnableVertexAttribArray(1);
+    	GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, text.getVertexCount());
+    	GL20.glDisableVertexAttribArray(0);
+    	GL20.glDisableVertexAttribArray(1);
+    	GL30.glBindVertexArray(0);
+    	
+    	GL11.glDisable(GL11.GL_BLEND);
+    	GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
-
-    public float get_width() { return m_transform.scale.x; }
-    public float get_height() { return m_transform.scale.y; }
+    
 }
