@@ -5,22 +5,17 @@ import java.util.*;
 import org.djog_unos.tankgame.engine.*;
 import org.joml.Vector2f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
-
 
 public class Player
 {
     private float m_movespeed = 256f;
-    private float m_rotatespeed = 40f;
-    private Sprite m_hull_sprite;
-    private Sprite m_turret_sprite;
+    private float m_rotatespeed = 100f;
+    private Sprite m_hullSprite;
+    private Sprite m_turretSprite;
 
     private float m_x;
     private float m_y;
-    private float m_hull_rotation;
+    private float m_hullRotation;
     
     private ArrayList<Shell> m_shells = new ArrayList<>();
     private static final float FIRE_DELAY = 1f;
@@ -38,51 +33,48 @@ public class Player
     public void init()
     {
         // Sprites MUST be initialized in init() 
-        m_hull_sprite = new Sprite("hull.png", 128, 128, 0);
-        m_turret_sprite = new Sprite("turret.png", 176, 176, 0);
+        m_hullSprite = new Sprite("hull.png", 128, 128, 0);
+        m_turretSprite = new Sprite("turret.png", 128, 128, 0);
     }
 
-    public void update(TankGame game)
+    public void update()
     {
         // Movement
-        Vector2f movement = new Vector2f(); // = InputManager.getNormalizedInputVector();
-        //movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
-        float hull_radian = m_hull_rotation * (PI / 180);
-        movement.x = ((m_movespeed * (float)Game.getDeltaTime())
-                     * (InputManager.isKeyDownInt(GLFW_KEY_W) - InputManager.isKeyDownInt(GLFW_KEY_S)))
+        Vector2f movement = new Vector2f();
+        float hull_radian = m_hullRotation * (PI / 180);
+        movement.x = m_movespeed * (float)Game.getDeltaTime()
+                     * InputManager.getVerticalInput()
                      * (float)Math.sin(hull_radian);
-        movement.y = ((m_movespeed * (float)Game.getDeltaTime())
-                     * (InputManager.isKeyDownInt(GLFW_KEY_W) - InputManager.isKeyDownInt(GLFW_KEY_S)))
+        movement.y = m_movespeed * (float)Game.getDeltaTime()
+                     * InputManager.getVerticalInput()
                      * (float)Math.cos(hull_radian);
-        if(!Game.collide(m_x + movement.x, m_y, game)){
+
+        if(!PhysicsManager.checkPoint(m_x + movement.x, m_y)){
             m_x += movement.x;
         }
-        if(!Game.collide(m_x, m_y + movement.y, game)){
+        if(!PhysicsManager.checkPoint(m_x, m_y + movement.y)){
             m_y += movement.y;
         }
-        m_hull_sprite.setPosition(m_x, m_y);
-        m_turret_sprite.setPosition(m_x, m_y + 12);
+        m_hullSprite.setPosition(m_x, m_y);
+        m_turretSprite.setPosition(m_x, m_y);
         
         // Rotate turret to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
         float directionX = screenPos.x - InputManager.getMousePosition().x;
         float directionY = screenPos.y - InputManager.getMousePosition().y;
         float turret_radians = (float)java.lang.Math.atan2(directionX, directionY);
-        m_turret_sprite.setRotation(turret_radians);
-        m_hull_sprite.setRotation(-hull_radian);
+        m_turretSprite.setRotation(turret_radians);
+        m_hullSprite.setRotation(-hull_radian);
 
         // Rotate hull
-        m_hull_rotation += ((InputManager.isKeyDownInt(GLFW_KEY_D) - InputManager.isKeyDownInt(GLFW_KEY_A)) * (m_rotatespeed * (float)Game.getDeltaTime())) % 360;
-        m_hull_rotation = m_hull_rotation % 360;
+        m_hullRotation += (InputManager.getHorizontalInput() * (m_rotatespeed * (float)Game.getDeltaTime())) % 360;
+        m_hullRotation = m_hullRotation % 360;
 
-        if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
+        if(m_buttonDown && !InputManager.isMouseButtonDown(0))
             m_buttonDown = false;
-        }
 
         if (m_fireCountdown > 0.0f)
-        {
             m_fireCountdown -= Game.getDeltaTime();
-        }
 
         // Firing
         if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f && !m_buttonDown)
@@ -112,8 +104,8 @@ public class Player
 
     public void draw() 
     {
-        m_hull_sprite.draw();
-        m_turret_sprite.draw();
+        m_hullSprite.draw();
+        m_turretSprite.draw();
     }
 
     public ArrayList<Shell> getShells()
