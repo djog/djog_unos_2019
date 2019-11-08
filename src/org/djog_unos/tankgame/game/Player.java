@@ -5,19 +5,27 @@ import java.util.*;
 import org.djog_unos.tankgame.engine.*;
 import org.joml.Vector2f;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
+
 
 public class Player
 {
     private float m_movespeed = 256f;
+    private float m_rotatespeed = 40f;
     private Sprite m_hull_sprite;
     private Sprite m_turret_sprite;
 
     private float m_x;
     private float m_y;
+    private float m_hull_rotation;
     
     private ArrayList<Shell> m_shells = new ArrayList<>();
     private static final float FIRE_DELAY = 1f;
     private static final float FIRE_OFFSET = 68;
+    private static final float PI = 3.14159265359f;
     private float m_fireCountdown = 0.0f;
     private boolean m_buttonDown = false;
 
@@ -37,8 +45,15 @@ public class Player
     public void update(TankGame game)
     {
         // Movement
-        Vector2f movement = InputManager.getNormalizedInputVector();
-        movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
+        Vector2f movement = new Vector2f(); // = InputManager.getNormalizedInputVector();
+        //movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
+        float hull_radian = m_hull_rotation * (PI / 180);
+        movement.x = ((m_movespeed * (float)Game.getDeltaTime())
+                     * (InputManager.isKeyDownInt(GLFW_KEY_W) - InputManager.isKeyDownInt(GLFW_KEY_S)))
+                     * (float)Math.sin(hull_radian);
+        movement.y = ((m_movespeed * (float)Game.getDeltaTime())
+                     * (InputManager.isKeyDownInt(GLFW_KEY_W) - InputManager.isKeyDownInt(GLFW_KEY_S)))
+                     * (float)Math.cos(hull_radian);
         if(!Game.collide(m_x + movement.x, m_y, game)){
             m_x += movement.x;
         }
@@ -48,12 +63,17 @@ public class Player
         m_hull_sprite.setPosition(m_x, m_y);
         m_turret_sprite.setPosition(m_x, m_y + 12);
         
-        // Rotate to mouse
+        // Rotate turret to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
         float directionX = screenPos.x - InputManager.getMousePosition().x;
         float directionY = screenPos.y - InputManager.getMousePosition().y;
-        float radians = (float)java.lang.Math.atan2(directionX, directionY);
-        m_turret_sprite.setRotation(radians);
+        float turret_radians = (float)java.lang.Math.atan2(directionX, directionY);
+        m_turret_sprite.setRotation(turret_radians);
+        m_hull_sprite.setRotation(-hull_radian);
+
+        // Rotate hull
+        m_hull_rotation += ((InputManager.isKeyDownInt(GLFW_KEY_D) - InputManager.isKeyDownInt(GLFW_KEY_A)) * (m_rotatespeed * (float)Game.getDeltaTime())) % 360;
+        m_hull_rotation = m_hull_rotation % 360;
 
         if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
             m_buttonDown = false;
@@ -75,7 +95,7 @@ public class Player
             Vector2f shellPosition = new Vector2f(m_x, m_y);
             Vector2f offsetDirection = new Vector2f(shellDirection); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            m_shells.add(new Shell(shellPosition.x, shellPosition.y, radians, shellDirection));
+            m_shells.add(new Shell(shellPosition.x, shellPosition.y, turret_radians, shellDirection));
         }
 
         // Update & destroy shells
