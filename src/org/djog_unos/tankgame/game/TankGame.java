@@ -30,6 +30,8 @@ public class TankGame extends Game
 	@Override
 	public void init()
 	{
+		PhysicsManager.setGame(this);
+
 		background.init();
 		player.init();
 		m_boxes.add(new Box(200.0f, 200.0f));
@@ -59,7 +61,7 @@ public class TankGame extends Game
 		// 86400 seconds in a real life day
 		Time = (float) ((Time + (60f / (1f / getDeltaTime()))) % 86400);
 
-		player.update(this);
+		player.update();
 	}
 
 	@Override

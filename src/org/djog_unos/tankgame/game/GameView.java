@@ -1,6 +1,8 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
+import org.djog_unos.tankgame.engine.fontRendering.*;
+
 import java.util.Iterator;
 
 public class GameView
@@ -31,7 +33,8 @@ public class GameView
             shellSprite.setPosition(shell.getX(), shell.getY());
             shellSprite.setRotation(shell.getAngle());
             shellSprite.draw();
-        }
+		}
+		Text text = new Text("./readme.md");
 
 	}
 }

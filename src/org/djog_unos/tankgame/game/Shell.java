@@ -1,6 +1,7 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.Game;
+import org.djog_unos.tankgame.engine.PhysicsManager;
 import org.joml.Vector2f;
 
 public class Shell 
@@ -28,10 +29,8 @@ public class Shell
         m_x += m_direction.x * SPEED * Game.getDeltaTime();
         m_y += m_direction.y * SPEED * Game.getDeltaTime();
         m_lifetime += Game.getDeltaTime();
-        if (m_lifetime >= MAX_LIFETIME)
-        {
+        if (m_lifetime >= MAX_LIFETIME || PhysicsManager.checkPoint(m_x, m_y))
             destroyed = true;
-        }
     }
 
     // GETTERS

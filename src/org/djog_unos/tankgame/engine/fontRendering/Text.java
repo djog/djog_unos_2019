@@ -1,21 +1,30 @@
 package org.djog_unos.tankgame.engine.fontRendering;
 
-import org.lwjgl.*;
-import org.lwjgl.stb.*;
-import org.lwjgl.system.*;
-import org.joml.*;
-
-import java.io.*;
-import java.nio.*;
-
-import static java.lang.Math.*;
+import static java.lang.Math.round;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBTruetype.*;
-import static org.lwjgl.system.MemoryStack.*;
+import static org.lwjgl.system.MemoryStack.stackPush;
 
-/** STB Truetype demo. */
-public final class Text extends FontDemo {
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+
+import org.joml.Vector3f;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.stb.*;
+import org.lwjgl.system.*;
+import org.lwjgl.glfw.*;
+import org.lwjgl.opengl.*;
+import java.util.*;
+import java.util.regex.*;
+
+import static java.lang.Math.*;
+import static org.lwjgl.glfw.Callbacks.*;
+import static org.lwjgl.system.MemoryUtil.*;
+
+public class Text {
 
     private final ByteBuffer ttf;
 
@@ -27,9 +36,55 @@ public final class Text extends FontDemo {
     
     private static final Vector3f BG_COLOR = new Vector3f(0.1f, 0.1f, 0.1f);
     private static final Vector3f TEXT_COLOR = new Vector3f(0,0.6f,1);
+
+    protected final String text;
+    private final   int    lineCount;
+
+    private long window;
+    private int ww = 800;
+    private int wh = 600;
+
+    private float contentScaleX, contentScaleY;
+
+
+    private int fontHeight;
+
+    private int   scale;
+    private int   lineOffset;
+    private float lineHeight;
+
+    private boolean kerningEnabled = true;
+    private boolean lineBBEnabled;
+
+    private Callback debugProc;
     
-    private Text(String filePath) {
-        super(24, filePath);
+    public Text(String filePath) {
+
+        this.fontHeight = 24;
+        this.lineHeight = fontHeight;
+
+        String t;
+
+        int lc;
+
+        try {
+            ByteBuffer source = IOUtil.ioResourceToByteBuffer(filePath, 4 * 1024);
+            t = memUTF8(source).replaceAll("\t", "    "); // Replace tabs
+
+            lc = 0;
+            Matcher m = Pattern.compile("^.*$", Pattern.MULTILINE).matcher(t);
+            while (m.find()) {
+                lc++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            t = "Failed to load text.";
+            lc = 1;
+        }
+
+        text = t;
+        lineCount = lc;
 
         try {
             ttf = IOUtil.ioResourceToByteBuffer("./assets/fonts/roboto_condensed.ttf", 512 * 1024);
@@ -56,7 +111,7 @@ public final class Text extends FontDemo {
     }
 
     public static void main(String[] args) {
-        String filePath = "./fairytale.md";
+        String filePath = "./readme.md";
         new Text(filePath).run("STB Truetype Demo");
     }
 
@@ -82,8 +137,7 @@ public final class Text extends FontDemo {
         return cdata;
     }
 
-    @Override
-    protected void loop() {
+    void loop() {
         int BITMAP_W = round(512 * getContentScaleX());
         int BITMAP_H = round(512 * getContentScaleY());
 
@@ -246,5 +300,163 @@ public final class Text extends FontDemo {
         cpOut.put(0, c1);
         return 1;
     }
+    
+    public String getText() {
+        return text;
+    }
 
+    public long getWindow() {
+        return window;
+    }
+
+    public int getFontHeight() {
+        return fontHeight;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public float getContentScaleX() {
+        return contentScaleX;
+    }
+
+    public float getContentScaleY() {
+        return contentScaleY;
+    }
+
+    public int getLineOffset() {
+        return lineOffset;
+    }
+
+    public boolean isKerningEnabled() {
+        return kerningEnabled;
+    }
+
+    public boolean isLineBBEnabled() {
+        return lineBBEnabled;
+    }
+
+    protected void run(String title) {
+        try {
+            init(title);
+
+            loop();
+        } finally {
+            try {
+                destroy();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void windowSizeChanged(long window, int width, int height) {
+        if (Platform.get() != Platform.MACOSX) {
+            width /= contentScaleX;
+            height /= contentScaleY;
+        }
+
+        this.ww = width;
+        this.wh = height;
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
+        glMatrixMode(GL_MODELVIEW);
+
+        setLineOffset(lineOffset);
+    }
+
+    private static void framebufferSizeChanged(long window, int width, int height) {
+        glViewport(0, 0, width, height);
+    }
+
+    private void init(String title) {
+        GLFWErrorCallback.createPrint().set();
+        if (!glfwInit()) {
+            throw new IllegalStateException("Unable to initialize GLFW");
+        }
+
+        glfwDefaultWindowHints();
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+
+        long monitor = glfwGetPrimaryMonitor();
+
+        int framebufferW;
+        int framebufferH;
+        try (MemoryStack s = stackPush()) {
+            FloatBuffer px = s.mallocFloat(1);
+            FloatBuffer py = s.mallocFloat(1);
+
+            glfwGetMonitorContentScale(monitor, px, py);
+
+            contentScaleX = px.get(0);
+            contentScaleY = py.get(0);
+
+            if (Platform.get() == Platform.MACOSX) {
+                framebufferW = ww;
+                framebufferH = wh;
+            } else {
+                framebufferW = round(ww * contentScaleX);
+                framebufferH = round(wh * contentScaleY);
+            }
+        }
+
+        this.window = glfwCreateWindow(framebufferW, framebufferH, title, NULL, NULL);
+        if (window == NULL) {
+            throw new RuntimeException("Failed to create the GLFW window");
+        }
+
+        glfwSetWindowSizeCallback(window, this::windowSizeChanged);
+        glfwSetFramebufferSizeCallback(window, Text::framebufferSizeChanged);
+
+        // Center window
+        GLFWVidMode vidmode = Objects.requireNonNull(glfwGetVideoMode(monitor));
+
+        glfwSetWindowPos(
+            window,
+            (vidmode.width() - framebufferW) / 2,
+            (vidmode.height() - framebufferH) / 2
+        );
+
+        // Create context
+        glfwMakeContextCurrent(window);
+        GL.createCapabilities();
+        debugProc = GLUtil.setupDebugMessageCallback();
+
+        glfwSwapInterval(1);
+        glfwShowWindow(window);
+
+        GLFWUtil.glfwInvoke(window, this::windowSizeChanged, Text::framebufferSizeChanged);
+    }
+
+    private void setScale(int scale) {
+        this.scale = max(-3, scale);
+        this.lineHeight = fontHeight * (1.0f + this.scale * 0.25f);
+        setLineOffset(lineOffset);
+    }
+
+    private void setLineOffset(float offset) {
+        setLineOffset(round(offset));
+    }
+
+    private void setLineOffset(int offset) {
+        lineOffset = max(0, min(offset, lineCount - (int)(wh / lineHeight)));
+    }
+
+    private void destroy() {
+        GL.setCapabilities(null);
+
+        if (debugProc != null) {
+            debugProc.free();
+        }
+
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
+    }
 }
