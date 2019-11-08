@@ -20,7 +20,10 @@ public class Player
 
     private float m_x;
     private float m_y;
+    // Degrees
     private float m_hull_rotation;
+    // Radians
+    private float m_turret_rotation;
     
     private ArrayList<Shell> m_shells = new ArrayList<>();
     private static final float FIRE_DELAY = 1f;
@@ -68,7 +71,10 @@ public class Player
         float directionX = screenPos.x - InputManager.getMousePosition().x;
         float directionY = screenPos.y - InputManager.getMousePosition().y;
         float turret_radians = (float)java.lang.Math.atan2(directionX, directionY);
-        m_turret_sprite.setRotation(turret_radians);
+        float turret_degrees = turret_radians * (180 / PI);
+        float shortest_angle = ((((turret_degrees - m_turret_rotation) % 360) + 540) % 360) - 180;
+        m_turret_rotation += ((shortest_angle * 0.75) % 360) * (float)Game.getDeltaTime();
+        m_turret_sprite.setRotation(m_turret_rotation * (PI / 180));
         m_hull_sprite.setRotation(-hull_radian);
 
         // Rotate hull
@@ -89,13 +95,15 @@ public class Player
         {
             m_fireCountdown = FIRE_DELAY;
             m_buttonDown = true;
-            Vector2f shellTarget = Window.ScreenToWorldCoords(InputManager.getMousePosition());
+            Vector2f shellTarget = new Vector2f();
+            shellTarget.x = (float)Math.sin(-m_turret_rotation * (PI / 180));
+            shellTarget.y = (float)Math.cos(-m_turret_rotation * (PI / 180));
             Vector2f shellDirection = shellTarget.sub(new Vector2f(m_x, m_y)); 
             shellDirection.normalize();
             Vector2f shellPosition = new Vector2f(m_x, m_y);
             Vector2f offsetDirection = new Vector2f(shellDirection); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            m_shells.add(new Shell(shellPosition.x, shellPosition.y, turret_radians, shellDirection));
+            m_shells.add(new Shell(shellPosition.x, shellPosition.y, m_turret_rotation * (PI / 180), shellDirection));
         }
 
         // Update & destroy shells
