@@ -14,7 +14,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
 public class Player
 {
     private float m_movespeed = 256f;
-    private float m_rotatespeed = 40f;
+    private float m_hull_rotatespeed = 40f;
+    private float m_turret_rotatespeed = 0.75f;
     private Sprite m_hull_sprite;
     private Sprite m_turret_sprite;
 
@@ -73,12 +74,12 @@ public class Player
         float turret_radians = (float)java.lang.Math.atan2(directionX, directionY);
         float turret_degrees = turret_radians * (180 / PI);
         float shortest_angle = ((((turret_degrees - m_turret_rotation) % 360) + 540) % 360) - 180;
-        m_turret_rotation += ((shortest_angle * 0.75) % 360) * (float)Game.getDeltaTime();
+        m_turret_rotation += ((shortest_angle * m_turret_rotatespeed) % 360) * (float)Game.getDeltaTime();
         m_turret_sprite.setRotation(m_turret_rotation * (PI / 180));
         m_hull_sprite.setRotation(-hull_radian);
 
         // Rotate hull
-        m_hull_rotation += ((InputManager.isKeyDownInt(GLFW_KEY_D) - InputManager.isKeyDownInt(GLFW_KEY_A)) * (m_rotatespeed * (float)Game.getDeltaTime())) % 360;
+        m_hull_rotation += ((InputManager.isKeyDownInt(GLFW_KEY_D) - InputManager.isKeyDownInt(GLFW_KEY_A)) * (m_hull_rotatespeed * (float)Game.getDeltaTime())) % 360;
         m_hull_rotation = m_hull_rotation % 360;
 
         if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
