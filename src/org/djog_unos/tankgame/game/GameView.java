@@ -1,9 +1,6 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
-import org.joml.Vector2f;
-
-import java.io.File;
 import java.util.Iterator;
 
 public class GameView
