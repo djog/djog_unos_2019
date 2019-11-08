@@ -1,5 +1,7 @@
 # djog_unos_2019
 
+![Octane logo](pics/team%20octance%20logo%2025%25.png)
+
 Branch   |[![Travis CI logo](pics/TravisCI.png)](https://travis-ci.org)                                                             
 ---------|--------------------------------------------------------------------------------------------------------------------------
 `master` |[![Build Status](https://travis-ci.org/djog/djog_unos_2019.svg?branch=master)](https://travis-ci.org/djog/djog_unos_2019)
