@@ -7,9 +7,9 @@ import java.util.*;
 public class TankGame extends Game
 {
 	// Window settings
-	private final static int WINDOW_WIDTH = 1000;
-	private final static int WINDOW_HEIGHT = 500;
-	private final static boolean FULLSCREEN = false;
+	private final static int WINDOW_WIDTH = 1200;
+	private final static int WINDOW_HEIGHT = 900;
+	private final static boolean FULLSCREEN = true;
 	private final static String WINDOW_TITLE = "Tank Game";
 	private final static int MAX_FPS = 240;
 

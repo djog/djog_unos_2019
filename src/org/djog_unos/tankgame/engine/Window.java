@@ -5,7 +5,6 @@ import static org.lwjgl.glfw.GLFW.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.*;
-import java.util.Objects;
 
 import javax.imageio.ImageIO;
 

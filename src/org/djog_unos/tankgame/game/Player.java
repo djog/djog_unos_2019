@@ -5,13 +5,11 @@ import java.util.*;
 import org.djog_unos.tankgame.engine.*;
 import org.joml.Vector2f;
 
-
 public class Player
 {
     private float m_movespeed = 256f;
-
-    private float m_hull_rotatespeed = 40f;
-    private float m_turret_rotatespeed = 0.75f;
+    private float m_hull_rotatespeed = 80f;
+    private float m_turret_rotatespeed = 3f;
     private Sprite m_hull_sprite;
     private Sprite m_turret_sprite;
 
@@ -45,15 +43,14 @@ public class Player
     public void update()
     {
         // Movement
-        Vector2f movement = new Vector2f();
+        Vector2f movement = new Vector2f(); 
         float hull_radian = m_hull_rotation * (PI / 180);
-        movement.x = m_movespeed * (float)Game.getDeltaTime()
-                     * InputManager.getVerticalInput()
+        movement.x = ((m_movespeed * (float)Game.getDeltaTime())
+                     * (InputManager.getVerticalInput()))
                      * (float)Math.sin(hull_radian);
-        movement.y = m_movespeed * (float)Game.getDeltaTime()
-                     * InputManager.getVerticalInput()
+        movement.y = ((m_movespeed * (float)Game.getDeltaTime())
+                     * (InputManager.getVerticalInput()))
                      * (float)Math.cos(hull_radian);
-
         if(!PhysicsManager.checkPoint(m_x + movement.x, m_y)){
             m_x += movement.x;
         }
@@ -75,14 +72,17 @@ public class Player
         m_hull_sprite.setRotation(-hull_radian);
 
         // Rotate hull
-        m_hull_rotation += (InputManager.getVerticalInput() * (m_hull_rotatespeed * (float)Game.getDeltaTime())) % 360;
+        m_hull_rotation += (InputManager.getHorizontalInput() * (m_hull_rotatespeed * (float)Game.getDeltaTime())) % 360;
         m_hull_rotation = m_hull_rotation % 360;
 
-        if(m_buttonDown && !InputManager.isMouseButtonDown(0))
+        if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
             m_buttonDown = false;
+        }
 
         if (m_fireCountdown > 0.0f)
+        {
             m_fireCountdown -= Game.getDeltaTime();
+        }
 
         // Firing
         if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f && !m_buttonDown)

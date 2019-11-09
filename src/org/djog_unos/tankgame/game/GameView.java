@@ -1,7 +1,6 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
-import org.djog_unos.tankgame.engine.fontRendering.*;
 
 import java.util.Iterator;
 
