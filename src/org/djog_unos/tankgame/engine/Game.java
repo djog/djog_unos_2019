@@ -15,12 +15,13 @@ public abstract class Game
 	private static double totalGameTime;
 	private static double deltaTime = 1.0/60.0; // Default for testing
 	private static double lastFrameTime;
+	private static boolean isInitialized = false;
 	private long variableYieldTime, lastTime;
-	
+
 	protected void run(int width, int height, boolean fullscreen, String title, int maxFPS) {
 		setupWindow(title, width, height, fullscreen);
 		init();
-
+		isInitialized = true;
 		// The main game loop
 		while(!window.isOpen()){
 			updateDeltaTime();
@@ -133,5 +134,10 @@ public abstract class Game
     public static double getFPS()
 	{
 		return (1 / getDeltaTime());
+	}
+
+	public static boolean isInitialized()
+	{
+		return isInitialized;
 	}
 }

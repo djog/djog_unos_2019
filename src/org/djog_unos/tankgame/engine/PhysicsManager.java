@@ -23,6 +23,9 @@ public final class PhysicsManager
 
 	public static boolean checkPoint(float x, float y)
 	{
+		if (!Game.isInitialized()) // No collision when testing
+			return false;
+
         // Boxes
 		Iterator<Box> i = game.m_boxes.iterator();
 		while (i.hasNext()) {
