@@ -46,7 +46,6 @@ public class Text {
 
     private float contentScaleX, contentScaleY;
 
-
     private int fontHeight;
 
     private int   scale;
@@ -55,36 +54,13 @@ public class Text {
 
     private boolean kerningEnabled = true;
     private boolean lineBBEnabled;
-
-    private Callback debugProc;
     
-    public Text(String filePath) {
+    public Text(String text, int size) {
 
-        this.fontHeight = 24;
+        this.text = text;
+        this.fontHeight = size;
+        lineCount = 1;
         this.lineHeight = fontHeight;
-
-        String t;
-
-        int lc;
-
-        try {
-            ByteBuffer source = IOUtil.ioResourceToByteBuffer(filePath, 4 * 1024);
-            t = memUTF8(source).replaceAll("\t", "    "); // Replace tabs
-
-            lc = 0;
-            Matcher m = Pattern.compile("^.*$", Pattern.MULTILINE).matcher(t);
-            while (m.find()) {
-                lc++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            t = "Failed to load text.";
-            lc = 1;
-        }
-
-        text = t;
-        lineCount = lc;
 
         try {
             ttf = IOUtil.ioResourceToByteBuffer("./assets/fonts/roboto_condensed.ttf", 512 * 1024);
@@ -108,15 +84,76 @@ public class Text {
             descent = pDescent.get(0);
             lineGap = pLineGap.get(0);
         }
+
+        /*
+            INIT
+        */
+
+        GLFWErrorCallback.createPrint().set();
+        if (!glfwInit()) {
+            throw new IllegalStateException("Unable to initialize GLFW");
+        }
+
+        glfwDefaultWindowHints();
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+
+        long monitor = glfwGetPrimaryMonitor();
+
+        int framebufferW;
+        int framebufferH;
+        try (MemoryStack s = stackPush()) {
+            FloatBuffer px = s.mallocFloat(1);
+            FloatBuffer py = s.mallocFloat(1);
+
+            glfwGetMonitorContentScale(monitor, px, py);
+
+            contentScaleX = px.get(0);
+            contentScaleY = py.get(0);
+
+            if (Platform.get() == Platform.MACOSX) {
+                framebufferW = ww;
+                framebufferH = wh;
+            } else {
+                framebufferW = round(ww * contentScaleX);
+                framebufferH = round(wh * contentScaleY);
+            }
+        }
+
+        this.window = glfwCreateWindow(framebufferW, framebufferH, "Test window", NULL, NULL);
+        if (window == NULL) {
+            throw new RuntimeException("Failed to create the GLFW window");
+        }
+
+        glfwSetWindowSizeCallback(window, this::windowSizeChanged);
+        glfwSetFramebufferSizeCallback(window, Text::framebufferSizeChanged);
+
+        // Center window
+        GLFWVidMode vidmode = Objects.requireNonNull(glfwGetVideoMode(monitor));
+
+        glfwSetWindowPos(
+            window,
+            (vidmode.width() - framebufferW) / 2,
+            (vidmode.height() - framebufferH) / 2
+        );
+
+        // Create context
+        glfwMakeContextCurrent(window);
+        GL.createCapabilities();
+
+        glfwSwapInterval(1);
+        glfwShowWindow(window);
+
+        GLFWUtil.glfwInvoke(window, this::windowSizeChanged, Text::framebufferSizeChanged);
     }
 
     public static void main(String[] args) {
-        String filePath = "./readme.md";
-        new Text(filePath).run("STB Truetype Demo");
+        new Text("MY TEXT", 24).run("TEXT TESTING");
     }
 
     private STBTTBakedChar.Buffer init(int BITMAP_W, int BITMAP_H) {
-        int                   texID = glGenTextures();
+        int texID = glGenTextures();
         STBTTBakedChar.Buffer cdata = STBTTBakedChar.malloc(96);
 
         ByteBuffer bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
@@ -166,10 +203,36 @@ public class Text {
         cdata.free();
     }
 
-    private static float scale(float center, float offset, float factor) {
-        return (offset - center) * factor + center;
+    protected void run(String title) {
+        try {
+            loop();
+        } finally {
+            try {
+                destroy();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
+    // Included
+    private void destroy() {
+        GL.setCapabilities(null);
+
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
+    }
+
+    
+
+    public void draw()
+    {
+      //  renderText(cdata, BITMAP_W, BITMAP_H);
+    }
+
+    // RENDERING
     private void renderText(STBTTBakedChar.Buffer cdata, int BITMAP_W, int BITMAP_H) {
         float scale = stbtt_ScaleForPixelHeight(info, getFontHeight());
 
@@ -262,6 +325,29 @@ public class Text {
         glColor3f(TEXT_COLOR.x, TEXT_COLOR.y, TEXT_COLOR.z); // Text color
     }
 
+    // WINDOW CALLBACKS
+    private void windowSizeChanged(long window, int width, int height) {
+        if (Platform.get() != Platform.MACOSX) {
+            width /= contentScaleX;
+            height /= contentScaleY;
+        }
+
+        this.ww = width;
+        this.wh = height;
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
+        glMatrixMode(GL_MODELVIEW);
+
+        setLineOffset(lineOffset);
+    }
+
+    private static void framebufferSizeChanged(long window, int width, int height) {
+        glViewport(0, 0, width, height);
+    }
+
+    // Private Scaling & Size
     private float getStringWidth(STBTTFontinfo info, String text, int from, int to, int fontHeight) {
         int width = 0;
 
@@ -300,7 +386,26 @@ public class Text {
         cpOut.put(0, c1);
         return 1;
     }
+   
+    private void setScale(int scale) {
+        this.scale = max(-3, scale);
+        this.lineHeight = fontHeight * (1.0f + this.scale * 0.25f);
+        setLineOffset(lineOffset);
+    }
+
+    private void setLineOffset(float offset) {
+        setLineOffset(round(offset));
+    }
+
+    private void setLineOffset(int offset) {
+        lineOffset = max(0, min(offset, lineCount - (int)(wh / lineHeight)));
+    }
     
+    private static float scale(float center, float offset, float factor) {
+        return (offset - center) * factor + center;
+    }
+
+    // GETTERS & SETTERS
     public String getText() {
         return text;
     }
@@ -337,126 +442,5 @@ public class Text {
         return lineBBEnabled;
     }
 
-    protected void run(String title) {
-        try {
-            init(title);
-
-            loop();
-        } finally {
-            try {
-                destroy();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void windowSizeChanged(long window, int width, int height) {
-        if (Platform.get() != Platform.MACOSX) {
-            width /= contentScaleX;
-            height /= contentScaleY;
-        }
-
-        this.ww = width;
-        this.wh = height;
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
-        glMatrixMode(GL_MODELVIEW);
-
-        setLineOffset(lineOffset);
-    }
-
-    private static void framebufferSizeChanged(long window, int width, int height) {
-        glViewport(0, 0, width, height);
-    }
-
-    private void init(String title) {
-        GLFWErrorCallback.createPrint().set();
-        if (!glfwInit()) {
-            throw new IllegalStateException("Unable to initialize GLFW");
-        }
-
-        glfwDefaultWindowHints();
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-
-        long monitor = glfwGetPrimaryMonitor();
-
-        int framebufferW;
-        int framebufferH;
-        try (MemoryStack s = stackPush()) {
-            FloatBuffer px = s.mallocFloat(1);
-            FloatBuffer py = s.mallocFloat(1);
-
-            glfwGetMonitorContentScale(monitor, px, py);
-
-            contentScaleX = px.get(0);
-            contentScaleY = py.get(0);
-
-            if (Platform.get() == Platform.MACOSX) {
-                framebufferW = ww;
-                framebufferH = wh;
-            } else {
-                framebufferW = round(ww * contentScaleX);
-                framebufferH = round(wh * contentScaleY);
-            }
-        }
-
-        this.window = glfwCreateWindow(framebufferW, framebufferH, title, NULL, NULL);
-        if (window == NULL) {
-            throw new RuntimeException("Failed to create the GLFW window");
-        }
-
-        glfwSetWindowSizeCallback(window, this::windowSizeChanged);
-        glfwSetFramebufferSizeCallback(window, Text::framebufferSizeChanged);
-
-        // Center window
-        GLFWVidMode vidmode = Objects.requireNonNull(glfwGetVideoMode(monitor));
-
-        glfwSetWindowPos(
-            window,
-            (vidmode.width() - framebufferW) / 2,
-            (vidmode.height() - framebufferH) / 2
-        );
-
-        // Create context
-        glfwMakeContextCurrent(window);
-        GL.createCapabilities();
-        debugProc = GLUtil.setupDebugMessageCallback();
-
-        glfwSwapInterval(1);
-        glfwShowWindow(window);
-
-        GLFWUtil.glfwInvoke(window, this::windowSizeChanged, Text::framebufferSizeChanged);
-    }
-
-    private void setScale(int scale) {
-        this.scale = max(-3, scale);
-        this.lineHeight = fontHeight * (1.0f + this.scale * 0.25f);
-        setLineOffset(lineOffset);
-    }
-
-    private void setLineOffset(float offset) {
-        setLineOffset(round(offset));
-    }
-
-    private void setLineOffset(int offset) {
-        lineOffset = max(0, min(offset, lineCount - (int)(wh / lineHeight)));
-    }
-
-    private void destroy() {
-        GL.setCapabilities(null);
-
-        if (debugProc != null) {
-            debugProc.free();
-        }
-
-        glfwFreeCallbacks(window);
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
-    }
+    
 }

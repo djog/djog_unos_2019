@@ -34,7 +34,7 @@ public class GameView
             shellSprite.setRotation(shell.getAngle());
             shellSprite.draw();
 		}
-		Text text = new Text("./readme.md");
-
+	//	Text text = new Text("./readme.md", 24);
+	//	text.draw();
 	}
 }

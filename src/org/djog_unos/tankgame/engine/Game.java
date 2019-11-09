@@ -21,6 +21,7 @@ public abstract class Game
 		setupWindow(title, width, height, fullscreen);
 		init();
 
+		// The main game loop
 		while(!window.isOpen()){
 			updateDeltaTime();
 
@@ -36,11 +37,11 @@ public abstract class Game
 			draw();
 			window.swapBuffers();
 
-			// Vsync / Wait for next frame
+			// Vsync & Wait for next frame
 			vsync(maxFPS); 
 		}
-
-		glfwTerminate();
+		// Cleanup everything properly
+		destroy();
 	}
 	
 	private void setupWindow(String title, int width, int height, boolean fullscreen)
@@ -111,6 +112,13 @@ public abstract class Game
 		totalGameTime += deltaTime;
 	}
 
+	private void destroy() {
+		GL.setCapabilities(null);
+
+		window.destroyWindow();
+		glfwTerminate();
+	}
+	
 	// STATIC GETTERS
 
 	public static double getDeltaTime() {
