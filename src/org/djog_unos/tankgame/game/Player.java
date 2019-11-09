@@ -23,7 +23,6 @@ public class Player
     private float m_y;
     // Degrees
     private float m_hull_rotation;
-    // Radians
     private float m_turret_rotation;
     
     private ArrayList<Shell> m_shells = new ArrayList<>();
@@ -73,7 +72,7 @@ public class Player
         float directionY = screenPos.y - InputManager.getMousePosition().y;
         float turret_radians = (float)java.lang.Math.atan2(directionX, directionY);
         float turret_degrees = turret_radians * (180 / PI);
-        float shortest_angle = ((((turret_degrees - m_turret_rotation) % 360) + 540) % 360) - 180;
+        float shortest_angle = (((turret_degrees - m_turret_rotation % 360) + 540) % 360) - 180;
         m_turret_rotation += ((shortest_angle * m_turret_rotatespeed) % 360) * (float)Game.getDeltaTime();
         m_turret_sprite.setRotation(m_turret_rotation * (PI / 180));
         m_hull_sprite.setRotation(-hull_radian);
@@ -99,12 +98,10 @@ public class Player
             Vector2f shellTarget = new Vector2f();
             shellTarget.x = (float)Math.sin(-m_turret_rotation * (PI / 180));
             shellTarget.y = (float)Math.cos(-m_turret_rotation * (PI / 180));
-            Vector2f shellDirection = shellTarget.sub(new Vector2f(m_x, m_y)); 
-            shellDirection.normalize();
             Vector2f shellPosition = new Vector2f(m_x, m_y);
-            Vector2f offsetDirection = new Vector2f(shellDirection); // Copy shellDirection otherwise shellDirectoin will change
+            Vector2f offsetDirection = new Vector2f(shellTarget); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            m_shells.add(new Shell(shellPosition.x, shellPosition.y, m_turret_rotation * (PI / 180), shellDirection));
+            m_shells.add(new Shell(shellPosition.x, shellPosition.y + 12, m_turret_rotation * (PI / 180), shellTarget));
         }
 
         // Update & destroy shells
