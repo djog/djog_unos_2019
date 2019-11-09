@@ -97,8 +97,6 @@ public class Window {
     {
         glfwFreeCallbacks(window);
         glfwDestroyWindow(window);
-        
-		Objects.requireNonNull(glfwSetErrorCallback(null)).free();
     }
 
     private void setCursor(String path, int hotspotX, int hotspotY) {

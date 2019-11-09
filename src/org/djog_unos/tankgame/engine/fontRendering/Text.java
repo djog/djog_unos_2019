@@ -18,7 +18,6 @@ import org.lwjgl.system.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import java.util.*;
-import java.util.regex.*;
 
 import static java.lang.Math.*;
 import static org.lwjgl.glfw.Callbacks.*;
@@ -54,7 +53,10 @@ public class Text {
 
     private boolean kerningEnabled = true;
     private boolean lineBBEnabled;
-    
+    private int BITMAP_W;
+    private int BITMAP_H;
+    private STBTTBakedChar.Buffer cdata;
+
     public Text(String text, int size) {
 
         this.text = text;
@@ -84,11 +86,9 @@ public class Text {
             descent = pDescent.get(0);
             lineGap = pLineGap.get(0);
         }
-
         /*
             INIT
         */
-
         GLFWErrorCallback.createPrint().set();
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
@@ -146,6 +146,7 @@ public class Text {
         glfwShowWindow(window);
 
         GLFWUtil.glfwInvoke(window, this::windowSizeChanged, Text::framebufferSizeChanged);
+
     }
 
     public static void main(String[] args) {
@@ -174,11 +175,26 @@ public class Text {
         return cdata;
     }
 
-    void loop() {
-        int BITMAP_W = round(512 * getContentScaleX());
-        int BITMAP_H = round(512 * getContentScaleY());
+    public void generate()
+    {
+        BITMAP_W = round(512 * getContentScaleX());
+        BITMAP_H = round(512 * getContentScaleY());
 
-        STBTTBakedChar.Buffer cdata = init(BITMAP_W, BITMAP_H);
+        cdata = init(BITMAP_W, BITMAP_H);
+    }   
+
+    public void draw()
+    {
+      renderText(cdata, BITMAP_W, BITMAP_H);
+    }
+    
+    public void cleanup()
+    {
+        cdata.free();
+    }
+
+    void loop() {
+        generate();
 
         while (!glfwWindowShouldClose(getWindow())) {
             glfwPollEvents();
@@ -193,14 +209,13 @@ public class Text {
             // Scroll
             glTranslatef(4.0f, getFontHeight() * 0.5f + 4.0f - getLineOffset() * getFontHeight(), 0f);
 
-            renderText(cdata, BITMAP_W, BITMAP_H);
+            draw();
 
             glPopMatrix();
 
             glfwSwapBuffers(getWindow());
         }
-
-        cdata.free();
+        cleanup();
     }
 
     protected void run(String title) {
@@ -223,13 +238,6 @@ public class Text {
         glfwDestroyWindow(window);
         glfwTerminate();
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
-    }
-
-    
-
-    public void draw()
-    {
-      //  renderText(cdata, BITMAP_W, BITMAP_H);
     }
 
     // RENDERING
