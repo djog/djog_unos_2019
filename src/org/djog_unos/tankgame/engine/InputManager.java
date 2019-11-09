@@ -17,12 +17,20 @@ public class InputManager {
 			keys[i] = false;
 		}
 	}
-	
+
+	public static float getHorizontalInput()
+	{
+		return isKeyDownInt(GLFW_KEY_D) - isKeyDownInt(GLFW_KEY_A);
+	}
+
+	public static float getVerticalInput()
+	{
+		return isKeyDownInt(GLFW_KEY_W) - isKeyDownInt(GLFW_KEY_S);
+	}
+
 	public static Vector2f getInputVector()
     {
-        float inputH = isKeyDownInt(GLFW_KEY_D) - isKeyDownInt(GLFW_KEY_A);
-        float inputV = isKeyDownInt(GLFW_KEY_W) - isKeyDownInt(GLFW_KEY_S);
-        return new Vector2f(inputH, inputV);
+        return new Vector2f(getHorizontalInput(), getVerticalInput());
     }
 	
 	public static Vector2f getNormalizedInputVector()

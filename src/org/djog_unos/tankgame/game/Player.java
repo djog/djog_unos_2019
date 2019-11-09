@@ -5,17 +5,11 @@ import java.util.*;
 import org.djog_unos.tankgame.engine.*;
 import org.joml.Vector2f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
-
-
 public class Player
 {
     private float m_movespeed = 256f;
-    private float m_hull_rotatespeed = 40f;
-    private float m_turret_rotatespeed = 0.75f;
+    private float m_hull_rotatespeed = 80f;
+    private float m_turret_rotatespeed = 3f;
     private Sprite m_hull_sprite;
     private Sprite m_turret_sprite;
 
@@ -42,29 +36,28 @@ public class Player
     {
         // Sprites MUST be initialized in init() 
         m_hull_sprite = new Sprite("hull.png", 128, 128, 0);
-        m_turret_sprite = new Sprite("turret.png", 176, 176, 0);
+        m_turret_sprite = new Sprite("turret.png", 128, 128, 0);
     }
 
-    public void update(TankGame game)
+    public void update()
     {
         // Movement
-        Vector2f movement = new Vector2f(); // = InputManager.getNormalizedInputVector();
-        //movement.mul(m_movespeed * (float)Game.getDeltaTime()); // Multiply by movespeed and deltatime
+        Vector2f movement = new Vector2f(); 
         float hull_radian = m_hull_rotation * (PI / 180);
         movement.x = ((m_movespeed * (float)Game.getDeltaTime())
-                     * (InputManager.isKeyDownInt(GLFW_KEY_W) - InputManager.isKeyDownInt(GLFW_KEY_S)))
+                     * (InputManager.getVerticalInput()))
                      * (float)Math.sin(hull_radian);
         movement.y = ((m_movespeed * (float)Game.getDeltaTime())
-                     * (InputManager.isKeyDownInt(GLFW_KEY_W) - InputManager.isKeyDownInt(GLFW_KEY_S)))
+                     * (InputManager.getVerticalInput()))
                      * (float)Math.cos(hull_radian);
-        if(!Game.collide(m_x + movement.x, m_y, game)){
+        if(!PhysicsManager.checkPoint(m_x + movement.x, m_y)){
             m_x += movement.x;
         }
-        if(!Game.collide(m_x, m_y + movement.y, game)){
+        if(!PhysicsManager.checkPoint(m_x, m_y + movement.y)){
             m_y += movement.y;
         }
         m_hull_sprite.setPosition(m_x, m_y);
-        m_turret_sprite.setPosition(m_x, m_y + 12);
+        m_turret_sprite.setPosition(m_x, m_y);
         
         // Rotate turret to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
@@ -78,7 +71,7 @@ public class Player
         m_hull_sprite.setRotation(-hull_radian);
 
         // Rotate hull
-        m_hull_rotation += ((InputManager.isKeyDownInt(GLFW_KEY_D) - InputManager.isKeyDownInt(GLFW_KEY_A)) * (m_hull_rotatespeed * (float)Game.getDeltaTime())) % 360;
+        m_hull_rotation += (InputManager.getHorizontalInput() * (m_hull_rotatespeed * (float)Game.getDeltaTime())) % 360;
         m_hull_rotation = m_hull_rotation % 360;
 
         if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
