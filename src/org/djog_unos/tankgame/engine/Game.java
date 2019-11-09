@@ -1,9 +1,9 @@
 package org.djog_unos.tankgame.engine;
 
-import org.lwjgl.opengl.GL;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+
+import org.lwjgl.opengl.GL;
 
 public abstract class Game 
 {
@@ -11,16 +11,19 @@ public abstract class Game
     protected abstract void update();
 	protected abstract void draw();
 
-	private static long window;
-	private static double deltaTime;
+	private static Window window;
+	private static double totalGameTime;
+	private static double deltaTime = 1.0/60.0; // Default for testing
 	private static double lastFrameTime;
+	private static boolean isInitialized = false;
 	private long variableYieldTime, lastTime;
 
-	protected void run(int width, int height, String title, int maxFPS) {
-		setupWindow(width, height, title);
+	protected void run(int width, int height, boolean fullscreen, String title, int maxFPS) {
+		setupWindow(title, width, height, fullscreen);
 		init();
-
-		while(glfwWindowShouldClose(window) != true){
+		isInitialized = true;
+		// The main game loop
+		while(!window.isOpen()){
 			updateDeltaTime();
 
 			// Input
@@ -31,29 +34,25 @@ public abstract class Game
 			
 			// Draw
 			glClear(GL_COLOR_BUFFER_BIT); // Clear the last frame
-			glClearColor(0.8f, 0.8f, 0.8f, 1);
+			glClearColor(0.6f, 0.8f, 1f, 1);
 			draw();
-			glfwSwapBuffers(window);
+			window.swapBuffers();
 
-			// Vsync / Wait for next frame
+			// Vsync & Wait for next frame
 			vsync(maxFPS); 
 		}
-
-		glfwTerminate();
+		// Cleanup everything properly
+		destroy();
 	}
-
-	private void setupWindow(int width, int height, String title)
+	
+	private void setupWindow(String title, int width, int height, boolean fullscreen)
 	{
 		if(!glfwInit()){
 			System.err.println("Failed To Initialize!");
 			System.exit(1);
 		}
 
-		window = glfwCreateWindow(width, height, title, 0, 0);
-
-		glfwShowWindow(window);
-
-		glfwMakeContextCurrent(window);
+		window = new Window(title, width, height, fullscreen);
 
 		GL.createCapabilities();
 
@@ -111,22 +110,34 @@ public abstract class Game
 		double time = glfwGetTime();
 		deltaTime = time - lastFrameTime;
 		lastFrameTime = time;
+		totalGameTime += deltaTime;
 	}
 
-	// STATIC GETTERS
+	private void destroy() {
+		GL.setCapabilities(null);
 
-	public static long getWindow()
-	{
-		return window;
+		window.destroyWindow();
+		glfwTerminate();
 	}
 	
+	// STATIC GETTERS
+
 	public static double getDeltaTime() {
-		
 		return deltaTime;
 	}
-    
+	
+	public static double getTotalGameTime()
+	{
+		return totalGameTime;
+	}
+
     public static double getFPS()
 	{
 		return (1 / getDeltaTime());
+	}
+
+	public static boolean isInitialized()
+	{
+		return isInitialized;
 	}
 }

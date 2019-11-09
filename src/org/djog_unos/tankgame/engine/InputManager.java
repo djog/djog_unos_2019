@@ -1,8 +1,10 @@
 package org.djog_unos.tankgame.engine;
 
 import static org.lwjgl.glfw.GLFW.*;
+import java.nio.DoubleBuffer;
 
 import org.joml.Vector2f;
+import org.lwjgl.BufferUtils;
 
 public class InputManager {
 	
@@ -15,12 +17,20 @@ public class InputManager {
 			keys[i] = false;
 		}
 	}
-	
+
+	public static float getHorizontalInput()
+	{
+		return isKeyDownInt(GLFW_KEY_D) - isKeyDownInt(GLFW_KEY_A);
+	}
+
+	public static float getVerticalInput()
+	{
+		return isKeyDownInt(GLFW_KEY_W) - isKeyDownInt(GLFW_KEY_S);
+	}
+
 	public static Vector2f getInputVector()
     {
-        float inputH = isKeyDownInt(GLFW_KEY_D) - isKeyDownInt(GLFW_KEY_A);
-        float inputV = isKeyDownInt(GLFW_KEY_W) - isKeyDownInt(GLFW_KEY_S);
-        return new Vector2f(inputH, inputV);
+        return new Vector2f(getHorizontalInput(), getVerticalInput());
     }
 	
 	public static Vector2f getNormalizedInputVector()
@@ -33,19 +43,34 @@ public class InputManager {
 	
 	public static boolean isKeyDown(int key)
 	{
-		return glfwGetKey(Game.getWindow(), key) == 1;
+		return glfwGetKey(Window.getWindow(), key) == 1;
 	}
 	
 	public static int isKeyDownInt(int key)
 	{
-		return glfwGetKey(Game.getWindow(), key);
+		return glfwGetKey(Window.getWindow(), key);
 	}
 	
 	public static boolean isKeyPressed(int key)
 	{
 		return (isKeyDown(key) && !keys[key]);
 	}
-	
+
+	public static boolean isMouseButtonDown(int button)
+	{
+		return glfwGetMouseButton(Window.getWindow(), button) == 1;
+	}
+
+	public static Vector2f getMousePosition()
+	{
+		DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
+		DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
+		glfwGetCursorPos(Window.getWindow(), xBuffer, yBuffer);
+		float x = (float)xBuffer.get(0);
+		float y = (float)yBuffer.get(0);
+		return new Vector2f(x, y);
+	}
+
 	public static void update()
 	{
 		for(int i = 0; i < GLFW_KEY_LAST; i++)

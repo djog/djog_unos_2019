@@ -17,5 +17,15 @@ public class TextureManager {
             return newTexture;
         }
     }
+
+    public static void clearAllTextures()
+    {
+        textures.clear();
+    }
+
+    public static int getTotalTextures()
+    {
+        return textures.size();
+    }
 }
 
