@@ -14,6 +14,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.*;
 
 public class Window {
+
     private static long window;
     private static int width, height;
     private static boolean fullscreen;
