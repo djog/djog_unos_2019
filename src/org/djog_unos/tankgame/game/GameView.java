@@ -15,6 +15,11 @@ public class GameView
 			Box box = i.next();
 			box.draw();
 		}
+		Iterator<Hedgehog> hedgehogIterator = game.m_hedgehogs.iterator();
+		while (hedgehogIterator.hasNext()) {
+			Hedgehog hedgehog = hedgehogIterator.next();
+			hedgehog.draw();
+		}
 		Iterator<Tree> j = game.m_trees.iterator();
 		while (j.hasNext()) {
 			Tree tree = j.next();

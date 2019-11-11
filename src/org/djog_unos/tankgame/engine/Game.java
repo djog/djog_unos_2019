@@ -3,10 +3,7 @@ package org.djog_unos.tankgame.engine;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import org.djog_unos.tankgame.game.Box;
-import org.djog_unos.tankgame.game.Bush;
-import org.djog_unos.tankgame.game.TankGame;
-import org.djog_unos.tankgame.game.Tree;
+import org.djog_unos.tankgame.game.*;
 import org.lwjgl.opengl.GL;
 
 import java.awt.*;
@@ -146,11 +143,25 @@ public abstract class Game
             float closestX = Math.max(box.get_x(), Math.min(box.get_x() + box.get_width(), x + distanceToCenter));
             float closestY = Math.max(box.get_y(), Math.min(box.get_y() + box.get_height(), y + distanceToCenter));
 
-            float distanceX = x + 45 - closestX;
-            float distanceY = y + 45 - closestY;
+            float distanceX = x - closestX;
+            float distanceY = y - closestY;
 
             float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
             if(distanceSquared < (radius * radius)) return true;
+		}
+
+		Iterator<Hedgehog> hedgehogs = game.m_hedgehogs.iterator();
+		// Hedgehogs
+		while (hedgehogs.hasNext()) {
+			Hedgehog hedgehog = hedgehogs.next();
+			float closestX = Math.max(hedgehog.get_x(), Math.min(hedgehog.get_x() + hedgehog.get_width(), x + distanceToCenter));
+			float closestY = Math.max(hedgehog.get_y(), Math.min(hedgehog.get_y() + hedgehog.get_height(), y + distanceToCenter));
+
+			float distanceX = x + 45 - closestX;
+			float distanceY = y + 45 - closestY;
+
+			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+			if(distanceSquared < (radius * radius)) return true;
 		}
 
 		// Trees

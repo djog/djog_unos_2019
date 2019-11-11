@@ -20,6 +20,7 @@ public class TankGame extends Game
 	public ArrayList<Box> m_boxes = new ArrayList<>();
 	public ArrayList<Bush> m_bushes = new ArrayList<>();
 	public ArrayList<Tree> m_trees = new ArrayList<>();
+	public ArrayList<Hedgehog> m_hedgehogs = new ArrayList<>();
 
 	private float Time = 0;
 
@@ -35,6 +36,10 @@ public class TankGame extends Game
 		m_boxes.add(new Box(200.0f, 200.0f));
 		m_bushes.add(new Bush(-200.0f, -300.0f));
 		m_trees.add(new Tree(-100.0f, 200.0f));
+		m_hedgehogs.add(new Hedgehog(-50.0f,-150.0f));
+		m_hedgehogs.add(new Hedgehog(-150.0f,150.0f));
+		m_hedgehogs.add(new Hedgehog(-250.0f,150.0f));
+
 		Iterator<Box> i = m_boxes.iterator();
 		while (i.hasNext()) {
 			Box box = i.next();
@@ -49,6 +54,11 @@ public class TankGame extends Game
 		while (k.hasNext()) {
 			Bush bush = k.next();
 			bush.init();
+		}
+		Iterator<Hedgehog> hedgehogIterator = m_hedgehogs.iterator();
+		while (hedgehogIterator.hasNext()) {
+			Hedgehog hedgehog = hedgehogIterator.next();
+			hedgehog.init();
 		}
 	}
 
