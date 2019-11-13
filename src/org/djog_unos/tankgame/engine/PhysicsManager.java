@@ -1,13 +1,11 @@
 package org.djog_unos.tankgame.engine;
 
-import org.djog_unos.tankgame.game.*;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.joml.*;
 
-// TODO: Add BoxCollider in the same way
+// TODO: Add BoxCollider in the same way 
 
 class CircleCollider
 {
