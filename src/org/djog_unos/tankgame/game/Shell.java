@@ -15,6 +15,7 @@ public class Shell
     
     private static final float SPEED = 400f;
     private static final float MAX_LIFETIME = 5f;
+    private static final float SHELL_RADIUS = 32/2;
 
     public Shell(float x, float y, float angle, Vector2f direction)
     {
@@ -29,7 +30,7 @@ public class Shell
         m_x += m_direction.x * SPEED * Game.getDeltaTime();
         m_y += m_direction.y * SPEED * Game.getDeltaTime();
         m_lifetime += Game.getDeltaTime();
-        if (m_lifetime >= MAX_LIFETIME || PhysicsManager.checkPoint(m_x, m_y))
+        if (m_lifetime >= MAX_LIFETIME || PhysicsManager.checkCircle(m_x, m_y, SHELL_RADIUS))
             destroyed = true;
     }
 

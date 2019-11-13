@@ -9,7 +9,6 @@ public class GameView
 	public static void drawGame(TankGame game)
 	{
 		game.background.draw();
-		game.player.draw();
 		Iterator<Box> i = game.m_boxes.iterator();
 		while (i.hasNext()) {
 			Box box = i.next();
@@ -25,6 +24,7 @@ public class GameView
 			Bush bush = k.next();
 			bush.draw();
 		}
+		game.player.draw();
 
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
         for(Shell shell : game.player.getShells())

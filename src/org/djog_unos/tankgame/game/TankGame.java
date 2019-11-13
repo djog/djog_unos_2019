@@ -30,8 +30,6 @@ public class TankGame extends Game
 	@Override
 	public void init()
 	{
-		PhysicsManager.setGame(this);
-
 		background.init();
 		player.init();
 		m_boxes.add(new Box(200.0f, 200.0f));
