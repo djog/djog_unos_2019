@@ -1,12 +1,10 @@
 package org.djog_unos.tankgame.game;
 
-import org.djog_unos.tankgame.engine.*;
-
 public class Bush extends StaticGameObject{
 
     public Bush(float x, float y)
     {
-        super(x, y);
+        super(x, y, 64/2);
     }
 
     public void init()

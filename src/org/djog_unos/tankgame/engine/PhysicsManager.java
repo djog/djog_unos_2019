@@ -1,24 +1,32 @@
 package org.djog_unos.tankgame.engine;
 
-import org.djog_unos.tankgame.game.*;
-
+import java.util.ArrayList;
 import java.util.Iterator;
+
+import org.joml.*;
+
+// TODO: Add BoxCollider in the same way 
+
+class CircleCollider
+{
+	public float x;
+	public float y;
+	public float radius;
+
+	public CircleCollider(float x, float y, float radius)
+	{
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+	}
+}
 
 public final class PhysicsManager
 {
-	private static TankGame game;
-	
-	private static final float BOX_RADIUS = 32;
-	private static final float BUSH_RADIUS = 32;
-	private static final float TREE_RADIUS = 64;
-
-	private static final float BOX_CENTER_DIST = (float) Math.sqrt((BOX_RADIUS * BOX_RADIUS) / 2);
-	private static final float BUSH_CENTER_DIST = (float) Math.sqrt((BUSH_RADIUS * BUSH_RADIUS) / 2);
-	private static final float TREE_CENTER_DIST = (float) Math.sqrt((TREE_RADIUS * TREE_RADIUS) / 2);
-
-	public static void setGame(TankGame gameRef) 
+    private static ArrayList<CircleCollider> m_circleColliders = new ArrayList<>();
+	public static void addStaticCircleCollider(float x, float y, float radius)
 	{
-		game = gameRef;
+		m_circleColliders.add(new CircleCollider(x, y, radius));
 	}
 
 	public static boolean checkPoint(float x, float y)
@@ -26,49 +34,34 @@ public final class PhysicsManager
 		if (!Game.isInitialized()) // No collision when testing
 			return false;
 
-        // Boxes
-		Iterator<Box> i = game.m_boxes.iterator();
-		while (i.hasNext()) {
-			
-		    Box box = i.next();
-            float closestX = Math.max(box.get_x(), Math.min(box.get_x() + box.get_width(), x + BOX_CENTER_DIST));
-            float closestY = Math.max(box.get_y(), Math.min(box.get_y() + box.get_height(), y + BOX_CENTER_DIST));
+		Iterator<CircleCollider> i = m_circleColliders.iterator();
+		while(i.hasNext()) {
+			CircleCollider collider = i.next();
 
-            float distanceX = x + 45 - closestX;
-            float distanceY = y + 45 - closestY;
-
-            float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-            if(distanceSquared < (BOX_RADIUS * BOX_RADIUS)) return true;
+			Vector2f pointA = new Vector2f(x, y);
+			Vector2f pointB = new Vector2f(collider.x, collider.y);
+			float distance = pointA.distance(pointB);
+			if (distance <= collider.radius)
+				return true;
 		}
+		return false;
+	}
 
-		// Trees
-		Iterator<Tree> j = game.m_trees.iterator();
-		while (j.hasNext()) {
-			Tree tree = j.next();
-			float closestX = Math.max(tree.get_x(), Math.min(tree.get_x() + tree.get_width(), x + TREE_CENTER_DIST));
-			float closestY = Math.max(tree.get_y(), Math.min(tree.get_y() + tree.get_height(), y + TREE_CENTER_DIST));
+	public static boolean checkCircle(float x, float y, float radius)
+	{
+		if (!Game.isInitialized()) // No collision when testing
+			return false;
 
-			float distanceX = x + TREE_CENTER_DIST - closestX;
-			float distanceY = y + TREE_CENTER_DIST - closestY;
+		Iterator<CircleCollider> i = m_circleColliders.iterator();
+		while(i.hasNext()) {
+			CircleCollider collider = i.next();
 
-			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-			if(distanceSquared < (TREE_RADIUS * TREE_RADIUS)) return true;
-		}
-
-		// Bush
-		Iterator<Bush> k = game.m_bushes.iterator();
-		while (k.hasNext()) {
-			Bush bush = k.next();
-			float closestX = Math.max(bush.get_x(), Math.min(bush.get_x() + bush.get_width(), x + BUSH_CENTER_DIST));
-			float closestY = Math.max(bush.get_y(), Math.min(bush.get_y() + bush.get_height(), y + BUSH_CENTER_DIST));
-
-			float distanceX = x + BUSH_CENTER_DIST - closestX;
-			float distanceY = y + BUSH_CENTER_DIST - closestY;
-
-			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-			if(distanceSquared < (BUSH_RADIUS * BUSH_RADIUS)) return true;
+			Vector2f pointA = new Vector2f(x, y);
+			Vector2f pointB = new Vector2f(collider.x, collider.y);
+			float distance = pointA.distance(pointB);
+			if (distance <= (collider.radius + radius))
+				return true;
 		}
 		return false;
 	}
 }
-    
