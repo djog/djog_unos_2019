@@ -1,6 +1,6 @@
 package org.djog_unos.tankgame.game;
 
-public class Box extends StaticGameObject{
+public class Box extends StaticGameObject {
 
     public Box(float x, float y)
     {

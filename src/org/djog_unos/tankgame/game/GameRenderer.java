@@ -10,20 +10,29 @@ public class GameRenderer
 	{
 		gameView.background.draw();
 		gameView.player.draw();
-		Iterator<Box> i = gameView.m_boxes.iterator();
-		while (i.hasNext()) {
-			Box box = i.next();
+		
+		Iterator<Box> boxIterator = gameView.boxes.iterator();
+		while (boxIterator.hasNext()) {
+			Box box = boxIterator.next();
 			box.draw();
 		}
-		Iterator<Tree> j = gameView.m_trees.iterator();
-		while (j.hasNext()) {
-			Tree tree = j.next();
+
+		Iterator<Tree> treeIterator = gameView.trees.iterator();
+		while (treeIterator.hasNext()) {
+			Tree tree = treeIterator.next();
 			tree.draw();
 		}
-		Iterator<Bush> k = gameView.m_bushes.iterator();
-		while (k.hasNext()) {
-			Bush bush = k.next();
+
+		Iterator<Bush> bushIterator = gameView.bushes.iterator();
+		while (bushIterator.hasNext()) {
+			Bush bush = bushIterator.next();
 			bush.draw();
+		}
+
+		Iterator<Hedgehog> hedgehogIterator = gameView.hedgehogs.iterator();
+		while (hedgehogIterator.hasNext()) {
+			Hedgehog hedgehog = hedgehogIterator.next();
+			hedgehog.draw();
 		}
 
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
