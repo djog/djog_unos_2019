@@ -1,5 +1,6 @@
 package org.djog_unos.tankgame.engine;
 
+import org.djog_unos.tankgame.game.Camera;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -32,7 +33,8 @@ public class Transform
     public Matrix4f getProjection(Matrix4f target)
     {
     	Matrix4f result = new Matrix4f(target);
-        result.translate(position);
+    	Vector3f actualPosition = new Vector3f(position.add(Camera.get()));
+        result.translate(actualPosition);
         result.rotateZ(rotation);
         result.scale(scale);
         return result;

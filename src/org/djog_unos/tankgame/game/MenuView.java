@@ -4,7 +4,7 @@ import org.djog_unos.tankgame.engine.*;
 
 public class MenuView extends View
 {
-    private float m_countdown = 10.0f;
+    private float m_countdown = 1.0f;
     private Sprite m_sprite;
 
     @Override
