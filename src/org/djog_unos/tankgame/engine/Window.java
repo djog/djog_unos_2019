@@ -22,6 +22,7 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 
 import java.io.IOException;
 public class Window {
+
     private static long window;
     private static int width, height;
     private static boolean fullscreen;
