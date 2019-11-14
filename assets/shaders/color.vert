@@ -1,4 +1,4 @@
-#version 440
+#version 130
 
 attribute vec3  vertices;
 
