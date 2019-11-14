@@ -3,12 +3,7 @@ package org.djog_unos.tankgame.engine;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import org.djog_unos.tankgame.game.*;
 import org.lwjgl.opengl.GL;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.Iterator;
 
 public abstract class Game 
 {
@@ -20,13 +15,14 @@ public abstract class Game
 	private static double totalGameTime;
 	private static double deltaTime = 1.0/60.0; // Default for testing
 	private static double lastFrameTime;
+	private static boolean isInitialized = false;
 	private long variableYieldTime, lastTime;
 
-	
 	protected void run(int width, int height, boolean fullscreen, String title, int maxFPS) {
 		setupWindow(title, width, height, fullscreen);
 		init();
-
+		isInitialized = true;
+		// The main game loop
 		while(!window.isOpen()){
 			updateDeltaTime();
 
@@ -42,13 +38,13 @@ public abstract class Game
 			draw();
 			window.swapBuffers();
 
-			// Vsync / Wait for next frame
+			// Vsync & Wait for next frame
 			vsync(maxFPS); 
 		}
-
-		glfwTerminate();
+		// Cleanup everything properly
+		destroy();
 	}
-
+	
 	private void setupWindow(String title, int width, int height, boolean fullscreen)
 	{
 		if(!glfwInit()){
@@ -117,6 +113,13 @@ public abstract class Game
 		totalGameTime += deltaTime;
 	}
 
+	private void destroy() {
+		GL.setCapabilities(null);
+
+		window.destroyWindow();
+		glfwTerminate();
+	}
+	
 	// STATIC GETTERS
 
 	public static double getDeltaTime() {
@@ -133,64 +136,8 @@ public abstract class Game
 		return (1 / getDeltaTime());
 	}
 
-	public static boolean collide(float x, float y, TankGame game){
-		int radius = 64;
-        float distanceToCenter = (float) Math.sqrt((radius * radius) / 2);
-        // Boxes
-		Iterator<Box> i = game.m_boxes.iterator();
-		while (i.hasNext()) {
-		    Box box = i.next();
-            float closestX = Math.max(box.get_x(), Math.min(box.get_x() + box.get_width(), x + distanceToCenter));
-            float closestY = Math.max(box.get_y(), Math.min(box.get_y() + box.get_height(), y + distanceToCenter));
-
-            float distanceX = x - closestX;
-            float distanceY = y - closestY;
-
-            float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-            if(distanceSquared < (radius * radius)) return true;
-		}
-
-		Iterator<Hedgehog> hedgehogs = game.m_hedgehogs.iterator();
-		// Hedgehogs
-		while (hedgehogs.hasNext()) {
-			Hedgehog hedgehog = hedgehogs.next();
-			float closestX = Math.max(hedgehog.get_x(), Math.min(hedgehog.get_x() + hedgehog.get_width(), x + distanceToCenter));
-			float closestY = Math.max(hedgehog.get_y(), Math.min(hedgehog.get_y() + hedgehog.get_height(), y + distanceToCenter));
-
-			float distanceX = x + 45 - closestX;
-			float distanceY = y + 45 - closestY;
-
-			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-			if(distanceSquared < (radius * radius)) return true;
-		}
-
-		// Trees
-		Iterator<Tree> j = game.m_trees.iterator();
-		while (j.hasNext()) {
-			Tree tree = j.next();
-			float closestX = Math.max(tree.get_x(), Math.min(tree.get_x() + tree.get_width(), x + distanceToCenter));
-			float closestY = Math.max(tree.get_y(), Math.min(tree.get_y() + tree.get_height(), y + distanceToCenter));
-
-			float distanceX = x + distanceToCenter - closestX;
-			float distanceY = y + distanceToCenter - closestY;
-
-			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-			if(distanceSquared < (radius * radius)) return true;
-		}
-
-		// Boxes
-		Iterator<Bush> k = game.m_bushes.iterator();
-		while (k.hasNext()) {
-			Bush bush = k.next();
-			float closestX = Math.max(bush.get_x(), Math.min(bush.get_x() + bush.get_width(), x + distanceToCenter));
-			float closestY = Math.max(bush.get_y(), Math.min(bush.get_y() + bush.get_height(), y + distanceToCenter));
-
-			float distanceX = x + distanceToCenter - closestX;
-			float distanceY = y + distanceToCenter - closestY;
-
-			float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-			if(distanceSquared < (radius * radius)) return true;
-		}
-		return false;
+	public static boolean isInitialized()
+	{
+		return isInitialized;
 	}
 }
