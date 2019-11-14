@@ -9,7 +9,6 @@ public class MenuView extends View
 
     @Override
     protected void setupView() {
-        System.out.println("IN MENU VIEW!!");
         m_sprite = new Sprite("menu_placeholder.png", 1024, 1024, 0);
     }
 
