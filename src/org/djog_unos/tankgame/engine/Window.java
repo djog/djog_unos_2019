@@ -163,10 +163,10 @@ public class Window {
 
     public static Vector2f ScreenToWorldCoords(Vector2f screenCoords)
 	{
-		return new Vector2f(screenCoords.x - Camera.get().x - (width / 2), -(screenCoords.y - Camera.get().y - (height / 2)));
+		return new Vector2f(screenCoords.x - (width / 2) - Camera.getPositon().x, -(screenCoords.y - (height / 2) - Camera.getPositon().y));
 	}
 	public static Vector2f WorldToScreenCoords(Vector2f worldCoords)
 	{
-		return new Vector2f(worldCoords.x + Camera.get().x + (width / 2), -(worldCoords.y + Camera.get().y - (height / 2)));
+		return new Vector2f(worldCoords.x + (width / 2) + Camera.getPositon().x, -(worldCoords.y - (height / 2) + Camera.getPositon().y));
 	}
 }

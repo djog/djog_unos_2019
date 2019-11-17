@@ -33,7 +33,7 @@ public class Transform
     public Matrix4f getProjection(Matrix4f target)
     {
     	Matrix4f result = new Matrix4f(target);
-    	Vector3f actualPosition = new Vector3f(position.add(Camera.get()));
+    	Vector3f actualPosition = new Vector3f(new Vector3f(position).add(Camera.getPositon()));
         result.translate(actualPosition);
         result.rotateZ(rotation);
         result.scale(scale);

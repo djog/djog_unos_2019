@@ -49,7 +49,12 @@ public class Sprite
     {
         m_transform.rotation = z;
     }
-
+    
+    public Vector2f getPosition() { return new Vector2f(m_transform.position.x, m_transform.position.y); };
+    
+    public float get_width() { return m_transform.scale.x; }
+    public float get_height() { return m_transform.scale.y; }
+    
     public void draw() 
     {
         m_shader.bind();
@@ -60,6 +65,4 @@ public class Sprite
         m_model.render();
     }
 
-    public float get_width() { return m_transform.scale.x; }
-    public float get_height() { return m_transform.scale.y; }
 }
