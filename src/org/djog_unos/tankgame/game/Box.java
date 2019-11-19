@@ -7,7 +7,7 @@ public class Box extends StaticGameObject {
     public Box(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticAABBCollider(x, y, 64, 64);
+        PhysicsManager.addStaticAABBCollider(x, y, 40, 40);
     }
 
     public void init()

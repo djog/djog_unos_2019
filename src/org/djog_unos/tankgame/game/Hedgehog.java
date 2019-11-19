@@ -7,7 +7,7 @@ public class Hedgehog extends StaticGameObject {
     public Hedgehog(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticAABBCollider(x, y, 96, 96);
+        PhysicsManager.addStaticAABBCollider(x, y, 50, 50);
     }
 
     public void init()

@@ -8,7 +8,7 @@ public class Tree extends StaticGameObject{
     public Tree(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticCircleCollider(x, y, 128/2);
+        PhysicsManager.addStaticCircleCollider(x, y, 128/4);
     }
 
     public void init()

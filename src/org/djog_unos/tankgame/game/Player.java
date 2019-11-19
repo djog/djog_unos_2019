@@ -51,10 +51,10 @@ public class Player
         movement.y = ((hull.getSpeed() * (float)Game.getDeltaTime())
                      * (InputManager.getVerticalInput()))
                      * (float)Math.cos(hull_radian);
-        if(!PhysicsManager.checkPoint(m_x + movement.x, m_y)){
+        if(!PhysicsManager.checkCircle(m_x + movement.x, m_y, 128/2)){
             m_x += movement.x;
         }
-        if(!PhysicsManager.checkPoint(m_x, m_y + movement.y)){
+        if(!PhysicsManager.checkCircle(m_x, m_y + movement.y, 128/2)){
             m_y += movement.y;
         }
         hull.sprite.setPosition(m_x, m_y);

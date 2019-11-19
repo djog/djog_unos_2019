@@ -108,12 +108,15 @@ public final class PhysicsManager
 		while(j.hasNext()) {
 			AABBCollider collider = j.next();
 
-			Vector2f closest;
-			for (Vector2f point : collider.getPoints()) {
-				// FIND THE CLOSEST
-			}
+			if ((x >= collider.x1 && x <= collider.x2)
+			&&	(y >= collider.y1 && y <= collider.y2)) return true;
 
-			// CALCULATE DISTANCE
+			Vector2f ciclePoint = new Vector2f(x, y);
+			for (Vector2f point : collider.getPoints()) {
+				float distance = point.distance(ciclePoint);
+				if (distance <= radius)
+					return true;
+			}
 		}
 
 		return false;

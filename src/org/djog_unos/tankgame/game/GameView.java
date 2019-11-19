@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.djog_unos.tankgame.engine.*;
+import java.util.Random;
 
 public class GameView extends View
 {
@@ -19,10 +20,14 @@ public class GameView extends View
     protected void setupView() {
 		background.init();
 		player.init();
-		boxes.add(new Box(200.0f, 200.0f));
-		bushes.add(new Bush(-200.0f, -300.0f));
-		trees.add(new Tree(-100.0f, 200.0f));
-		hedgehogs.add(new Hedgehog(200, -300));
+
+		for(int i = 0; i < 8; i++)
+		{
+			boxes.add(new Box(getRandom(), getRandom()));
+			bushes.add(new Bush(getRandom(), getRandom()));
+			trees.add(new Tree(getRandom(), getRandom()));
+			hedgehogs.add(new Hedgehog(getRandom(), getRandom()));
+		}
 
 		Iterator<Box> boxIterator = boxes.iterator();
 		while (boxIterator.hasNext()) {
@@ -58,5 +63,10 @@ public class GameView extends View
 	@Override
     protected void drawView() {
 		GameRenderer.drawGame(this);
+	}
+
+	float getRandom()
+	{
+		return -1000 + (int)(Math.random() * ((1000 - -1000) + 1));
 	}
 }
