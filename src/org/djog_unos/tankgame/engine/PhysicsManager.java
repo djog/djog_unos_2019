@@ -18,7 +18,6 @@ class AABBCollider
 		x2 = x + (width / 2);
 		y1 = y - (height / 2);
 		y2 = y + (height / 2);
-		System.out.println(x1 + " " + x2  + " " + y1 + " " + y2);
 	}
 
 	public Vector2f[] getPoints()
