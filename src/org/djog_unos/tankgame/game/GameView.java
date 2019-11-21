@@ -15,6 +15,7 @@ public class GameView extends View
 	public ArrayList<Bush> bushes = new ArrayList<>();
     public ArrayList<Tree> trees = new ArrayList<>();
 	public ArrayList<Hedgehog> hedgehogs = new ArrayList<>();
+	public ArrayList<Stone> stones = new ArrayList<>();
 	
     @Override
     protected void setupView() {
@@ -27,6 +28,7 @@ public class GameView extends View
 			bushes.add(new Bush(getRandom(), getRandom()));
 			trees.add(new Tree(getRandom(), getRandom()));
 			hedgehogs.add(new Hedgehog(getRandom(), getRandom()));
+			stones.add(new Stone(getRandom(), getRandom()));
 		}
 
 		Iterator<Box> boxIterator = boxes.iterator();
@@ -51,6 +53,12 @@ public class GameView extends View
 		while (bushIterator.hasNext()) {
 			Bush bush = bushIterator.next();
 			bush.init();
+		}
+		
+		Iterator<Stone> stoneIterator = stones.iterator();
+		while (stoneIterator.hasNext()) {
+			Stone stone = stoneIterator.next();
+			stone.init();
 		}
 	}
 	
