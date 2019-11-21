@@ -14,6 +14,7 @@ public class GameView extends View
 	public ArrayList<Bush> bushes = new ArrayList<>();
     public ArrayList<Tree> trees = new ArrayList<>();
 	public ArrayList<Hedgehog> hedgehogs = new ArrayList<>();
+	public ArrayList<MachineGunNest> machineGunNests = new ArrayList<>();
 	
     @Override
     protected void setupView() {
@@ -23,6 +24,7 @@ public class GameView extends View
 		bushes.add(new Bush(-200.0f, -300.0f));
 		trees.add(new Tree(-100.0f, 200.0f));
 		hedgehogs.add(new Hedgehog(200, -300));
+		machineGunNests.add(new MachineGunNest(400.0f, 200.0f));
 
 		Iterator<Box> boxIterator = boxes.iterator();
 		while (boxIterator.hasNext()) {
@@ -47,12 +49,23 @@ public class GameView extends View
 			Bush bush = bushIterator.next();
 			bush.init();
 		}
+
+		Iterator<MachineGunNest> MachineGunNestIterator = machineGunNests.iterator();
+		while (MachineGunNestIterator.hasNext()) {
+			MachineGunNest nest = MachineGunNestIterator.next();
+			nest.init();
+		}
 	}
 	
 	@Override
     protected void updateView() {
     	player.update();
     	Camera.update(player.get_x(), player.get_y());
+		Iterator<MachineGunNest> MachineGunNestIterator = machineGunNests.iterator();
+		while (MachineGunNestIterator.hasNext()) {
+			MachineGunNest nest = MachineGunNestIterator.next();
+			nest.update(player);
+		}
 	}
 
 	@Override

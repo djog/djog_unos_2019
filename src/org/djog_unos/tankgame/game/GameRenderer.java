@@ -35,12 +35,26 @@ public class GameRenderer
 			hedgehog.draw();
 		}
 
+		Iterator<MachineGunNest> MachineGunNestIterator = gameView.machineGunNests.iterator();
+		while (MachineGunNestIterator.hasNext()) {
+			MachineGunNest nest = MachineGunNestIterator.next();
+			nest.machineGun.draw();
+			nest.draw();
+		}
+
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
         for(Shell shell : gameView.player.getShells())
         {
             shellSprite.setPosition(shell.getX(), shell.getY());
             shellSprite.setRotation(shell.getAngle());
             shellSprite.draw();
+		}
+        for(MachineGunNest machineGunNest : gameView.machineGunNests){
+        	for(Shell shell : machineGunNest.getShells()){
+				shellSprite.setPosition(shell.getX(), shell.getY());
+				shellSprite.setRotation(shell.getAngle());
+				shellSprite.draw();
+			}
 		}
 	}
 }
