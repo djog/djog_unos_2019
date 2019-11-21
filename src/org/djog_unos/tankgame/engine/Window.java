@@ -8,6 +8,7 @@ import java.nio.*;
 
 import javax.imageio.ImageIO;
 
+import org.djog_unos.tankgame.game.Camera;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
@@ -162,10 +163,10 @@ public class Window {
 
     public static Vector2f ScreenToWorldCoords(Vector2f screenCoords)
 	{
-		return new Vector2f(screenCoords.x - (width / 2), -(screenCoords.y - (height / 2)));
+		return new Vector2f(screenCoords.x - (width / 2) - Camera.getPositon().x, -(screenCoords.y - (height / 2) - Camera.getPositon().y));
 	}
 	public static Vector2f WorldToScreenCoords(Vector2f worldCoords)
 	{
-		return new Vector2f(worldCoords.x + (width / 2), -(worldCoords.y - (height / 2)));
+		return new Vector2f(worldCoords.x + (width / 2) + Camera.getPositon().x, -(worldCoords.y - (height / 2) + Camera.getPositon().y));
 	}
 }

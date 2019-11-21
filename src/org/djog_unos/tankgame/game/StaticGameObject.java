@@ -22,8 +22,8 @@ abstract public class StaticGameObject {
 
     public void draw(){ m_sprite.draw();}
 
-    public float get_x() { return m_x; }
-    public float get_y() { return m_y; }
-    public float get_width() { return m_sprite.get_width(); }
-    public float get_height() { return m_sprite.get_height(); }
+    public float getX() { return m_x; }
+    public float getY() { return m_y; }
+    public float getWidth() { return m_sprite.getWidth(); }
+    public float getHeight() { return m_sprite.getHeight(); }
 }

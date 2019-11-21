@@ -51,7 +51,8 @@ public class GameView extends View
 	
 	@Override
     protected void updateView() {
-		player.update();
+    	player.update();
+    	Camera.update(player.get_x(), player.get_y());
 	}
 
 	@Override
