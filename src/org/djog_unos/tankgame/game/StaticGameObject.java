@@ -8,10 +8,9 @@ abstract public class StaticGameObject {
     private float m_x = 0.0f;
     private float m_y = 0.0f;
 
-    public StaticGameObject(float x, float y, float radius) {
+    public StaticGameObject(float x, float y) {
         m_x = x;
         m_y = y;
-        PhysicsManager.addStaticCircleCollider(x, y, radius);
     }
 
     public void init(String textureName, int width, int height)
