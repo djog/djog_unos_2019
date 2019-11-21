@@ -20,7 +20,7 @@ public class MachineGunNest extends StaticGameObject{
     private float m_fireCountdown = 0.0f;
 
     public MachineGunNest(float x, float y){
-       super(x, y, 128/2);
+       super(x, y);
        machineGun.setRotation(0);
        machineGun.setRotation_speed(3f);
     }

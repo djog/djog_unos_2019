@@ -34,6 +34,12 @@ public class GameRenderer
 			Hedgehog hedgehog = hedgehogIterator.next();
 			hedgehog.draw();
 		}
+		
+		Iterator<Stone> stoneIterator = gameView.stones.iterator();
+		while (stoneIterator.hasNext()) {
+			Stone stone = stoneIterator.next();
+			stone.draw();
+		}
 
 		Iterator<MachineGunNest> MachineGunNestIterator = gameView.machineGunNests.iterator();
 		while (MachineGunNestIterator.hasNext()) {

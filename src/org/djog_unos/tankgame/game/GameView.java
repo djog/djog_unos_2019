@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.djog_unos.tankgame.engine.*;
+import java.util.Random;
 
 public class GameView extends View
 {
@@ -15,16 +16,22 @@ public class GameView extends View
     public ArrayList<Tree> trees = new ArrayList<>();
 	public ArrayList<Hedgehog> hedgehogs = new ArrayList<>();
 	public ArrayList<MachineGunNest> machineGunNests = new ArrayList<>();
+	public ArrayList<Stone> stones = new ArrayList<>();
 	
     @Override
     protected void setupView() {
 		background.init();
 		player.init();
-		boxes.add(new Box(200.0f, 200.0f));
-		bushes.add(new Bush(-200.0f, -300.0f));
-		trees.add(new Tree(-100.0f, 200.0f));
-		hedgehogs.add(new Hedgehog(200, -300));
-		machineGunNests.add(new MachineGunNest(400.0f, 200.0f));
+
+		for(int i = 0; i < 8; i++)
+		{
+			boxes.add(new Box(getRandom(), getRandom()));
+			bushes.add(new Bush(getRandom(), getRandom()));
+			trees.add(new Tree(getRandom(), getRandom()));
+			hedgehogs.add(new Hedgehog(getRandom(), getRandom()));
+			stones.add(new Stone(getRandom(), getRandom()));
+            machineGunNests.add(new MachineGunNest(getRandom(), getRandom()));
+		}
 
 		Iterator<Box> boxIterator = boxes.iterator();
 		while (boxIterator.hasNext()) {
@@ -52,8 +59,14 @@ public class GameView extends View
 
 		Iterator<MachineGunNest> MachineGunNestIterator = machineGunNests.iterator();
 		while (MachineGunNestIterator.hasNext()) {
-			MachineGunNest nest = MachineGunNestIterator.next();
-			nest.init();
+            MachineGunNest nest = MachineGunNestIterator.next();
+            nest.init();
+        }
+		
+		Iterator<Stone> stoneIterator = stones.iterator();
+		while (stoneIterator.hasNext()) {
+			Stone stone = stoneIterator.next();
+			stone.init();
 		}
 	}
 	
@@ -71,5 +84,10 @@ public class GameView extends View
 	@Override
     protected void drawView() {
 		GameRenderer.drawGame(this);
+	}
+
+	float getRandom()
+	{
+		return -1000 + (int)(Math.random() * ((1000 - -1000) + 1));
 	}
 }

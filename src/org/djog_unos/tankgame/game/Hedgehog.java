@@ -1,10 +1,13 @@
 package org.djog_unos.tankgame.game;
 
+import org.djog_unos.tankgame.engine.PhysicsManager;
+
 public class Hedgehog extends StaticGameObject {
 
     public Hedgehog(float x, float y)
     {
-        super(x, y, 64/2);
+        super(x, y);
+        PhysicsManager.addStaticAABBCollider(x, y, 50, 50);
     }
 
     public void init()

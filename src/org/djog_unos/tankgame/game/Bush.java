@@ -1,10 +1,13 @@
 package org.djog_unos.tankgame.game;
 
+import org.djog_unos.tankgame.engine.PhysicsManager;
+
 public class Bush extends StaticGameObject{
 
     public Bush(float x, float y)
     {
-        super(x, y, 64/2);
+        super(x, y);
+        PhysicsManager.addStaticCircleCollider(x, y, 64/3);
     }
 
     public void init()
