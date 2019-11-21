@@ -8,7 +8,6 @@ public class Bush extends StaticGameObject{
     {
         super(x, y);
         PhysicsManager.addStaticCircleCollider(x, y, 64/3);
-
     }
 
     public void init()

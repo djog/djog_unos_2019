@@ -34,6 +34,12 @@ public class GameRenderer
 			Hedgehog hedgehog = hedgehogIterator.next();
 			hedgehog.draw();
 		}
+		
+		Iterator<Stone> stoneIterator = gameView.stones.iterator();
+		while (stoneIterator.hasNext()) {
+			Stone stone = stoneIterator.next();
+			stone.draw();
+		}
 
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
         for(Shell shell : gameView.player.getShells())
