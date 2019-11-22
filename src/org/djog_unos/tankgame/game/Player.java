@@ -7,6 +7,8 @@ import org.joml.Vector2f;
 
 public class Player
 {
+    private static final int GLFW_KEY_LEFT = 263;
+    private static final int GLFW_KEY_RIGHT = 262;
     private Turret turret = new Turret();
     private Hull hull = new Hull();
 
@@ -16,9 +18,13 @@ public class Player
     private ArrayList<Shell> m_shells = new ArrayList<>();
     private static final float FIRE_DELAY = 1f;
     private static final float FIRE_OFFSET = 68;
+    private static final float BUTTON_DELAY = 0.5f;
     private static final float PI = 3.14159265359f;
     private float m_fireCountdown = 0.0f;
     private boolean m_buttonDown = false;
+    private float m_buttonDelay = 0.0f;
+
+    private int gun = 1;
 
     Player(float x, float y)
     {
@@ -82,6 +88,21 @@ public class Player
             m_fireCountdown -= Game.getDeltaTime();
         }
 
+        if(m_buttonDelay > 0.0f){
+            m_buttonDelay -= Game.getDeltaTime();
+        }
+
+        if(InputManager.isKeyDownInt(GLFW_KEY_LEFT) == 1 && m_buttonDelay <= 0.0f){
+            m_buttonDelay = BUTTON_DELAY;
+            gun--;
+            if(gun < 1) gun = 2;
+        }
+        else if(InputManager.isKeyDownInt(GLFW_KEY_RIGHT) == 1 && m_buttonDelay <= 0.0f){
+            m_buttonDelay = BUTTON_DELAY;
+            gun++;
+            gun = Math.max(1, Math.min(2, gun % 3));
+        }
+        
         // Firing
         if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f && !m_buttonDown)
         {
