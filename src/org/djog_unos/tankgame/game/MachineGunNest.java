@@ -1,7 +1,6 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.Game;
-import org.djog_unos.tankgame.engine.InputManager;
 import org.djog_unos.tankgame.engine.Sprite;
 import org.joml.Vector2f;
 
@@ -17,6 +16,7 @@ public class MachineGunNest extends StaticGameObject{
     private ArrayList<Shell> m_shells = new ArrayList<>();
     private static final float FIRE_DELAY = 0.05f;
     private static final float FIRE_OFFSET = 75;
+    private static final float RANGE = 500;
     private float m_fireCountdown = 0.0f;
 
     public MachineGunNest(float x, float y){
@@ -33,6 +33,22 @@ public class MachineGunNest extends StaticGameObject{
     }
 
     public void update(Player player){
+        Iterator<Shell> i = m_shells.iterator();
+        while (i.hasNext()) {
+            Shell shell = i.next();
+            shell.update();
+            if (shell.destroyed)
+            {
+                i.remove();
+            }
+        }
+
+        double distance = Math.sqrt(((player.get_x() - super.getX()) * (player.get_x() - super.getX()) +
+                                     (player.get_y() - super.getY()) * (player.get_y() - super.getY())));
+        System.out.println(distance);
+
+        if(distance > RANGE) return;
+
         float gun_radians = (float) java.lang.Math.atan2(super.getX() - player.get_x(), super.getY() - player.get_y());
         float gun_degrees = -gun_radians * (180 / PI);
         float shortest_angle = ((((gun_degrees - machineGun.getRotation()) % 360) + 540) % 360) - 180;
@@ -54,16 +70,6 @@ public class MachineGunNest extends StaticGameObject{
             Vector2f offsetDirection = new Vector2f(shellTarget); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
             m_shells.add(new Shell(shellPosition.x, shellPosition.y + 32, machineGun.getRotation() * (PI / 180) + PI, shellTarget));
-        }
-
-        Iterator<Shell> i = m_shells.iterator();
-        while (i.hasNext()) {
-            Shell shell = i.next();
-            shell.update();
-            if (shell.destroyed)
-            {
-                i.remove();
-            }
         }
     }
 
