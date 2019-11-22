@@ -60,7 +60,6 @@ public class MachineGunNest extends StaticGameObject{
 
         if (m_fireCountdown <= 0.0f)
         {
-            System.out.println("shoot");
             m_fireCountdown = FIRE_DELAY;
             Vector2f shellTarget = new Vector2f();
             shellTarget.x = (float)-Math.sin(-machineGun.getRotation() * (PI / 180));
