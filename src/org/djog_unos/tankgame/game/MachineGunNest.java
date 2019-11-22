@@ -45,7 +45,6 @@ public class MachineGunNest extends StaticGameObject{
 
         double distance = Math.sqrt(((player.get_x() - super.getX()) * (player.get_x() - super.getX()) +
                                      (player.get_y() - super.getY()) * (player.get_y() - super.getY())));
-        System.out.println(distance);
 
         if(distance > RANGE) return;
 
