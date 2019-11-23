@@ -13,7 +13,6 @@ public class Player
     private float m_x;
     private float m_y;
 
-    private static final float FIRE_DELAY = 1f;
     private static final float FIRE_OFFSET = 68;
     private static final float BUTTON_DELAY = 0.5f;
     private static final float PI = 3.14159265359f;
@@ -103,18 +102,23 @@ public class Player
         // Firing
         if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f && !m_buttonDown)
         {
-            m_fireCountdown = FIRE_DELAY;
-            m_buttonDown = true;
-            Vector2f shellTarget = new Vector2f();
-            shellTarget.x = (float)Math.sin(-turret.getRotation() * (PI / 180));
-            shellTarget.y = (float)Math.cos(-turret.getRotation() * (PI / 180));
-            Vector2f shellPosition = new Vector2f(m_x, m_y);
-            Vector2f offsetDirection = new Vector2f(shellTarget); // Copy shellDirection otherwise shellDirectoin will change
-            shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            ProjectileManager.addProjectile(ProjectileType.Shell, shellPosition.x, shellPosition.y, turret.getRotation() * (PI / 180), shellTarget);
+            Vector2f target = new Vector2f();
+            target.x = (float)Math.sin(-turret.getRotation() * (PI / 180));
+            target.y = (float)Math.cos(-turret.getRotation() * (PI / 180));
+            Vector2f projectilePosition = new Vector2f(m_x, m_y);
+            Vector2f offsetDirection = new Vector2f(target); // Copy shellDirection otherwise shellDirectoin will change
+            projectilePosition.add(offsetDirection.mul(FIRE_OFFSET));
+            switch(gun)
+            {
+                case 1:
+                    ProjectileManager.addProjectile(ProjectileType.Shell, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
+                    m_fireCountdown = 1.0f;
+                    m_buttonDown = true;
+                    break;
+                case 2:
+                    break;
+            }
         }
-
-        
     }
 
     public void draw() 
