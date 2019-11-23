@@ -116,6 +116,8 @@ public class Player
                     m_buttonDown = true;
                     break;
                 case 2:
+                    ProjectileManager.addProjectile(ProjectileType.Bullet, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
+                    m_fireCountdown = 0.1f;
                     break;
             }
         }
