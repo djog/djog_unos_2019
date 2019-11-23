@@ -1,7 +1,5 @@
 package org.djog_unos.tankgame.game;
 
-import org.djog_unos.tankgame.engine.*;
-
 import java.util.Iterator;
 
 public class GameRenderer
@@ -47,20 +45,7 @@ public class GameRenderer
 			nest.machineGun.draw();
 			nest.draw();
 		}
-
-        Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
-        for(Shell shell : gameView.player.getShells())
-        {
-            shellSprite.setPosition(shell.getX(), shell.getY());
-            shellSprite.setRotation(shell.getAngle());
-            shellSprite.draw();
-		}
-        for(MachineGunNest machineGunNest : gameView.machineGunNests){
-        	for(Shell shell : machineGunNest.getShells()){
-				shellSprite.setPosition(shell.getX(), shell.getY());
-				shellSprite.setRotation(shell.getAngle());
-				shellSprite.draw();
-			}
-		}
+        
+		ProjectileManager.draw();
 	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.djog_unos.tankgame.engine.*;
-import java.util.Random;
 
 public class GameView extends View
 {
@@ -79,6 +78,7 @@ public class GameView extends View
 			MachineGunNest nest = MachineGunNestIterator.next();
 			nest.update(player);
 		}
+		ProjectileManager.update();
 	}
 
 	@Override
@@ -87,7 +87,11 @@ public class GameView extends View
 	}
 
 	float getRandom()
-	{
-		return -1000 + (int)(Math.random() * ((1000 - -1000) + 1));
+	{ // Generate a random number between -1000 - -100 & 100 - 1000
+		float random = 100 + (int)(Math.random() * ((900) + 1));
+		if (Math.random() > 0.5)
+			return random;
+		else
+			return -random;
 	}
 }

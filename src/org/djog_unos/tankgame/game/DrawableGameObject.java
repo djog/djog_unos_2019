@@ -1,14 +1,13 @@
 package org.djog_unos.tankgame.game;
 
-import org.djog_unos.tankgame.engine.PhysicsManager;
 import org.djog_unos.tankgame.engine.Sprite;
 
-abstract public class StaticGameObject {
+abstract public class DrawableGameObject {
     private Sprite m_sprite;
     private float m_x = 0.0f;
     private float m_y = 0.0f;
 
-    public StaticGameObject(float x, float y) {
+    public DrawableGameObject(float x, float y) {
         m_x = x;
         m_y = y;
     }

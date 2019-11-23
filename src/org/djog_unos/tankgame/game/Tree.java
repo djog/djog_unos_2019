@@ -3,7 +3,7 @@ package org.djog_unos.tankgame.game;
 import org.djog_unos.tankgame.engine.PhysicsManager;
 
 
-public class Tree extends StaticGameObject{
+public class Tree extends DrawableGameObject{
 
     public Tree(float x, float y)
     {

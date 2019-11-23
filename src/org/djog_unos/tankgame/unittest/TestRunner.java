@@ -20,7 +20,7 @@ public class TestRunner {
         createTestContext();
         
         Result result = JUnitCore.runClasses(
-            ShellTest.class, 
+            ProjectileTest.class, 
             TextureTest.class,
             CoordinateTest.class
         );

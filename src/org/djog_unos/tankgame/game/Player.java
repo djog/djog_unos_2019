@@ -1,7 +1,5 @@
 package org.djog_unos.tankgame.game;
 
-import java.util.*;
-
 import org.djog_unos.tankgame.engine.*;
 import org.joml.Vector2f;
 
@@ -15,7 +13,6 @@ public class Player
     private float m_x;
     private float m_y;
 
-    private ArrayList<Shell> m_shells = new ArrayList<>();
     private static final float FIRE_DELAY = 1f;
     private static final float FIRE_OFFSET = 68;
     private static final float BUTTON_DELAY = 0.5f;
@@ -32,11 +29,11 @@ public class Player
         m_y = y;
 
         turret.setRotation(0);
-        turret.setRotation_speed(3f);
+        turret.setRotation_speed(4f);
 
         hull.setSpeed(256f);
         hull.setRotation(0);
-        hull.setRotation_speed(80f);
+        hull.setRotation_speed(110f);
     }
 
     public void init()
@@ -91,7 +88,7 @@ public class Player
         if(m_buttonDelay > 0.0f){
             m_buttonDelay -= Game.getDeltaTime();
         }
-
+        
         if(InputManager.isKeyDownInt(GLFW_KEY_LEFT) == 1 && m_buttonDelay <= 0.0f){
             m_buttonDelay = BUTTON_DELAY;
             gun--;
@@ -114,30 +111,16 @@ public class Player
             Vector2f shellPosition = new Vector2f(m_x, m_y);
             Vector2f offsetDirection = new Vector2f(shellTarget); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            m_shells.add(new Shell(shellPosition.x, shellPosition.y, turret.getRotation() * (PI / 180), shellTarget));
+            ProjectileManager.addProjectile(ProjectileType.Shell, shellPosition.x, shellPosition.y, turret.getRotation() * (PI / 180), shellTarget);
         }
 
-        // Update & destroy shells
-        Iterator<Shell> i = m_shells.iterator();
-        while (i.hasNext()) {
-            Shell shell = i.next(); 
-            shell.update();
-            if (shell.destroyed)
-            {
-                i.remove();
-            }
-        }
+        
     }
 
     public void draw() 
     {
         hull.sprite.draw();
         turret.sprite.draw();
-    }
-
-    public ArrayList<Shell> getShells()
-    {
-        return m_shells;
     }
 
     public float get_x() { return m_x; }

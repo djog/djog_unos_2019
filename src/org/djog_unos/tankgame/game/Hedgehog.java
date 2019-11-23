@@ -2,7 +2,7 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.PhysicsManager;
 
-public class Hedgehog extends StaticGameObject {
+public class Hedgehog extends DrawableGameObject {
 
     public Hedgehog(float x, float y)
     {

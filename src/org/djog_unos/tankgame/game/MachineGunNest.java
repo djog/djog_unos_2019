@@ -1,21 +1,18 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.Game;
+import org.djog_unos.tankgame.engine.PhysicsManager;
 import org.djog_unos.tankgame.engine.Sprite;
 import org.joml.Vector2f;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-public class MachineGunNest extends StaticGameObject{
+public class MachineGunNest extends DrawableGameObject {
 
     private static final float PI = 3.14159265359f;
 
     MachineGun machineGun = new MachineGun();
 
-    private ArrayList<Shell> m_shells = new ArrayList<>();
-    private static final float FIRE_DELAY = 0.05f;
-    private static final float FIRE_OFFSET = 75;
+    private static final float FIRE_DELAY = 0.1f;
+    private static final float FIRE_OFFSET = 56;
     private static final float RANGE = 500;
     private float m_fireCountdown = 0.0f;
 
@@ -23,6 +20,7 @@ public class MachineGunNest extends StaticGameObject{
        super(x, y);
        machineGun.setRotation(0);
        machineGun.setRotation_speed(3f);
+       PhysicsManager.addStaticCircleCollider(x, y, 128/4);
     }
 
     public void init()
@@ -33,16 +31,6 @@ public class MachineGunNest extends StaticGameObject{
     }
 
     public void update(Player player){
-        Iterator<Shell> i = m_shells.iterator();
-        while (i.hasNext()) {
-            Shell shell = i.next();
-            shell.update();
-            if (shell.destroyed)
-            {
-                i.remove();
-            }
-        }
-
         double distance = Math.sqrt(((player.get_x() - super.getX()) * (player.get_x() - super.getX()) +
                                      (player.get_y() - super.getY()) * (player.get_y() - super.getY())));
 
@@ -67,12 +55,7 @@ public class MachineGunNest extends StaticGameObject{
             Vector2f shellPosition = new Vector2f(super.getX(), super.getY());
             Vector2f offsetDirection = new Vector2f(shellTarget); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            m_shells.add(new Shell(shellPosition.x, shellPosition.y + 32, machineGun.getRotation() * (PI / 180) + PI, shellTarget));
+            ProjectileManager.addProjectile(ProjectileType.Bullet, shellPosition.x, shellPosition.y + 32, machineGun.getRotation() * (PI / 180) + PI, shellTarget);
         }
-    }
-
-    public ArrayList<Shell> getShells()
-    {
-        return m_shells;
     }
 }

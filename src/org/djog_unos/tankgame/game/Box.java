@@ -2,7 +2,7 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.PhysicsManager;
 
-public class Box extends StaticGameObject {
+public class Box extends DrawableGameObject {
 
     public Box(float x, float y)
     {
