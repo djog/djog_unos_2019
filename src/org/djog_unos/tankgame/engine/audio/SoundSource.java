@@ -5,7 +5,11 @@ import static org.lwjgl.openal.AL10.*;
 public class SoundSource {
 
     private final int sourceId;
-
+    
+    public SoundSource() {
+        this(false, false);
+    }
+    
     public SoundSource(boolean loop, boolean relative) {
         sourceId = alGenSources();
 

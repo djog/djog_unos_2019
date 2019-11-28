@@ -11,12 +11,12 @@ public class MenuView extends View
     @Override
     protected void setupView() {
         // Setup game music
-		SoundBuffer soundBuffer = new SoundBuffer("menu_music.ogg");
-		AudioManager.addSoundBuffer(soundBuffer);
-		m_musicSource = new SoundSource(true, true);
-		m_musicSource.setBuffer(soundBuffer.getBufferId());
-		AudioManager.addSoundSource("menu_music", m_musicSource);
-        AudioManager.playSoundSource("menu_music");
+	//	SoundBuffer soundBuffer = new SoundBuffer("heavy_fire.ogg");
+    //	AudioManager.addSoundBuffer(soundBuffer);
+	//	m_musicSource = new SoundSource(false, false);
+	//	m_musicSource.setBuffer(soundBuffer.getBufferId());
+	//	AudioManager.addSoundSource("menu_music", m_musicSource);
+     //   AudioManager.playSoundSource("menu_music");
         
         m_sprite = new Sprite("menu_placeholder.png", 1024, 1024, 0);
     }
@@ -34,6 +34,6 @@ public class MenuView extends View
 
     @Override
     protected void endView() {
-        m_musicSource.stop();
+//        m_musicSource.stop();
     }
 }

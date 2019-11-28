@@ -2,6 +2,8 @@ package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
 import org.djog_unos.tankgame.engine.audio.AudioManager;
+import org.djog_unos.tankgame.engine.audio.SoundBuffer;
+import org.djog_unos.tankgame.engine.audio.SoundSource;
 import org.joml.Vector2f;
 
 public class Player
@@ -22,7 +24,10 @@ public class Player
     private float m_buttonDelay = 0.0f;
 
     private int gun = 1;
-
+    
+    private SoundSource shellSource;
+    private SoundSource machineGunSource;
+    
     Player(float x, float y)
     {
         m_x = x;
@@ -41,6 +46,19 @@ public class Player
         // Sprites MUST be initialized in init() 
         hull.sprite = new Sprite("hull.png", 128, 128, 0);
         turret.sprite = new Sprite("turret.png", 128, 128, 0);
+        
+        // Setup audio
+ 		SoundBuffer soundBuffer = new SoundBuffer("machine_gun_fire.ogg");
+ 		AudioManager.addSoundBuffer(soundBuffer);
+ 		machineGunSource = new SoundSource();
+ 		machineGunSource.setBuffer(soundBuffer.getBufferId());
+ 		AudioManager.addSoundSource("machine_gun_fire", machineGunSource);
+ 		
+    	SoundBuffer sound2Buffer = new SoundBuffer("heavy_fire.ogg");
+        AudioManager.addSoundBuffer(sound2Buffer);
+    	shellSource = new SoundSource(false, false);
+    	shellSource.setBuffer(sound2Buffer.getBufferId());
+    	AudioManager.addSoundSource("menu_music", shellSource);
     }
 
     public void update()
@@ -115,11 +133,15 @@ public class Player
             switch(gun)
             {
                 case 1:
+                	shellSource.setPosition(m_x, m_y);
+                    AudioManager.playSoundSource("menu_music");            		
                     ProjectileManager.addProjectile(ProjectileType.Shell, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
                     m_fireCountdown = 1.0f;
                     m_buttonDown = true;
                     break;
                 case 2:
+            		machineGunSource.setPosition(m_x, m_y);                		
+            		AudioManager.playSoundSource("machine_gun_fire");
                     ProjectileManager.addProjectile(ProjectileType.Bullet, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
                     m_fireCountdown = 0.1f;
                     break;

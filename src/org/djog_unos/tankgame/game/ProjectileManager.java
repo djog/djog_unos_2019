@@ -45,11 +45,12 @@ public final class ProjectileManager
 
     public static void draw()
     {
+    	
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
-        Sprite bulletSprite = new Sprite("bullet.png", 32, 32, 0);
+        Sprite bulletSprite = new Sprite("bullet.png", 16, 16, 0);
         Sprite tracerSprite = new Sprite("box.png", 32, 32, 0);
 
-        for(var projectile : m_projectiles)
+        for(Projectile projectile : m_projectiles)
         {
             switch(projectile.getType())
             {   
