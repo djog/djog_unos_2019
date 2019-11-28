@@ -8,6 +8,8 @@ Branch   |[![Travis CI logo](doc/TravisCI.png)](https://travis-ci.org)
 `develop`|[![Build Status](https://travis-ci.org/djog/djog_unos_2019.svg?branch=develop)](https://travis-ci.org/djog/djog_unos_2019)
 `richel` |[![Build Status](https://travis-ci.org/djog/djog_unos_2019.svg?branch=richel)](https://travis-ci.org/djog/djog_unos_2019)
 
+[![Discord](https://img.shields.io/discord/647155357554311172?color=blueviolet&label=Discord)](discord.gg/FE75PBy)
+
 [![IRC Network](https://img.shields.io/badge/irc-%23djog_unos_2019-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=djog_unos_2019)
 
 Project by the Uno's at DJOG 2019-2020 
