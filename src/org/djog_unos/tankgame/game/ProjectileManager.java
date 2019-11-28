@@ -47,7 +47,7 @@ public final class ProjectileManager
     {
         Sprite shellSprite = new Sprite("shell.png", 32, 32, 0);
         Sprite bulletSprite = new Sprite("bullet.png", 32, 32, 0);
-        Sprite tracerSprite = new Sprite("box.png", 32, 32, 0);
+        Sprite tracerSprite = new Sprite("tracer.png", 32, 32, 0);
 
         for(var projectile : m_projectiles)
         {
