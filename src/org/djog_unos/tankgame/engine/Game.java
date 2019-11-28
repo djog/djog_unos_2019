@@ -3,6 +3,7 @@ package org.djog_unos.tankgame.engine;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import org.djog_unos.tankgame.engine.audio.AudioManager;
 import org.lwjgl.opengl.GL;
 
 public abstract class Game 
@@ -20,8 +21,10 @@ public abstract class Game
 
 	protected void run(int width, int height, boolean fullscreen, String title, int maxFPS) {
 		setupWindow(title, width, height, fullscreen);
+		AudioManager.init();
 		init();
 		isInitialized = true;
+
 		// The main game loop
 		while(!window.isOpen()){
 			updateDeltaTime();
@@ -114,6 +117,7 @@ public abstract class Game
 	}
 
 	private void destroy() {
+		AudioManager.cleanup();
 		GL.setCapabilities(null);
 
 		window.destroyWindow();

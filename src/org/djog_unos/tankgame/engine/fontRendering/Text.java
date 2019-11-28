@@ -23,6 +23,8 @@ import static java.lang.Math.*;
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
+import org.djog_unos.tankgame.engine.utils.*;
+
 public class Text {
 
     private final ByteBuffer ttf;

@@ -2,23 +2,32 @@ package org.djog_unos.tankgame.game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import org.djog_unos.tankgame.engine.audio.*;
 import org.djog_unos.tankgame.engine.*;
 
-public class GameView extends View
-{
-    public Background background = new Background();
-	public Player player =	new Player(0.0f, 0.0f);
+public class GameView extends View {
+	public Background background = new Background();
+	public Player player = new Player(0.0f, 0.0f);
 
 	public ArrayList<Box> boxes = new ArrayList<>();
 	public ArrayList<Bush> bushes = new ArrayList<>();
-    public ArrayList<Tree> trees = new ArrayList<>();
+	public ArrayList<Tree> trees = new ArrayList<>();
 	public ArrayList<Hedgehog> hedgehogs = new ArrayList<>();
 	public ArrayList<MachineGunNest> machineGunNests = new ArrayList<>();
 	public ArrayList<Stone> stones = new ArrayList<>();
-	
-    @Override
-    protected void setupView() {
+
+	private SoundSource m_musicSource;
+	@Override
+	protected void setupView() {
+		// Setup game music
+		SoundBuffer soundBuffer = new SoundBuffer("game_music.ogg");
+		AudioManager.addSoundBuffer(soundBuffer);
+		m_musicSource = new SoundSource(true, true);
+		m_musicSource.setBuffer(soundBuffer.getBufferId());
+		AudioManager.addSoundSource("game_music", m_musicSource);
+		AudioManager.playSoundSource("game_music");
+
+
 		background.init();
 		player.init();
 
@@ -93,5 +102,10 @@ public class GameView extends View
 			return random;
 		else
 			return -random;
+	}
+
+	@Override
+	protected void endView() {
+		m_musicSource.stop();
 	}
 }

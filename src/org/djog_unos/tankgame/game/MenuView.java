@@ -1,21 +1,29 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
+import org.djog_unos.tankgame.engine.audio.*;
 
 public class MenuView extends View
 {
-    private float m_countdown = 3.0f;
     private Sprite m_sprite;
+    private SoundSource m_musicSource;
 
     @Override
     protected void setupView() {
+        // Setup game music
+		SoundBuffer soundBuffer = new SoundBuffer("menu_music.ogg");
+		AudioManager.addSoundBuffer(soundBuffer);
+		m_musicSource = new SoundSource(true, true);
+		m_musicSource.setBuffer(soundBuffer.getBufferId());
+		AudioManager.addSoundSource("menu_music", m_musicSource);
+        AudioManager.playSoundSource("menu_music");
+        
         m_sprite = new Sprite("menu_placeholder.png", 1024, 1024, 0);
     }
 
     @Override
     protected void updateView() {
-        m_countdown -= Game.getDeltaTime();
-        if (m_countdown <= 0.0f)
+        if (InputManager.isMouseButtonDown(0))
             ViewManager.setView(ViewManager.ViewType.Game);
     }
 
@@ -24,4 +32,8 @@ public class MenuView extends View
         m_sprite.draw();
     }
 
+    @Override
+    protected void endView() {
+        m_musicSource.stop();
+    }
 }

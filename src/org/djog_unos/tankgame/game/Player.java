@@ -1,6 +1,7 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
+import org.djog_unos.tankgame.engine.audio.AudioManager;
 import org.joml.Vector2f;
 
 public class Player
@@ -59,8 +60,11 @@ public class Player
         if(!PhysicsManager.checkCircle(m_x, m_y + movement.y, 128/2)){
             m_y += movement.y;
         }
+
+        // Apply movement
         hull.sprite.setPosition(m_x, m_y);
         turret.sprite.setPosition(m_x, m_y);
+        AudioManager.setListenerPosition(new Vector2f(m_x, m_y));
         
         // Rotate turret to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));

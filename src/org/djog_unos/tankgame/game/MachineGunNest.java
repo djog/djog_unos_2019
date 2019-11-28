@@ -4,6 +4,7 @@ import org.djog_unos.tankgame.engine.Game;
 import org.djog_unos.tankgame.engine.PhysicsManager;
 import org.djog_unos.tankgame.engine.Sprite;
 import org.joml.Vector2f;
+import org.djog_unos.tankgame.engine.audio.*;
 
 public class MachineGunNest extends DrawableGameObject {
 
@@ -15,6 +16,7 @@ public class MachineGunNest extends DrawableGameObject {
     private static final float FIRE_OFFSET = 56;
     private static final float RANGE = 500;
     private float m_fireCountdown = 0.0f;
+    private SoundSource m_soundSource;
 
     public MachineGunNest(float x, float y){
        super(x, y);
@@ -28,13 +30,21 @@ public class MachineGunNest extends DrawableGameObject {
         super.init("machine_nest.png", 128, 128);
         machineGun.sprite = new Sprite("machine_gun.png", 128, 128, 0);
         machineGun.sprite.setPosition(super.getX(), super.getY() + 32);
-    }
 
+        // Setup game music
+		SoundBuffer soundBuffer = new SoundBuffer("machine_gun_fire.ogg");
+        AudioManager.addSoundBuffer(soundBuffer);
+		m_soundSource = new SoundSource(super.getX(), super.getY(), 1, false);
+		m_soundSource.setBuffer(soundBuffer.getBufferId());
+		//AudioManager.addSoundSource("machine_gun_fire", m_soundSource);
+    }
+    
     public void update(Player player){
         double distance = Math.sqrt(((player.get_x() - super.getX()) * (player.get_x() - super.getX()) +
-                                     (player.get_y() - super.getY()) * (player.get_y() - super.getY())));
-
+        (player.get_y() - super.getY()) * (player.get_y() - super.getY())));
+        
         if(distance > RANGE) return;
+         
 
         float gun_radians = (float) java.lang.Math.atan2(super.getX() - player.get_x(), super.getY() - player.get_y());
         float gun_degrees = -gun_radians * (180 / PI);
@@ -48,6 +58,9 @@ public class MachineGunNest extends DrawableGameObject {
 
         if (m_fireCountdown <= 0.0f)
         {
+            if (!m_soundSource.isPlaying())
+                m_soundSource.play();
+                
             m_fireCountdown = FIRE_DELAY;
             Vector2f shellTarget = new Vector2f();
             shellTarget.x = (float)-Math.sin(-machineGun.getRotation() * (PI / 180));

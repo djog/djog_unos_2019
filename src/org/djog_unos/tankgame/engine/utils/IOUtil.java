@@ -1,4 +1,4 @@
-package org.djog_unos.tankgame.engine.fontRendering;
+package org.djog_unos.tankgame.engine.utils;
 
 import org.lwjgl.*;
 

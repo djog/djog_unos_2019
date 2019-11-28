@@ -19,6 +19,8 @@ public class ViewManager
     
     public static void setView(ViewType viewType)
     {
+        if (m_currentView != null)
+            m_currentView.endView();
         m_currentView = makeView(viewType);
         m_currentView.setupView();
     }
