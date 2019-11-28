@@ -43,7 +43,7 @@ public class Player
         turret.sprite = new Sprite("turret.png", 128, 128, 0);
     }
 
-    public void update()
+    public void update(GameView view)
     {
         // Movement
         Vector2f movement = new Vector2f(); 
@@ -127,6 +127,11 @@ public class Player
                     m_fireCountdown = 0.1f;
                     break;
             }
+        }
+
+        if(PhysicsManager.checkNonCollidingCircle(m_x, m_y, 16)){
+            System.out.println("Boom!");
+            view.explosions.add(new Explosion(m_x, m_y));
         }
     }
 

@@ -11,13 +11,15 @@ class AABBCollider
 	public float x2;
 	public float y1;
 	public float y2;
+	public boolean collidable;
 
-	public AABBCollider(float x, float y, float width, float height)
+	public AABBCollider(float x, float y, float width, float height, boolean collidable)
 	{
 		x1 = x - (width / 2);
 		x2 = x + (width / 2);
 		y1 = y - (height / 2);
 		y2 = y + (height / 2);
+		this.collidable = collidable;
 	}
 
 	public Vector2f[] getPoints()
@@ -37,12 +39,14 @@ class CircleCollider
 	public float x;
 	public float y;
 	public float radius;
+	public boolean collidable;
 
-	public CircleCollider(float x, float y, float radius)
+	public CircleCollider(float x, float y, float radius, boolean collidable)
 	{
 		this.x = x;
 		this.y = y;
 		this.radius = radius;
+		this.collidable = collidable;
 	}
 }
 
@@ -51,14 +55,14 @@ public final class PhysicsManager
 	private static ArrayList<CircleCollider> m_circleColliders = new ArrayList<>();
     private static ArrayList<AABBCollider> m_aabbColliders = new ArrayList<>();
 	
-	public static void addStaticCircleCollider(float x, float y, float radius)
+	public static void addStaticCircleCollider(float x, float y, float radius, boolean collidable)
 	{
-		m_circleColliders.add(new CircleCollider(x, y, radius));
+		m_circleColliders.add(new CircleCollider(x, y, radius, collidable));
 	}
 
-	public static void addStaticAABBCollider(float x, float y, float width, float height)
+	public static void addStaticAABBCollider(float x, float y, float width, float height, boolean collidable)
 	{
-		m_aabbColliders.add(new AABBCollider(x, y, width, height));
+		m_aabbColliders.add(new AABBCollider(x, y, width, height, collidable));
 	}
 
 	public static boolean checkPoint(float x, float y)
@@ -70,6 +74,8 @@ public final class PhysicsManager
 		while(i.hasNext()) {
 			CircleCollider collider = i.next();
 
+			if(!collider.collidable) continue;
+
 			Vector2f pointA = new Vector2f(x, y);
 			Vector2f pointB = new Vector2f(collider.x, collider.y);
 			float distance = pointA.distance(pointB);
@@ -80,6 +86,8 @@ public final class PhysicsManager
 		Iterator<AABBCollider> j = m_aabbColliders.iterator();
 		while(j.hasNext()) {
 			AABBCollider collider = j.next();
+
+			if(!collider.collidable) continue;
 
 			if ((x >= collider.x1 && x <= collider.x2)
 			&&	(y >= collider.y1 && y <= collider.y2)) return true;
@@ -96,6 +104,8 @@ public final class PhysicsManager
 		while(i.hasNext()) {
 			CircleCollider collider = i.next();
 
+			if(!collider.collidable) continue;
+
 			Vector2f pointA = new Vector2f(x, y);
 			Vector2f pointB = new Vector2f(collider.x, collider.y);
 			float distance = pointA.distance(pointB);
@@ -107,6 +117,8 @@ public final class PhysicsManager
 		while(j.hasNext()) {
 			AABBCollider collider = j.next();
 
+			if(!collider.collidable) continue;
+
 			if ((x >= collider.x1 && x <= collider.x2)
 			&&	(y >= collider.y1 && y <= collider.y2)) return true;
 
@@ -116,6 +128,26 @@ public final class PhysicsManager
 				if (distance <= radius)
 					return true;
 			}
+		}
+
+		return false;
+	}
+
+	public static boolean checkNonCollidingCircle(float x, float y, float radius) {
+		if (!Game.isInitialized()) // No collision when testing
+			return false;
+
+		Iterator<CircleCollider> i = m_circleColliders.iterator();
+		while (i.hasNext()) {
+			CircleCollider collider = i.next();
+
+			if (collider.collidable) continue;
+
+			Vector2f pointA = new Vector2f(x, y);
+			Vector2f pointB = new Vector2f(collider.x, collider.y);
+			float distance = pointA.distance(pointB);
+			if (distance <= (collider.radius + radius))
+				return true;
 		}
 
 		return false;

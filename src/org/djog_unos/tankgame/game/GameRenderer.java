@@ -7,7 +7,6 @@ public class GameRenderer
 	public static void drawGame(GameView gameView)
 	{
 		gameView.background.draw();
-		gameView.player.draw();
 		
 		Iterator<Box> boxIterator = gameView.boxes.iterator();
 		while (boxIterator.hasNext()) {
@@ -45,6 +44,20 @@ public class GameRenderer
 			nest.machineGun.draw();
 			nest.draw();
 		}
+
+		Iterator<Landmine> LandmineIterator = gameView.landmines.iterator();
+		while (LandmineIterator.hasNext()) {
+			Landmine landmine = LandmineIterator.next();
+			landmine.draw();
+		}
+
+		Iterator<Explosion> explosionIterator = gameView.explosions.iterator();
+		while (explosionIterator.hasNext()) {
+			Explosion explosion = explosionIterator.next();
+			explosion.draw();
+		}
+
+		gameView.player.draw();
         
 		ProjectileManager.draw();
 	}

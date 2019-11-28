@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.djog_unos.tankgame.engine.*;
+import org.joml.Vector2f;
 
 public class GameView extends View
 {
@@ -16,6 +17,8 @@ public class GameView extends View
 	public ArrayList<Hedgehog> hedgehogs = new ArrayList<>();
 	public ArrayList<MachineGunNest> machineGunNests = new ArrayList<>();
 	public ArrayList<Stone> stones = new ArrayList<>();
+	public ArrayList<Landmine> landmines = new ArrayList<>();
+	public ArrayList<Explosion> explosions = new ArrayList<>();
 	
     @Override
     protected void setupView() {
@@ -30,6 +33,7 @@ public class GameView extends View
 			hedgehogs.add(new Hedgehog(getRandom(), getRandom()));
 			stones.add(new Stone(getRandom(), getRandom()));
             machineGunNests.add(new MachineGunNest(getRandom(), getRandom()));
+			landmines.add(new Landmine(getRandom(), getRandom()));
 		}
 
 		Iterator<Box> boxIterator = boxes.iterator();
@@ -67,11 +71,17 @@ public class GameView extends View
 			Stone stone = stoneIterator.next();
 			stone.init();
 		}
+
+		Iterator<Landmine> landMineIterator = landmines.iterator();
+		while (landMineIterator.hasNext()) {
+			Landmine landmine = landMineIterator.next();
+			landmine.init();
+		}
 	}
 	
 	@Override
     protected void updateView() {
-    	player.update();
+    	player.update(this);
     	Camera.update(player.get_x(), player.get_y());
 		Iterator<MachineGunNest> MachineGunNestIterator = machineGunNests.iterator();
 		while (MachineGunNestIterator.hasNext()) {
@@ -79,6 +89,12 @@ public class GameView extends View
 			nest.update(player);
 		}
 		ProjectileManager.update();
+        Iterator<Explosion> explosionIterator = explosions.iterator();
+        while (explosionIterator.hasNext()) {
+            Explosion explosion = explosionIterator.next();
+            explosion.update();
+            if(explosion.current_frame > 11) explosions.remove(explosion);
+        }
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public final class ProjectileManager
             case Bullet:
                 return new Projectile(type, x, y, angle, direction, 700);
             case Tracer:
-                return new Projectile(type, x, y, angle, direction, 400);
+                return new Projectile(type, x, y, angle, direction, 700);
             default:
                 throw new RuntimeException("A projectile is not implemented in createProjectile!");
         }
