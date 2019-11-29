@@ -7,7 +7,8 @@ public class Shape
 	public enum ShapeType
 	{
 		Triangle,
-		Square
+        Square,
+        Circle
 	}
 	
     private Transform m_transform;
@@ -35,6 +36,45 @@ public class Shape
         2,3,0
     };
 
+    private static final float[] CIRCLE_VERTICES = new float[] {
+        -0.00000f, 0.000000f, -0.000000f,
+        -0.00000f, 0.000000f, -0.500000f,
+        -0.09754f, 0.000000f, -0.490393f,
+        -0.19134f, 0.000000f, -0.461940f,
+        -0.27778f, 0.000000f, -0.415735f,
+        -0.35355f, 0.000000f, -0.353554f,
+        -0.41573f, 0.000000f, -0.277785f,
+        -0.46194f, 0.000000f, -0.191342f,
+        -0.49039f, 0.000000f, -0.097545f,
+        -0.50000f, 0.000000f, -0.000000f,
+        -0.49039f, 0.000000f, 0.097545f,
+        -0.46194f, 0.000000f, 0.191341f,
+        -0.41573f, 0.000000f, 0.277785f,
+        -0.35355f, 0.000000f, 0.353553f,
+        -0.27778f, 0.000000f, 0.415735f,
+        -0.19134f, 0.000000f, 0.461940f,
+        -0.09754f, 0.000000f, 0.490393f,
+        0.000000f, 0.000000f, 0.500000f,
+        0.097545f, 0.000000f, 0.490392f,
+        0.191342f, 0.000000f, 0.461940f,
+        0.277785f, 0.000000f, 0.415735f,
+        0.353554f, 0.000000f, 0.353553f,
+        0.415735f, 0.000000f, 0.277785f,
+        0.461940f, 0.000000f, 0.191341f,
+        0.490393f, 0.000000f, 0.097545f,
+        0.500000f, 0.000000f, -0.000001f,
+        0.490392f, 0.000000f, -0.097546f,
+        0.461939f, 0.000000f, -0.191342f,
+        0.415734f, 0.000000f, -0.277786f,
+        0.353553f, 0.000000f, -0.353554f,
+        0.277784f, 0.000000f, -0.415735f,
+        0.191341f, 0.000000f, -0.461940f,
+        0.097544f, 0.000000f, -0.490393f,
+    };
+    private static final int[] CIRCLE_INDICES = new int[] {
+        0,1,2
+    };
+    
     private Vector4f m_color; // RGBA COLOR
 
     public Shape(ShapeType type, float width, float height, Vector4f color)
@@ -46,6 +86,9 @@ public class Shape
 	    		break;
 	    	case Square:
 	    		m_model = new Model(SQUARE_VERTICES, SQUARE_INDICES);
+                break;
+            case Circle:
+	    		m_model = new Model(CIRCLE_VERTICES, CIRCLE_INDICES);
 	    		break;
     	}
         m_color = color;

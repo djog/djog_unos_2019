@@ -76,6 +76,8 @@ public class GameView extends View {
 			Stone stone = stoneIterator.next();
 			stone.init();
 		}
+
+		PhysicsManager.generateDebugColliders();
 	}
 	
 	@Override
@@ -93,6 +95,7 @@ public class GameView extends View {
 	@Override
     protected void drawView() {
 		GameRenderer.drawGame(this);
+		PhysicsManager.drawDebugColliders();
 	}
 
 	float getRandom()

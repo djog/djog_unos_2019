@@ -1,6 +1,7 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
+import org.djog_unos.tankgame.engine.Shape.ShapeType;
 import org.djog_unos.tankgame.engine.audio.AudioManager;
 import org.djog_unos.tankgame.engine.audio.SoundBuffer;
 import org.djog_unos.tankgame.engine.audio.SoundSource;
@@ -18,7 +19,10 @@ public class Player
 
     private static final float FIRE_OFFSET = 68;
     private static final float BUTTON_DELAY = 0.5f;
-    private static final float PI = 3.14159265359f;
+    private static final float RADIUS = 128/2;
+    private static final float TURRET_ROTATION_SPEED = 4;
+    private static final float HULL_ROTATION_SPEED = 110;
+
     private float m_fireCountdown = 0.0f;
     private boolean m_buttonDown = false;
     private float m_buttonDelay = 0.0f;
@@ -35,11 +39,9 @@ public class Player
         m_y = y;
 
         turret.setRotation(0);
-        turret.setRotation_speed(4f);
 
         hull.setSpeed(256f);
         hull.setRotation(0);
-        hull.setRotation_speed(110f);
     }
 
     public void init()
@@ -51,7 +53,7 @@ public class Player
         // Setup audio
  		SoundBuffer soundBuffer = new SoundBuffer("machine_gun_fire.ogg");
  		AudioManager.addSoundBuffer(soundBuffer);
- 		machineGunSource = new SoundSource();
+ 		machineGunSource = new SoundSource(false, false);
  		machineGunSource.setBuffer(soundBuffer.getBufferId());
  		AudioManager.addSoundSource("machine_gun_fire", machineGunSource);
  		
@@ -59,24 +61,24 @@ public class Player
         AudioManager.addSoundBuffer(sound2Buffer);
     	shellSource = new SoundSource(false, false);
     	shellSource.setBuffer(sound2Buffer.getBufferId());
-    	AudioManager.addSoundSource("menu_music", shellSource);
+    	AudioManager.addSoundSource("shell_fire", shellSource);
     }
 
     public void update()
     {
         // Movement
         Vector2f movement = new Vector2f(); 
-        float hull_radian = hull.getRotation() * (PI / 180);
+        float hull_radian = hull.getRotation() * ((float)Math.PI / 180);
         movement.x = ((hull.getSpeed() * (float)Game.getDeltaTime())
                      * (InputManager.getVerticalInput()))
                      * (float)Math.sin(hull_radian);
         movement.y = ((hull.getSpeed() * (float)Game.getDeltaTime())
                      * (InputManager.getVerticalInput()))
                      * (float)Math.cos(hull_radian);
-        if(!PhysicsManager.checkCircle(m_x + movement.x, m_y, 128/2)){
+        if(!PhysicsManager.checkCircle(m_x + movement.x, m_y, RADIUS)){
             m_x += movement.x;
         }
-        if(!PhysicsManager.checkCircle(m_x, m_y + movement.y, 128/2)){
+        if(!PhysicsManager.checkCircle(m_x, m_y + movement.y, RADIUS)){
             m_y += movement.y;
         }
 
@@ -90,13 +92,13 @@ public class Player
         float directionX = screenPos.x - InputManager.getMousePosition().x;
         float directionY = screenPos.y - InputManager.getMousePosition().y;
         float turret_radians = (float)java.lang.Math.atan2(directionX, directionY);
-        float turret_degrees = turret_radians * (180 / PI);
+        float turret_degrees = turret_radians * (180 / (float)Math.PI);
         float shortest_angle = ((((turret_degrees - turret.getRotation()) % 360) + 540) % 360) - 180;
-        turret.setRotation(((shortest_angle * 0.75f) % 360) * (float)Game.getDeltaTime() * turret.getRotation_speed());
+        turret.setRotation(((shortest_angle * 0.75f) % 360) * (float)Game.getDeltaTime() * TURRET_ROTATION_SPEED);
         hull.sprite.setRotation(-hull_radian);
 
         // Rotate hull
-        hull.setRotation((InputManager.getHorizontalInput() * hull.getRotation_speed() % 360) * (float)Game.getDeltaTime());
+        hull.setRotation((InputManager.getHorizontalInput() * HULL_ROTATION_SPEED % 360) * (float)Game.getDeltaTime());
 
         if(m_buttonDown && !InputManager.isMouseButtonDown(0)){
             m_buttonDown = false;
@@ -132,8 +134,8 @@ public class Player
                 m_tracerCountdown = 5;
             }
             Vector2f target = new Vector2f();
-            target.x = (float)Math.sin(-turret.getRotation() * (PI / 180));
-            target.y = (float)Math.cos(-turret.getRotation() * (PI / 180));
+            target.x = (float)Math.sin(-turret.getRotation() * (Math.PI / 180));
+            target.y = (float)Math.cos(-turret.getRotation() * (Math.PI / 180));
             Vector2f projectilePosition = new Vector2f(m_x, m_y);
             Vector2f offsetDirection = new Vector2f(target); // Copy shellDirection otherwise shellDirectoin will change
             projectilePosition.add(offsetDirection.mul(FIRE_OFFSET));
@@ -141,15 +143,15 @@ public class Player
             {
                 case 1:
                 	shellSource.setPosition(m_x, m_y);
-                    AudioManager.playSoundSource("menu_music");            		
-                    ProjectileManager.addProjectile(ProjectileType.Shell, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
+                    AudioManager.playSoundSource("shell_fire");            		
+                    ProjectileManager.addProjectile(ProjectileType.Shell, projectilePosition.x, projectilePosition.y, turret.getRotation() * ((float)Math.PI / 180), target);
                     m_fireCountdown = 1.0f;
                     m_buttonDown = true;
                     break;
                 case 2:
             		machineGunSource.setPosition(m_x, m_y);                		
             		AudioManager.playSoundSource("machine_gun_fire");
-                    ProjectileManager.addProjectile(type, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
+                    ProjectileManager.addProjectile(type, projectilePosition.x, projectilePosition.y, turret.getRotation() * ((float)Math.PI / 180), target);
                     m_fireCountdown = 0.1f;
                     break;
             }
@@ -159,7 +161,11 @@ public class Player
     public void draw() 
     {
         hull.sprite.draw();
-        turret.sprite.draw();
+        turret.sprite.draw();        
+
+        Shape colliderShape = new Shape(ShapeType.Circle, RADIUS * 2, RADIUS * 2, PhysicsManager.DEBUG_COLOR);
+        colliderShape.setPosition(m_x, m_y);
+        colliderShape.draw();
     }
 
     public float get_x() { return m_x; }

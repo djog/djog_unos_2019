@@ -8,8 +8,6 @@ import org.djog_unos.tankgame.engine.audio.*;
 
 public class MachineGunNest extends DrawableGameObject {
 
-    private static final float PI = 3.14159265359f;
-
     MachineGun machineGun = new MachineGun();
 
     private static final float FIRE_DELAY = 0.1f;
@@ -48,7 +46,7 @@ public class MachineGunNest extends DrawableGameObject {
          
 
         float gun_radians = (float) java.lang.Math.atan2(super.getX() - player.get_x(), super.getY() - player.get_y());
-        float gun_degrees = -gun_radians * (180 / PI);
+        float gun_degrees = -gun_radians * (180 / (float)Math.PI);
         float shortest_angle = ((((gun_degrees - machineGun.getRotation()) % 360) + 540) % 360) - 180;
         machineGun.setRotation(((shortest_angle * 0.75f) % 360) * (float)Game.getDeltaTime() * machineGun.getRotation_speed());
 
@@ -70,12 +68,12 @@ public class MachineGunNest extends DrawableGameObject {
             }
             m_fireCountdown = FIRE_DELAY;
             Vector2f shellTarget = new Vector2f();
-            shellTarget.x = (float)-Math.sin(-machineGun.getRotation() * (PI / 180));
-            shellTarget.y = (float)-Math.cos(-machineGun.getRotation() * (PI / 180));
+            shellTarget.x = (float)-Math.sin(-machineGun.getRotation() * (Math.PI / 180));
+            shellTarget.y = (float)-Math.cos(-machineGun.getRotation() * (Math.PI / 180));
             Vector2f shellPosition = new Vector2f(super.getX(), super.getY());
             Vector2f offsetDirection = new Vector2f(shellTarget); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            ProjectileManager.addProjectile(type, shellPosition.x, shellPosition.y + 32, machineGun.getRotation() * (PI / 180) + PI, shellTarget);
+            ProjectileManager.addProjectile(type, shellPosition.x, shellPosition.y + 32, machineGun.getRotation() * ((float)Math.PI / 180) + (float)Math.PI, shellTarget);
         }
     }
 }

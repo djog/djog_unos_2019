@@ -14,7 +14,7 @@ public final class ProjectileManager
         switch(type)
         {
             case Shell:
-                return new Projectile(type, x, y, angle, direction, 400);
+                return new Projectile(type, x, y, angle, direction, 800);
             case Bullet:
                 return new Projectile(type, x, y, angle, direction, 700);
             case Tracer:

@@ -3,7 +3,8 @@ package org.djog_unos.tankgame.engine;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.joml.*;
+import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 class AABBCollider
 {
@@ -30,6 +31,17 @@ class AABBCollider
 
 		return coords;
 	}
+
+	public float getWidth() { return x2 - x1; }
+	public float getHeight() { return y2 - y1; }
+
+	public Vector2f getCenter()
+	{
+		return new Vector2f(
+			x1 + getWidth() / 2,
+			y1 + getHeight() / 2
+		);
+	}
 }
 
 class CircleCollider
@@ -51,6 +63,9 @@ public final class PhysicsManager
 	private static ArrayList<CircleCollider> m_circleColliders = new ArrayList<>();
     private static ArrayList<AABBCollider> m_aabbColliders = new ArrayList<>();
 	
+	private static ArrayList<Shape> m_shapes = new ArrayList<>();
+	public static Vector4f DEBUG_COLOR = new Vector4f(1, 0, 1, .4f);
+
 	public static void addStaticCircleCollider(float x, float y, float radius)
 	{
 		m_circleColliders.add(new CircleCollider(x, y, radius));
@@ -119,5 +134,30 @@ public final class PhysicsManager
 		}
 
 		return false;
+	}
+
+	public static void generateDebugColliders()
+	{
+		for(var circleCollider : m_circleColliders)
+		{
+			Shape shape = new Shape(Shape.ShapeType.Circle, circleCollider.radius * 2, circleCollider.radius  * 2, DEBUG_COLOR);
+			shape.setPosition(circleCollider.x, circleCollider.y);
+			m_shapes.add(shape);
+		}
+
+		for(var aabbCollider : m_aabbColliders)
+		{
+			Shape shape = new Shape(Shape.ShapeType.Square, aabbCollider.getWidth(), aabbCollider.getHeight(), DEBUG_COLOR);
+			shape.setPosition(aabbCollider.getCenter());
+			m_shapes.add(shape);
+		}
+	}
+
+	public static void drawDebugColliders()
+	{
+		for(var shape : m_shapes)
+		{
+			shape.draw();
+		}
 	}
 }
