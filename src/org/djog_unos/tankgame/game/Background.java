@@ -19,16 +19,16 @@ public class Background
     }
      */
     //snowy mountains
-    public void init() {
-        m_sprite = new Sprite("snow_mountains.png", 2048, 2048, 0);
-    }
+//    public void init() {
+//        m_sprite = new Sprite("snow_mountains.png", 2048, 2048, 0);
+//    }
     //grassland
-    /*
+
     public void init()
     {
         m_sprite = new Sprite("grassland.png", 2048, 2048, 0);
     }
-*/
+
     public void draw() 
     {
         m_sprite.draw();

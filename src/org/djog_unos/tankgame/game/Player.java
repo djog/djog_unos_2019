@@ -22,6 +22,7 @@ public class Player
     private float m_fireCountdown = 0.0f;
     private boolean m_buttonDown = false;
     private float m_buttonDelay = 0.0f;
+    private int m_tracerCountdown = 5;
 
     private int gun = 1;
     
@@ -124,6 +125,12 @@ public class Player
         // Firing
         if (InputManager.isMouseButtonDown(0) && m_fireCountdown <= 0.0f && !m_buttonDown)
         {
+            m_tracerCountdown--;
+            ProjectileType type = ProjectileType.Bullet;
+            if(m_tracerCountdown == 0) {
+                type = ProjectileType.Tracer;
+                m_tracerCountdown = 5;
+            }
             Vector2f target = new Vector2f();
             target.x = (float)Math.sin(-turret.getRotation() * (PI / 180));
             target.y = (float)Math.cos(-turret.getRotation() * (PI / 180));
@@ -142,7 +149,7 @@ public class Player
                 case 2:
             		machineGunSource.setPosition(m_x, m_y);                		
             		AudioManager.playSoundSource("machine_gun_fire");
-                    ProjectileManager.addProjectile(ProjectileType.Bullet, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
+                    ProjectileManager.addProjectile(type, projectilePosition.x, projectilePosition.y, turret.getRotation() * (PI / 180), target);
                     m_fireCountdown = 0.1f;
                     break;
             }

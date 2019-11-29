@@ -17,6 +17,7 @@ public class MachineGunNest extends DrawableGameObject {
     private static final float RANGE = 500;
     private float m_fireCountdown = 0.0f;
     private SoundSource m_soundSource;
+    private int m_tracerCountdown = 5;
 
     public MachineGunNest(float x, float y){
        super(x, y);
@@ -61,6 +62,12 @@ public class MachineGunNest extends DrawableGameObject {
             if (!m_soundSource.isPlaying())
                 m_soundSource.play();
                 
+            m_tracerCountdown--;
+            ProjectileType type = ProjectileType.Bullet;
+            if(m_tracerCountdown == 0) {
+                type = ProjectileType.Tracer;
+                m_tracerCountdown = 5;
+            }
             m_fireCountdown = FIRE_DELAY;
             Vector2f shellTarget = new Vector2f();
             shellTarget.x = (float)-Math.sin(-machineGun.getRotation() * (PI / 180));
@@ -68,7 +75,7 @@ public class MachineGunNest extends DrawableGameObject {
             Vector2f shellPosition = new Vector2f(super.getX(), super.getY());
             Vector2f offsetDirection = new Vector2f(shellTarget); // Copy shellDirection otherwise shellDirectoin will change
             shellPosition.add(offsetDirection.mul(FIRE_OFFSET));
-            ProjectileManager.addProjectile(ProjectileType.Bullet, shellPosition.x, shellPosition.y + 32, machineGun.getRotation() * (PI / 180) + PI, shellTarget);
+            ProjectileManager.addProjectile(type, shellPosition.x, shellPosition.y + 32, machineGun.getRotation() * (PI / 180) + PI, shellTarget);
         }
     }
 }
