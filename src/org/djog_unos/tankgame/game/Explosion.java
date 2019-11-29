@@ -6,7 +6,8 @@ public class Explosion extends DrawableGameObject {
 
     private String[] textures;
 
-    private float m_countDown = 0.1f;
+    private static final float FRAME_TIME = 0.05f;
+    private float m_countDown = FRAME_TIME;
     public int current_frame = 0;
 
     public Explosion(float x, float y)
@@ -34,7 +35,7 @@ public class Explosion extends DrawableGameObject {
 
         if(m_countDown < 0.0f){
             super.changeSprite(textures[current_frame], 96, 96);
-            m_countDown = 0.1f;
+            m_countDown = FRAME_TIME;
             current_frame++;
         }
     }

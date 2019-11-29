@@ -20,6 +20,7 @@ public class Player
     private boolean m_buttonDown = false;
     private float m_buttonDelay = 0.0f;
     private int m_tracerCountdown = 5;
+    private boolean m_alreadyExploded = false;
 
     private int gun = 1;
 
@@ -129,9 +130,11 @@ public class Player
             }
         }
 
-        if(PhysicsManager.checkNonCollidingCircle(m_x, m_y, 16)){
-            System.out.println("Boom!");
-            view.explosions.add(new Explosion(m_x, m_y));
+        if(PhysicsManager.checkNonCollidingCircle(m_x, m_y, 16) && !m_alreadyExploded){
+            m_alreadyExploded = true;
+            Explosion explosion = new Explosion(m_x, m_y);
+            explosion.init();
+            view.explosions.add(explosion);
         }
     }
 

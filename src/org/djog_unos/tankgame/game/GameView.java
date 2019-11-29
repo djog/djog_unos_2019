@@ -93,7 +93,7 @@ public class GameView extends View
         while (explosionIterator.hasNext()) {
             Explosion explosion = explosionIterator.next();
             explosion.update();
-            if(explosion.current_frame > 11) explosions.remove(explosion);
+            if(explosion.current_frame > 11) explosionIterator.remove();
         }
 	}
 
