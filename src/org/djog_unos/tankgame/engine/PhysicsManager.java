@@ -85,6 +85,7 @@ public final class PhysicsManager
     private static PlayerCollider playerCollider;
 	
 	private static ArrayList<Shape> m_shapes = new ArrayList<>();
+	public final static boolean DEBUG_PHYSICS = false;
 	public static Vector4f DEBUG_COLOR = new Vector4f(1, 0, 1, .4f);
 
 	public static void addStaticCircleCollider(float x, float y, float radius, boolean collidable)
@@ -176,6 +177,9 @@ public final class PhysicsManager
 
 	public static void generateDebugColliders()
 	{
+		if (!DEBUG_PHYSICS)
+			return;
+
 		for(var circleCollider : m_circleColliders)
 		{
 			Shape shape = new Shape(Shape.ShapeType.Circle, circleCollider.radius * 2, circleCollider.radius  * 2, DEBUG_COLOR);
@@ -193,6 +197,9 @@ public final class PhysicsManager
 
 	public static void drawDebugColliders()
 	{
+		if (!DEBUG_PHYSICS)
+			return;
+			
 		for(var shape : m_shapes)
 		{
 			shape.draw();

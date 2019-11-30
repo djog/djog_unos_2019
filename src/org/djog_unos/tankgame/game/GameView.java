@@ -77,8 +77,7 @@ public class GameView extends View {
 			Landmine landmine = landMineIterator.next();
 			landmine.init();
 		}
-
-
+		
 		PhysicsManager.generateDebugColliders();
 	}
 	

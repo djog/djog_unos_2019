@@ -163,11 +163,14 @@ public class Player
     public void draw() 
     {
         hull.sprite.draw();
-        turret.sprite.draw();        
+        turret.sprite.draw();  
 
-        Shape colliderShape = new Shape(ShapeType.Circle, RADIUS * 2, RADIUS * 2, PhysicsManager.DEBUG_COLOR);
-        colliderShape.setPosition(m_x, m_y);
-        colliderShape.draw();
+        if (PhysicsManager.DEBUG_PHYSICS) // Temp fix
+        {
+            Shape colliderShape = new Shape(ShapeType.Circle, RADIUS * 2, RADIUS * 2, PhysicsManager.DEBUG_COLOR);
+            colliderShape.setPosition(m_x, m_y);
+            colliderShape.draw();
+        }
     }
 
     public float get_x() { return m_x; }
