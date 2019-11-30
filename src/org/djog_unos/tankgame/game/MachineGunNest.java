@@ -30,12 +30,15 @@ public class MachineGunNest extends DrawableGameObject {
         machineGun.sprite = new Sprite("machine_gun.png", 128, 128, 0);
         machineGun.sprite.setPosition(super.getX(), super.getY() + 32);
 
-        // Setup game music
+        // Setup audio
 		SoundBuffer soundBuffer = new SoundBuffer("machine_gun_fire.ogg");
         AudioManager.addSoundBuffer(soundBuffer);
-		m_soundSource = new SoundSource(super.getX(), super.getY(), 1, false);
-		m_soundSource.setBuffer(soundBuffer.getBufferId());
-		//AudioManager.addSoundSource("machine_gun_fire", m_soundSource);
+        m_soundSource = new SoundSource(false, false);
+        m_soundSource.setPosition(super.getX(), super.getY());
+        m_soundSource.setBuffer(soundBuffer.getBufferId());
+        m_soundSource.setGain(200);
+        m_soundSource.setMaxDistance(200);
+        AudioManager.addSoundSource("machine_gun_fire", m_soundSource);
     }
     
     public void update(Player player){
@@ -43,23 +46,23 @@ public class MachineGunNest extends DrawableGameObject {
         (player.get_y() - super.getY()) * (player.get_y() - super.getY())));
         
         if(distance > RANGE) return;
-         
-
+        
+        
         float gun_radians = (float) java.lang.Math.atan2(super.getX() - player.get_x(), super.getY() - player.get_y());
         float gun_degrees = -gun_radians * (180 / (float)Math.PI);
         float shortest_angle = ((((gun_degrees - machineGun.getRotation()) % 360) + 540) % 360) - 180;
         machineGun.setRotation(((shortest_angle * 0.75f) % 360) * (float)Game.getDeltaTime() * machineGun.getRotation_speed());
-
+        
         if (m_fireCountdown > 0.0f)
         {
             m_fireCountdown -= Game.getDeltaTime();
         }
-
+        
         if (m_fireCountdown <= 0.0f)
-        {
-            if (!m_soundSource.isPlaying())
+        {          
+            if (!m_soundSource.isPlaying())      
                 m_soundSource.play();
-                
+
             m_tracerCountdown--;
             ProjectileType type = ProjectileType.Bullet;
             if(m_tracerCountdown == 0) {

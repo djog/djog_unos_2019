@@ -40,6 +40,11 @@ public class SoundSource {
         alSourcef(sourceId, AL_GAIN, gain);
     }
     
+    public void setMaxDistance(float distance)
+    {
+        alSourcef(sourceId, AL_MAX_DISTANCE, distance);
+    }
+
     public void play() {
         alSourcePlay(sourceId);
     }
