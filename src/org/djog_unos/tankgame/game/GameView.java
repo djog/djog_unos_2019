@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import org.djog_unos.tankgame.engine.audio.*;
 import org.djog_unos.tankgame.engine.*;
-import org.joml.Vector2f;
 
 public class GameView extends View {
 	public Background background = new Background();
@@ -79,7 +78,7 @@ public class GameView extends View {
 			landmine.init();
 		}
 
-		
+
 		PhysicsManager.generateDebugColliders();
 	}
 	
