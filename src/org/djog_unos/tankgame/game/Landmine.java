@@ -9,7 +9,6 @@ public class Landmine extends DrawableGameObject {
     public Landmine(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticCircleCollider(x, y, 16, false);
     }
 
     public void update(GameView view){

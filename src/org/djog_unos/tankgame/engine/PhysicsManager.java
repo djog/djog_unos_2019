@@ -85,7 +85,7 @@ public final class PhysicsManager
     private static PlayerCollider playerCollider;
 	
 	private static ArrayList<Shape> m_shapes = new ArrayList<>();
-	public final static boolean DEBUG_PHYSICS = false;
+	public final static boolean DEBUG_PHYSICS = true;
 	public static Vector4f DEBUG_COLOR = new Vector4f(1, 0, 1, .4f);
 
 	public static void addStaticCircleCollider(float x, float y, float radius, boolean collidable)
