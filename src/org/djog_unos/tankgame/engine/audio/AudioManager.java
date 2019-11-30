@@ -22,7 +22,6 @@ public final class AudioManager
 
     private static final Map<String, SoundSource> soundSourceMap;
 
-
     static {
         soundBufferList = new ArrayList<>();
         soundSourceMap = new HashMap<>();
@@ -45,6 +44,22 @@ public final class AudioManager
         {
             e.printStackTrace();
         }
+    }
+
+    public static void setMusic(SoundBuffer buffer)
+    {
+        SoundSource oldMusic = getSoundSource("music");
+        if (oldMusic != null)
+        {
+            oldMusic.stop();
+            removeSoundSource("music");
+        }
+
+        addSoundBuffer(buffer);
+        SoundSource musicSource = new SoundSource(true, true);
+        musicSource.setBuffer(buffer.getBufferId());
+        addSoundSource("music", musicSource);
+        playSoundSource("music");
     }
 
     public static void addSoundSource(String name, SoundSource soundSource) {

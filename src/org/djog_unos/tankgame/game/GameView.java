@@ -16,17 +16,10 @@ public class GameView extends View {
 	public ArrayList<MachineGunNest> machineGunNests = new ArrayList<>();
 	public ArrayList<Stone> stones = new ArrayList<>();
 
-	private SoundSource m_musicSource;
 	@Override
 	protected void setupView() {
 		// Setup game music
-		SoundBuffer soundBuffer = new SoundBuffer("game_music.ogg");
-		AudioManager.addSoundBuffer(soundBuffer);
-		m_musicSource = new SoundSource(true, true);
-		m_musicSource.setBuffer(soundBuffer.getBufferId());
-		AudioManager.addSoundSource("game_music", m_musicSource);
-		AudioManager.playSoundSource("game_music");
-
+		AudioManager.setMusic(new SoundBuffer("game_music.ogg"));
 
 		background.init();
 		player.init();
@@ -109,6 +102,6 @@ public class GameView extends View {
 
 	@Override
 	protected void endView() {
-		m_musicSource.stop();
+
 	}
 }

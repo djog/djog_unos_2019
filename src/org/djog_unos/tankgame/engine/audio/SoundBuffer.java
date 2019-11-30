@@ -22,7 +22,7 @@ public class SoundBuffer {
         String path = "./assets/audio/" + fileName;
         bufferId = alGenBuffers();
         try (STBVorbisInfo info = STBVorbisInfo.malloc()) {
-            ShortBuffer pcm = readVorbis(path, 32 * 1024, info);
+            ShortBuffer pcm = readVorbis(path, 256 * 1024, info);
 
             // Copy to buffer
             alBufferData(bufferId, info.channels() == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, pcm, info.sample_rate());
