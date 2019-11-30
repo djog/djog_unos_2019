@@ -51,13 +51,13 @@ public class GameRenderer
 			landmine.draw();
 		}
 
+		gameView.player.draw();
+
 		Iterator<Explosion> explosionIterator = gameView.explosions.iterator();
 		while (explosionIterator.hasNext()) {
 			Explosion explosion = explosionIterator.next();
 			explosion.draw();
 		}
-
-		gameView.player.draw();
         
 		ProjectileManager.draw();
 	}

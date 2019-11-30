@@ -81,7 +81,7 @@ public class GameView extends View
 	
 	@Override
     protected void updateView() {
-    	player.update(this);
+    	player.update();
     	Camera.update(player.get_x(), player.get_y());
 		Iterator<MachineGunNest> MachineGunNestIterator = machineGunNests.iterator();
 		while (MachineGunNestIterator.hasNext()) {
@@ -95,6 +95,12 @@ public class GameView extends View
             explosion.update();
             if(explosion.current_frame > 11) explosionIterator.remove();
         }
+		Iterator<Landmine> landmineIterator = landmines.iterator();
+		while (landmineIterator.hasNext()) {
+			Landmine landmine = landmineIterator.next();
+			landmine.update(this);
+			if(landmine.getToBeDestroyed()) landmineIterator.remove();
+		}
 	}
 
 	@Override

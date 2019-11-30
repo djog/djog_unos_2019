@@ -3,6 +3,7 @@ package org.djog_unos.tankgame.engine;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.djog_unos.tankgame.game.Player;
 import org.joml.*;
 
 class AABBCollider
@@ -50,10 +51,27 @@ class CircleCollider
 	}
 }
 
+class PlayerCollider
+{
+	public float x;
+	public float y;
+	public float radius;
+	public boolean collidable;
+
+	public PlayerCollider(float x, float y, float radius, boolean collidable)
+	{
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+		this.collidable = collidable;
+	}
+}
+
 public final class PhysicsManager
 {
 	private static ArrayList<CircleCollider> m_circleColliders = new ArrayList<>();
     private static ArrayList<AABBCollider> m_aabbColliders = new ArrayList<>();
+    private static PlayerCollider playerCollider;
 	
 	public static void addStaticCircleCollider(float x, float y, float radius, boolean collidable)
 	{
@@ -63,6 +81,15 @@ public final class PhysicsManager
 	public static void addStaticAABBCollider(float x, float y, float width, float height, boolean collidable)
 	{
 		m_aabbColliders.add(new AABBCollider(x, y, width, height, collidable));
+	}
+
+	public static void addPlayerCollider(float x, float y, float radius, boolean collidable){
+		playerCollider = new PlayerCollider(x, y, radius, collidable);
+	}
+
+	public static void updatePlayerCollider(float x, float y){
+		playerCollider.x = x;
+		playerCollider.y = y;
 	}
 
 	public static boolean checkPoint(float x, float y)
@@ -151,5 +178,17 @@ public final class PhysicsManager
 		}
 
 		return false;
+	}
+
+	public static boolean checkPlayer(float x, float y, float radius){
+		if (!Game.isInitialized()) // No collision when testing
+			return false;
+
+		Vector2f pointA = new Vector2f(x, y);
+		Vector2f pointB = new Vector2f(playerCollider.x, playerCollider.y);
+		float distance = pointA.distance(pointB);
+		if (distance <= (playerCollider.radius + radius))
+			return true;
+		else return false;
 	}
 }

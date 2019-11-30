@@ -20,7 +20,6 @@ public class Player
     private boolean m_buttonDown = false;
     private float m_buttonDelay = 0.0f;
     private int m_tracerCountdown = 5;
-    private boolean m_alreadyExploded = false;
 
     private int gun = 1;
 
@@ -35,6 +34,8 @@ public class Player
         hull.setSpeed(256f);
         hull.setRotation(0);
         hull.setRotation_speed(110f);
+
+        PhysicsManager.addPlayerCollider(m_x, m_y, 128/2, false);
     }
 
     public void init()
@@ -44,7 +45,7 @@ public class Player
         turret.sprite = new Sprite("turret.png", 128, 128, 0);
     }
 
-    public void update(GameView view)
+    public void update()
     {
         // Movement
         Vector2f movement = new Vector2f(); 
@@ -63,6 +64,7 @@ public class Player
         }
         hull.sprite.setPosition(m_x, m_y);
         turret.sprite.setPosition(m_x, m_y);
+        PhysicsManager.updatePlayerCollider(m_x, m_y);
         
         // Rotate turret to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
@@ -128,13 +130,6 @@ public class Player
                     m_fireCountdown = 0.1f;
                     break;
             }
-        }
-
-        if(PhysicsManager.checkNonCollidingCircle(m_x, m_y, 16) && !m_alreadyExploded){
-            m_alreadyExploded = true;
-            Explosion explosion = new Explosion(m_x, m_y);
-            explosion.init();
-            view.explosions.add(explosion);
         }
     }
 
