@@ -7,7 +7,7 @@ public class Hedgehog extends DrawableGameObject {
     public Hedgehog(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticAABBCollider(x, y, 50, 50);
+        PhysicsManager.addStaticAABBCollider(x, y, 50, 50, true);
     }
 
     public void init()

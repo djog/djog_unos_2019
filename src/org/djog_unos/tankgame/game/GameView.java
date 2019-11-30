@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import org.djog_unos.tankgame.engine.audio.*;
 import org.djog_unos.tankgame.engine.*;
+import org.joml.Vector2f;
 
 public class GameView extends View {
 	public Background background = new Background();
@@ -16,11 +17,12 @@ public class GameView extends View {
 	public ArrayList<MachineGunNest> machineGunNests = new ArrayList<>();
 	public ArrayList<Stone> stones = new ArrayList<>();
 
+	public ArrayList<Landmine> landmines = new ArrayList<>();
+	public ArrayList<Explosion> explosions = new ArrayList<>();
+		
 	@Override
 	protected void setupView() {
-		// Setup game music
 		AudioManager.setMusic(new SoundBuffer("game_music.ogg"));
-
 		background.init();
 		player.init();
 
@@ -32,6 +34,7 @@ public class GameView extends View {
 			hedgehogs.add(new Hedgehog(getRandom(), getRandom()));
 			stones.add(new Stone(getRandom(), getRandom()));
             machineGunNests.add(new MachineGunNest(getRandom(), getRandom()));
+			landmines.add(new Landmine(getRandom(), getRandom()));
 		}
 
 		Iterator<Box> boxIterator = boxes.iterator();
@@ -70,6 +73,13 @@ public class GameView extends View {
 			stone.init();
 		}
 
+		Iterator<Landmine> landMineIterator = landmines.iterator();
+		while (landMineIterator.hasNext()) {
+			Landmine landmine = landMineIterator.next();
+			landmine.init();
+		}
+
+		
 		PhysicsManager.generateDebugColliders();
 	}
 	
@@ -83,6 +93,18 @@ public class GameView extends View {
 			nest.update(player);
 		}
 		ProjectileManager.update();
+        Iterator<Explosion> explosionIterator = explosions.iterator();
+        while (explosionIterator.hasNext()) {
+            Explosion explosion = explosionIterator.next();
+            explosion.update();
+            if(explosion.current_frame > 11) explosionIterator.remove();
+        }
+		Iterator<Landmine> landmineIterator = landmines.iterator();
+		while (landmineIterator.hasNext()) {
+			Landmine landmine = landmineIterator.next();
+			landmine.update(this);
+			if(landmine.getToBeDestroyed()) landmineIterator.remove();
+		}
 	}
 
 	@Override

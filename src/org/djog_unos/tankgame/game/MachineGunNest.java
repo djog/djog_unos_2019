@@ -21,7 +21,7 @@ public class MachineGunNest extends DrawableGameObject {
        super(x, y);
        machineGun.setRotation(0);
        machineGun.setRotation_speed(3f);
-       PhysicsManager.addStaticCircleCollider(x, y, 128/4);
+       PhysicsManager.addStaticCircleCollider(x, y, 128/4, true);
     }
 
     public void init()

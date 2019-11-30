@@ -42,6 +42,7 @@ public class Player
 
         hull.setSpeed(256f);
         hull.setRotation(0);
+        PhysicsManager.addPlayerCollider(m_x, m_y, 128/2, false);
     }
 
     public void init()
@@ -86,6 +87,7 @@ public class Player
         hull.sprite.setPosition(m_x, m_y);
         turret.sprite.setPosition(m_x, m_y);
         AudioManager.setListenerPosition(new Vector2f(m_x, m_y));
+        PhysicsManager.updatePlayerCollider(m_x, m_y);
         
         // Rotate turret to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));

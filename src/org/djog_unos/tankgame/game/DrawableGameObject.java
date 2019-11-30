@@ -18,6 +18,11 @@ abstract public class DrawableGameObject {
         m_sprite.setPosition(m_x, m_y);
     }
 
+    public void changeSprite(String textureName, int width, int height){
+        m_sprite = new Sprite(textureName, width, height, 0);
+        m_sprite.setPosition(m_x, m_y);
+    }
+
     public void draw(){ m_sprite.draw();}
 
     public float getX() { return m_x; }
