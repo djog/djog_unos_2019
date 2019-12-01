@@ -69,7 +69,7 @@ class CircleCollider
 
 public final class PhysicsManager
 {
-	public enum Layer { Player, MachineGunNest }
+	public enum Layer { NotUsed, Player, MachineGunNest }
 
 	public static boolean debugPhysics = false;
 	public static Vector4f DEBUG_COLOR = new Vector4f(1, 0, 1, .4f);
@@ -110,12 +110,25 @@ public final class PhysicsManager
 		m_dynamicCircleColliders.remove(key);
 	}
 
+	private static ArrayList<CircleCollider> getAllCircleColliders()
+	{
+		ArrayList<CircleCollider> colliders = new ArrayList<>();
+		colliders.addAll(m_circleColliders);
+		colliders.addAll(m_dynamicCircleColliders.values());
+		return colliders;
+	}
+
 	public static boolean checkPoint(float x, float y)
+	{
+		return checkPoint(x, y, Layer.NotUsed);
+	}
+
+	public static boolean checkPoint(float x, float y, Layer ignoreLayer)
 	{
 		if (!Game.isInitialized()) // No collision when testing
 			return false;
 
-		Iterator<CircleCollider> i = m_circleColliders.iterator();
+		Iterator<CircleCollider> i = getAllCircleColliders().iterator();
 		while(i.hasNext()) {
 			CircleCollider collider = i.next();
 
@@ -155,16 +168,19 @@ public final class PhysicsManager
 		}
 		return false;
 	}
-
 	public static boolean checkCircle(float x, float y, float radius)
+	{
+		return checkCircle(x, y, radius, Layer.NotUsed);
+	}
+	public static boolean checkCircle(float x, float y, float radius, Layer ignoreLayer)
 	{
 		if (!Game.isInitialized()) // No collision when testing
 			return false;
 
-		Iterator<CircleCollider> i = m_circleColliders.iterator();
+		Iterator<CircleCollider> i = getAllCircleColliders().iterator();
 		while(i.hasNext()) {
 			CircleCollider collider = i.next();
-
+			if (collider.layer == ignoreLayer) continue;
 			Vector2f pointA = new Vector2f(x, y);
 			Vector2f pointB = new Vector2f(collider.x, collider.y);
 			float distance = pointA.distance(pointB);
@@ -175,6 +191,7 @@ public final class PhysicsManager
 		Iterator<AABBCollider> j = m_aabbColliders.iterator();
 		while(j.hasNext()) {
 			AABBCollider collider = j.next();
+			if (collider.layer == ignoreLayer) continue;
 			Vector2f closestPoint = new Vector2f(x, y);
 			// Get the closest point by clamping it to the min/max x/y
 			if (closestPoint.x < collider.x1)

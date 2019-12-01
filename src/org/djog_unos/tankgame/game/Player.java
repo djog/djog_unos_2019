@@ -73,10 +73,10 @@ public class Player
         movement.y = ((hull.getSpeed() * (float)Game.getDeltaTime())
                      * (InputManager.getVerticalInput()))
                      * (float)Math.cos(hull_radian);
-        if(!PhysicsManager.checkCircle(m_x + movement.x, m_y, RADIUS)){
+        if(!PhysicsManager.checkCircle(m_x + movement.x, m_y, RADIUS, PhysicsManager.Layer.Player)){
             m_x += movement.x;
         }
-        if(!PhysicsManager.checkCircle(m_x, m_y + movement.y, RADIUS)){
+        if(!PhysicsManager.checkCircle(m_x, m_y + movement.y, RADIUS, PhysicsManager.Layer.Player)){
             m_y += movement.y;
         }
 
