@@ -78,7 +78,7 @@ public class GameView extends View {
 			landmine.init();
 		}
 		
-		PhysicsManager.generateDebugColliders();
+		PhysicsManager.generateStaticDebugColliders();
 	}
 	
 	@Override
@@ -103,12 +103,19 @@ public class GameView extends View {
 			landmine.update(this);
 			if(landmine.getToBeDestroyed()) landmineIterator.remove();
 		}
+
+		if (InputManager.isKeyDown(org.lwjgl.glfw.GLFW.GLFW_KEY_P))
+		{
+			PhysicsManager.debugPhysics = true;
+			PhysicsManager.generateDynamicDebugColliders();
+		}
+		else
+			PhysicsManager.debugPhysics = false;
 	}
 
 	@Override
     protected void drawView() {
 		GameRenderer.drawGame(this);
-		PhysicsManager.drawDebugColliders();
 	}
 
 	float getRandom()
@@ -122,6 +129,6 @@ public class GameView extends View {
 
 	@Override
 	protected void endView() {
-
+		PhysicsManager.cleanup();
 	}
 }

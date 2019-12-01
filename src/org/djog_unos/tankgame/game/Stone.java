@@ -7,7 +7,7 @@ public class Stone extends DrawableGameObject {
     public Stone(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticCircleCollider(x, y, 64/2, true);
+        PhysicsManager.addStaticCircleCollider(x, y, 64/2);
     }
 
     public void init()

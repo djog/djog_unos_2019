@@ -7,7 +7,7 @@ public class Box extends DrawableGameObject {
     public Box(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticAABBCollider(x, y, 40, 40, true);
+        PhysicsManager.addStaticAABBCollider(x, y, 64, 64);
     }
 
     public void init()

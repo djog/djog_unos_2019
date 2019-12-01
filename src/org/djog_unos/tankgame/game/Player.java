@@ -1,10 +1,7 @@
 package org.djog_unos.tankgame.game;
 
 import org.djog_unos.tankgame.engine.*;
-import org.djog_unos.tankgame.engine.Shape.ShapeType;
-import org.djog_unos.tankgame.engine.audio.AudioManager;
-import org.djog_unos.tankgame.engine.audio.SoundBuffer;
-import org.djog_unos.tankgame.engine.audio.SoundSource;
+import org.djog_unos.tankgame.engine.audio.*;
 import org.joml.Vector2f;
 
 public class Player
@@ -42,7 +39,7 @@ public class Player
 
         hull.setSpeed(256f);
         hull.setRotation(0);
-        PhysicsManager.addPlayerCollider(m_x, m_y, 128/2, false);
+        PhysicsManager.addDynamicCircleCollider("Player", PhysicsManager.Layer.Player, m_x, m_y, 128/2);
     }
 
     public void init()
@@ -87,7 +84,7 @@ public class Player
         hull.sprite.setPosition(m_x, m_y);
         turret.sprite.setPosition(m_x, m_y);
         AudioManager.setListenerPosition(new Vector2f(m_x, m_y));
-        PhysicsManager.updatePlayerCollider(m_x, m_y);
+        PhysicsManager.updateDynamicCircleCollider("Player", m_x, m_y);
         
         // Rotate turret to mouse
         Vector2f screenPos = Window.WorldToScreenCoords(new Vector2f(m_x, m_y));
@@ -163,14 +160,7 @@ public class Player
     public void draw() 
     {
         hull.sprite.draw();
-        turret.sprite.draw();  
-
-        if (PhysicsManager.DEBUG_PHYSICS) // Temp fix
-        {
-            Shape colliderShape = new Shape(ShapeType.Circle, RADIUS * 2, RADIUS * 2, PhysicsManager.DEBUG_COLOR);
-            colliderShape.setPosition(m_x, m_y);
-            colliderShape.draw();
-        }
+        turret.sprite.draw();
     }
 
     public float get_x() { return m_x; }

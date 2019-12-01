@@ -8,7 +8,7 @@ public class Tree extends DrawableGameObject{
     public Tree(float x, float y)
     {
         super(x, y);
-        PhysicsManager.addStaticCircleCollider(x, y, 128/4, true);
+        PhysicsManager.addStaticAABBCollider(x, y, 50, 128);
     }
 
     public void init()

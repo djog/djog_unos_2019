@@ -2,6 +2,8 @@ package org.djog_unos.tankgame.game;
 
 import java.util.Iterator;
 
+import org.djog_unos.tankgame.engine.PhysicsManager;
+
 public class GameRenderer
 {
 	public static void drawGame(GameView gameView)
@@ -60,5 +62,6 @@ public class GameRenderer
 		}
         
 		ProjectileManager.draw();
+		PhysicsManager.drawDebugColliders();
 	}
 }

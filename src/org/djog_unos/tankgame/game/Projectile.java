@@ -33,6 +33,16 @@ public class Projectile
         m_x += m_direction.x * m_speed * Game.getDeltaTime();
         m_y += m_direction.y * m_speed * Game.getDeltaTime();
         m_lifetime += Game.getDeltaTime();
+        if (PhysicsManager.checkCircle(PhysicsManager.Layer.Player, m_x, m_y, COLLIDER_RADIUS))
+        {
+            destroyed = true;
+            // TODO: Deal damage to player
+        }
+        if (PhysicsManager.checkCircle(PhysicsManager.Layer.MachineGunNest, m_x, m_y, COLLIDER_RADIUS))
+        {
+            destroyed = true;
+            // TODO: Deal damage to MachineGunNest
+        }
         if (m_lifetime >= MAX_LIFETIME || PhysicsManager.checkCircle(m_x, m_y, COLLIDER_RADIUS))
             destroyed = true;
     }

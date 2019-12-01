@@ -21,11 +21,12 @@ public class MachineGunNest extends DrawableGameObject {
        super(x, y);
        machineGun.setRotation(0);
        machineGun.setRotation_speed(3f);
-       PhysicsManager.addStaticCircleCollider(x, y, 128/4, true);
     }
-
+    
     public void init()
     {
+        PhysicsManager.addDynamicCircleCollider(String.valueOf(Math.random()), PhysicsManager.Layer.MachineGunNest, super.getX(), super.getY(),  128/3);
+        
         super.init("machine_nest.png", 128, 128);
         machineGun.sprite = new Sprite("machine_gun.png", 128, 128, 0);
         machineGun.sprite.setPosition(super.getX(), super.getY() + 32);
