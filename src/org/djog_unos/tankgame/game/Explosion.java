@@ -34,7 +34,6 @@ public class Explosion extends DrawableGameObject {
         }
 
         if(m_countDown < 0.0f){
-            super.changeSprite(textures[current_frame], 96, 96);
             m_countDown = FRAME_TIME;
             current_frame++;
         }

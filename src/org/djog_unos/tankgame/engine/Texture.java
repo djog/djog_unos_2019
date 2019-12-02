@@ -52,6 +52,7 @@ public class Texture {
         } 
         catch (IOException e)
         {
+            System.out.println("PATH: " + path);
             e.printStackTrace();
         }
     }

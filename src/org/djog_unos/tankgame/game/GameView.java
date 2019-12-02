@@ -17,7 +17,7 @@ public class GameView extends View {
 	public ArrayList<Stone> stones = new ArrayList<>();
 
 	public ArrayList<Landmine> landmines = new ArrayList<>();
-	public ArrayList<Explosion> explosions = new ArrayList<>();
+	public ArrayList<Animation> explosions = new ArrayList<>();
 		
 	@Override
 	protected void setupView() {
@@ -91,11 +91,11 @@ public class GameView extends View {
 			nest.update(player);
 		}
 		ProjectileManager.update();
-        Iterator<Explosion> explosionIterator = explosions.iterator();
+        Iterator<Animation> explosionIterator = explosions.iterator();
         while (explosionIterator.hasNext()) {
-            Explosion explosion = explosionIterator.next();
+            Animation explosion = explosionIterator.next();
             explosion.update();
-            if(explosion.current_frame > 11) explosionIterator.remove();
+        //    if(explosion.current_frame > 11) explosionIterator.remove();
         }
 		Iterator<Landmine> landmineIterator = landmines.iterator();
 		while (landmineIterator.hasNext()) {

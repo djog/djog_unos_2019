@@ -18,6 +18,17 @@ public class TextureManager {
         }
     }
 
+    public static Texture[] getTexturesFromDir(String dirName, int amount)
+    {
+        Texture[] textures = new Texture[amount];
+        for (int i = 0; i < amount; i++)
+        {
+            String relativePath = dirName + "/" + (i+1) + ".png";
+            textures[i] = getTexture(relativePath);
+        }
+        return textures;
+    }
+
     public static void clearAllTextures()
     {
         textures.clear();

@@ -2,6 +2,7 @@ package org.djog_unos.tankgame.game;
 
 import java.util.Iterator;
 
+import org.djog_unos.tankgame.engine.Animation;
 import org.djog_unos.tankgame.engine.PhysicsManager;
 
 public class GameRenderer
@@ -55,9 +56,9 @@ public class GameRenderer
 
 		gameView.player.draw();
 
-		Iterator<Explosion> explosionIterator = gameView.explosions.iterator();
+		Iterator<Animation> explosionIterator = gameView.explosions.iterator();
 		while (explosionIterator.hasNext()) {
-			Explosion explosion = explosionIterator.next();
+			Animation explosion = explosionIterator.next();
 			explosion.draw();
 		}
         
