@@ -1,8 +1,5 @@
 package org.djog_unos.tankgame.game;
 
-import java.util.Iterator;
-
-import org.djog_unos.tankgame.engine.Animation;
 import org.djog_unos.tankgame.engine.PhysicsManager;
 
 public class GameRenderer
@@ -11,56 +8,21 @@ public class GameRenderer
 	{
 		gameView.background.draw();
 		
-		Iterator<Box> boxIterator = gameView.boxes.iterator();
-		while (boxIterator.hasNext()) {
-			Box box = boxIterator.next();
-			box.draw();
-		}
+		for(var object : gameView.objects)
+			object.draw();
 
-		Iterator<Tree> treeIterator = gameView.trees.iterator();
-		while (treeIterator.hasNext()) {
-			Tree tree = treeIterator.next();
-			tree.draw();
-		}
-
-		Iterator<Bush> bushIterator = gameView.bushes.iterator();
-		while (bushIterator.hasNext()) {
-			Bush bush = bushIterator.next();
-			bush.draw();
-		}
-
-		Iterator<Hedgehog> hedgehogIterator = gameView.hedgehogs.iterator();
-		while (hedgehogIterator.hasNext()) {
-			Hedgehog hedgehog = hedgehogIterator.next();
-			hedgehog.draw();
-		}
-		
-		Iterator<Stone> stoneIterator = gameView.stones.iterator();
-		while (stoneIterator.hasNext()) {
-			Stone stone = stoneIterator.next();
-			stone.draw();
-		}
-
-		Iterator<MachineGunNest> MachineGunNestIterator = gameView.machineGunNests.iterator();
-		while (MachineGunNestIterator.hasNext()) {
-			MachineGunNest nest = MachineGunNestIterator.next();
+		for(var nest : gameView.machineGunNests) {
 			nest.machineGun.draw();
 			nest.draw();
 		}
 
-		Iterator<Landmine> LandmineIterator = gameView.landmines.iterator();
-		while (LandmineIterator.hasNext()) {
-			Landmine landmine = LandmineIterator.next();
+		for(var landmine : gameView.landmines)
 			landmine.draw();
-		}
 
 		gameView.player.draw();
 
-		Iterator<Animation> explosionIterator = gameView.explosions.iterator();
-		while (explosionIterator.hasNext()) {
-			Animation explosion = explosionIterator.next();
-			explosion.draw();
-		}
+		for(var animation : GameView.animations)
+			animation.draw();
         
 		ProjectileManager.draw();
 		PhysicsManager.drawDebugColliders();

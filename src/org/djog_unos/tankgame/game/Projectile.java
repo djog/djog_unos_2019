@@ -36,12 +36,12 @@ public class Projectile
         if (PhysicsManager.checkCircle(PhysicsManager.Layer.Player, m_x, m_y, COLLIDER_RADIUS))
         {
             destroyed = true;
-            // TODO: Deal damage to player
+            // TODO: Deal damage to player here
         }
         if (PhysicsManager.checkCircle(PhysicsManager.Layer.MachineGunNest, m_x, m_y, COLLIDER_RADIUS))
         {
             destroyed = true;
-            // TODO: Deal damage to MachineGunNest
+            // TODO: Deal damage to MachineGunNest here
         }
         if (m_lifetime >= MAX_LIFETIME || PhysicsManager.checkCircle(m_x, m_y, COLLIDER_RADIUS))
             destroyed = true;

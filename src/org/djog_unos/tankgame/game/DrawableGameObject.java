@@ -19,6 +19,8 @@ abstract public class DrawableGameObject {
         m_sprite.setPosition(m_x, m_y);
     }
 
+    public abstract void init();
+    
     public void draw(){ m_sprite.draw();}
 
     public float getWidth() { return m_sprite.getWidth(); }

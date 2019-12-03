@@ -9,15 +9,11 @@ public class GameView extends View {
 	public Background background = new Background();
 	public Player player = new Player(0.0f, 0.0f);
 
-	public ArrayList<Box> boxes = new ArrayList<>();
-	public ArrayList<Bush> bushes = new ArrayList<>();
-	public ArrayList<Tree> trees = new ArrayList<>();
-	public ArrayList<Hedgehog> hedgehogs = new ArrayList<>();
+	public ArrayList<DrawableGameObject> objects = new ArrayList<>(); 
+	
 	public ArrayList<MachineGunNest> machineGunNests = new ArrayList<>();
-	public ArrayList<Stone> stones = new ArrayList<>();
-
 	public ArrayList<Landmine> landmines = new ArrayList<>();
-	public ArrayList<Animation> explosions = new ArrayList<>();
+	public static ArrayList<Animation> animations = new ArrayList<>();
 		
 	@Override
 	protected void setupView() {
@@ -27,50 +23,23 @@ public class GameView extends View {
 
 		for(int i = 0; i < 8; i++)
 		{
-			boxes.add(new Box(getRandom(), getRandom()));
-			bushes.add(new Bush(getRandom(), getRandom()));
-			trees.add(new Tree(getRandom(), getRandom()));
-			hedgehogs.add(new Hedgehog(getRandom(), getRandom()));
-			stones.add(new Stone(getRandom(), getRandom()));
+			objects.add(new Box(getRandom(), getRandom()));
+			objects.add(new Bush(getRandom(), getRandom()));
+			objects.add(new Tree(getRandom(), getRandom()));
+			objects.add(new Hedgehog(getRandom(), getRandom()));
+			objects.add(new Stone(getRandom(), getRandom()));
             machineGunNests.add(new MachineGunNest(getRandom(), getRandom()));
 			landmines.add(new Landmine(getRandom(), getRandom()));
 		}
 
-		Iterator<Box> boxIterator = boxes.iterator();
-		while (boxIterator.hasNext()) {
-			Box box = boxIterator.next();
-			box.init();
-		}
+		for(var object : objects)
+			object.init();
 
-		Iterator<Hedgehog> hedgehogIterator = hedgehogs.iterator();
-		while (hedgehogIterator.hasNext()) {
-			Hedgehog hedgehog = hedgehogIterator.next();
-			hedgehog.init();
-		}
-
-		Iterator<Tree> treeIterator = trees.iterator();
-		while (treeIterator.hasNext()) {
-			Tree tree = treeIterator.next();
-			tree.init();
-		}
-		
-		Iterator<Bush> bushIterator = bushes.iterator();
-		while (bushIterator.hasNext()) {
-			Bush bush = bushIterator.next();
-			bush.init();
-		}
-
-		Iterator<MachineGunNest> MachineGunNestIterator = machineGunNests.iterator();
-		while (MachineGunNestIterator.hasNext()) {
-            MachineGunNest nest = MachineGunNestIterator.next();
+		Iterator<MachineGunNest> mgNestIterator = machineGunNests.iterator();
+		while (mgNestIterator.hasNext()) {
+            MachineGunNest nest = mgNestIterator.next();
             nest.init();
         }
-		
-		Iterator<Stone> stoneIterator = stones.iterator();
-		while (stoneIterator.hasNext()) {
-			Stone stone = stoneIterator.next();
-			stone.init();
-		}
 
 		Iterator<Landmine> landMineIterator = landmines.iterator();
 		while (landMineIterator.hasNext()) {
@@ -85,23 +54,26 @@ public class GameView extends View {
     protected void updateView() {
     	player.update();
     	Camera.update(player.get_x(), player.get_y());
-		Iterator<MachineGunNest> MachineGunNestIterator = machineGunNests.iterator();
-		while (MachineGunNestIterator.hasNext()) {
-			MachineGunNest nest = MachineGunNestIterator.next();
+		
+		for (var nest : machineGunNests)
 			nest.update(player);
-		}
+
 		ProjectileManager.update();
-        Iterator<Animation> explosionIterator = explosions.iterator();
+
+        Iterator<Animation> explosionIterator = animations.iterator();
         while (explosionIterator.hasNext()) {
             Animation explosion = explosionIterator.next();
-            explosion.update();
-        //    if(explosion.current_frame > 11) explosionIterator.remove();
-        }
+			explosion.update();
+			if (explosion.destoyed)
+				explosionIterator.remove();
+		}
+		
 		Iterator<Landmine> landmineIterator = landmines.iterator();
 		while (landmineIterator.hasNext()) {
 			Landmine landmine = landmineIterator.next();
-			landmine.update(this);
-			if(landmine.getToBeDestroyed()) landmineIterator.remove();
+			landmine.update();
+			if(landmine.destroyed)
+				landmineIterator.remove();
 		}
 
 		if (InputManager.isKeyDown(org.lwjgl.glfw.GLFW.GLFW_KEY_P))
