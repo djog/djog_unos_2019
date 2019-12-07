@@ -1,6 +1,5 @@
 package org.djog_unos.tankgame.game;
 
-import org.djog_unos.tankgame.engine.Game;
 import org.djog_unos.tankgame.engine.Window;
 
 import java.util.Iterator;
