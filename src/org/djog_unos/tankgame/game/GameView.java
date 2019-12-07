@@ -36,6 +36,8 @@ public class GameView extends View {
 			landmines.add(new Landmine(getRandom(), getRandom()));
 		}
 
+		boxes.add(new Box(200, 0));
+
 		Iterator<Box> boxIterator = boxes.iterator();
 		while (boxIterator.hasNext()) {
 			Box box = boxIterator.next();
