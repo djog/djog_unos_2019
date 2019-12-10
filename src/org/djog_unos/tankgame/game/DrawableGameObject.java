@@ -25,4 +25,7 @@ abstract public class DrawableGameObject {
 
     public float getWidth() { return m_sprite.getWidth(); }
     public float getHeight() { return m_sprite.getHeight(); }
+
+    public float getX() { return m_x; }
+    public float getY() { return m_y; }
 }
